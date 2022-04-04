@@ -47,9 +47,11 @@ exports.login=(email,password)=>{
             if(!user){
               reject("invalid email")
             }
+
+            
                 bcrypt.compare(password,user.password).then(same=>{
                     if(same){
-                        let token=jwt.sign({id:user.id,username:user.id,role:"userrole"},PrivateKey,{
+                        let token=jwt.sign({id:user.id,username:user.username,role:"userrole"},PrivateKey,{
                             expiresIn:"2h"
                         })
                       resolve({token:token})
@@ -105,19 +107,18 @@ exports.uploadImage=(req,res,next)=>{
      }).then(()=>res.status(201).send("done !!"))
      .catch((err)=>res.status(500).send(err))
      
-     return res.send(req.file);
 }
 
 exports.sendEmail=(req,res,next)=>{
-const {user,pass} = req.body;
+
     // Step 1
 let transporter =nodemailer.createTransport({
-    // user:process.env.EMAIL,
-    // pass:process.env.PASSWORD
+   
     service:'gmail',
     auth:{
-        user,
-        pass
+         user:process.env.EMAIL,
+        pass:process.env.PASSWORD
+        
     }
 });
      // step 2

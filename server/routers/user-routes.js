@@ -2,8 +2,7 @@ const express= require('express')
 const route=express.Router();
 
 const db= require('../models')
-
-
+const fileUpload = require("../middleware/file-aploader");
 
 const userContoller=require('../controlles/userController');
 
@@ -35,7 +34,7 @@ route.patch('/user/:id',userContoller.update);
 
 route.delete('/user/:id',userContoller.delete);
 
-const fileUpload = require("../middleware/file-aploader");
+
 route.post('/Add',(fileUpload.single("image")),userContoller.uploadImage);
 
 route.post('/sendEmail',userContoller.sendEmail)
