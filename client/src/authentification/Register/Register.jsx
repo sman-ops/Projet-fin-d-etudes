@@ -1,21 +1,67 @@
 import React,{useState} from 'react'
 import styles from "./styles.module.css";
 import {Link} from "react-router-dom"
-import axios from 'axios'
+// import axios from 'axios'
 import {useNavigate} from 'react-router-dom';
+import M from 'materialize-css'
+import { toast,Zoom } from 'react-toastify';
 
 function Register() {
+	const navigate=useNavigate();
 	const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-const navigate=useNavigate();
-    const Register =() => {
-        const data = { username: username,email:email, password: password };
-        axios.post("http://localhost:3001/register", data).then((response) => {
-             console.log(response.data);
-			 alert('scucce register')
-             navigate('/login')
-            });}
+
+    const Register =(e) => {
+		e.preventDefault();
+	
+        // const data = { username: username,email:email, password: password };
+        // axios.post("http://localhost:3001/register", data).then((response) => {
+        //      console.log(response.data);
+        //      navigate('/login')
+        //     });
+		
+		if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+            toast.error("email invalid ",{
+				transition:Zoom,
+				theme: "colored" 
+				
+				
+			}
+			
+			)
+            return
+        }
+		fetch("http://localhost:3001/register",{
+            method:"post",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                username,
+				email,
+                password
+                
+                
+            })
+        }).then(res=>res.json())
+        .then(data=>{
+            if(data.error){
+              toast.error(data.error,{
+				theme: "colored"
+			  })
+            }else {
+              toast.success(data.message,{
+				  theme:"colored"
+			  })
+                navigate("/login")
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+       
+    
+	}
   return (
     <div className={styles.signup_container}>
 			<div className={styles.signup_form_container}>
@@ -53,7 +99,7 @@ const navigate=useNavigate();
 								setEmail(event.target.value);
 							  }}
 							 
-							required
+						
 							className={styles.input}
 						/>
 						<input
@@ -64,7 +110,7 @@ const navigate=useNavigate();
 								setPassword(event.target.value);
 							  }}
 							 
-							required
+						
 							className={styles.input}
 						/>
                         

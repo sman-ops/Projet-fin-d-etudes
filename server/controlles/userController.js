@@ -10,60 +10,64 @@ const nodemailer = require('nodemailer');
 // to send mail using nodemailer we need what we call transporter
 // transporter connect you to host domain 
 
-const SchemaValidation = Joi.object({
-    username:Joi.string().required(),
-    email:Joi.string().email().required(),
-    password:Joi.string().min(8).required(),
 
-})
+exports.register=(req,res,next)=>{
+  const {username,email,password}=req.body;
+  if(!username||!email || !password ){
+    return res.status(422).json({error:"please add all the fields"})
+                                     }
 
-exports.register=(username,email,password)=>{
-    return new Promise((resolve,reject)=>{
-        let validation=SchemaValidation.validate({username,email,password:password})
-        if(validation.error){
-            reject(validation.error.details[0].message)
-        }
-        // const {username,email,password}=req.body;
-    db.User.count({where:{email:email}}).then((doc)=>{
-        if(doc!=0){
-        resolve("this email is used")
+    db.User.count({where:{email:email}}).then((saveUser)=>{
+        if(saveUser){
+            return res.status(422).json({error:"user already exists with that email"})
         }
             bcrypt.hash(password,10).then((hashedPassword)=>{
 
                          db.User.create({
                         username,email,password:hashedPassword
-                    }).then((response)=>resolve(response))
-                     .catch((err)=>reject(err))
+                    }).then(user=>{
+                        res.json({message:"saved successfully"})
+                    })
+                     .catch(err=>console.log(err))
                 
             })
         
-    })
-    })
+    }).catch(err=>{
+        console.log(err)
+      })
+  
+    
 }
+
 const PrivateKey="this is private ky hhhhhfdhfdkhkfhkfg "
-exports.login=(email,password)=>{
-    return new Promise((resolve,reject)=>{
-        db.User.findOne({where:{email:email}}).then(user=>{
-            if(!user){
-              reject("invalid email")
+exports.login=(req,res,next)=>{
+    const {email,password}=req.body;
+    if(!email || !password ){
+        return res.status(422).json({error:"please add all the fields"})
+         }
+    
+        db.User.findOne({where:{email:email}}).then(savedUser=>{
+            if(!savedUser){
+            return res.status(422).json({error:"Invalid Email or password"})
             }
 
-            
-                bcrypt.compare(password,user.password).then(same=>{
-                    if(same){
-                        let token=jwt.sign({id:user.id,username:user.username,role:"userrole"},PrivateKey,{
+                bcrypt.compare(password,savedUser.password).then(doMatch=>{
+                    if(doMatch){
+                        const token=jwt.sign({id:savedUser.id,username:savedUser.username,role:"userrole"},PrivateKey,{
                             expiresIn:"2h"
                         })
-                      resolve({token:token})
+                        const {id,username,email} =savedUser
+                        res.json({token,user:{id,username,email}})
+                    }else {
+                        return res.status(422).json({error:"Invalid Email or password"})
                     }
-                        reject("invalid password and email ")
-                    
-                })
-            
         })
      
+    }) .catch(err=>{
+        console.log(err)
     })
 }
+
 
 exports.getUser=(req,res,next)=>{
 

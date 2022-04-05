@@ -1,7 +1,8 @@
 import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import { Children } from 'react/cjs/react.production.min';
 
-function Template() {
+function Template(children) {
 const navigate=  useNavigate();
 
   const logout=() =>{
@@ -15,6 +16,7 @@ const navigate=  useNavigate();
         <a class="sidebar-brand brand-logo" href="index.html"><img src="assets/images/logo.svg" alt="logo" /></a>
         <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
       </div>
+    
       <ul class="nav">
         <li class="nav-item nav-profile">
           <a href="#" class="nav-link">
@@ -243,7 +245,7 @@ const navigate=  useNavigate();
         </div>
       </nav>
       <div class="main-panel">
-      <div class="row">
+      {/* <div class="row">
               <div class="col-xl-8 col-sm-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body px-0 overflow-auto">
@@ -351,7 +353,9 @@ const navigate=  useNavigate();
               <div class="col-xl-4 col-sm-6 grid-margin stretch-card">
                
               </div>
-            </div>
+            </div> */}
+
+          
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>

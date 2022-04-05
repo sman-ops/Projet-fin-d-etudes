@@ -5,25 +5,66 @@ import axios from 'axios';
 import {Link} from "react-router-dom"
 import {useNavigate} from'react-router-dom'
 import { AuthContext } from '../../helpers/AuthContext'
+import { toast,Zoom } from 'react-toastify';
 // import { ToastContainer, toast } from 'react-toastify';
 //   import 'react-toastify/dist/ReactToastify.css';
 function Login() {
+    const navigate =useNavigate();
     const [email,setEmail] = useState("");
     const [password,setPassword] =useState("");
     const {setAuthState} = useContext(AuthContext)
-const navigate =useNavigate();
+
 const login =(e) =>{
     e.preventDefault();
-    const data={email:email,password:password};
-    axios.post("http://localhost:3001/login",data).then((response)=>{
-        console.log(response.data.token)
-        
-      localStorage.setItem("accessToken",response.data.token.token)
-      setAuthState(true)
-      navigate('/template')
-    
-        });
 
+
+    // const data={email:email,password:password};
+    // axios.post("http://localhost:3001/login",data).then((response)=>{
+    //     console.log(response.data.token)
+        
+    //   localStorage.setItem("accessToken",response.data.token.token)
+    //   setAuthState(true)
+    //   navigate('/template')
+    
+    //     });
+    if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+        toast.error("email invalid ",{
+            transition:Zoom,
+            theme: "colored"   
+        }
+        )
+        return
+        
+    }
+    fetch("http://localhost:3001/login",{
+        method:"post",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            
+            
+            email:email,
+            password
+        })
+    }).then(res=>res.json())
+    
+    .then(data=>{
+        console.log(data) 
+        if(data.error){
+            toast.error(data.error,{
+				theme: "colored"
+			  })
+        }else {
+          
+            toast.success("signedin successfuly",{
+                theme:"colored"
+            })
+            navigate("/template")
+        }
+    }).catch(err=>{
+        console.log(err)
+    })
    
       
 

@@ -2,7 +2,8 @@
 import './App.css';
 import {useState} from 'react';
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
-
+import { ToastContainer } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 // import Register from './authentification/Register';
 // import Login from './authentification/Login'
 import Exemple from './authentification/Exemple'
@@ -23,11 +24,13 @@ function App() {
   return (
     <div className="App">
       <AuthContext.Provider value={{authState,setAuthState}}>
+
+      <ToastContainer/>
     <Router>
     
 
       <Routes>
-      <Route path="/" element={<Login/>} />
+      <Route path="/login" element={<Login/>} />
       <Route path="/Register" element={<Register/>} />
       <Route path="/user" element={<Users/>} />
       <Route path="/ex" element={<Exemple/>} />
