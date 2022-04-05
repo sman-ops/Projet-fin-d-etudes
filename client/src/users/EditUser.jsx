@@ -2,7 +2,7 @@ import React from 'react'
 
 function EditUser() {
   return (
-    <div class="col-12 grid-margin" style={{width:"70%",alignItems:"center",height:"30%",margin:"3% 10% 20% 15%"}}>
+    // <div class="col-12 grid-margin" style={{width:"70%",alignItems:"center",height:"30%",margin:"3% 10% 20% 15%"}}>
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Edit User</h4>
@@ -143,7 +143,7 @@ function EditUser() {
         </form>
       </div>
     </div>
-  </div>
+  // </div>
   )
 }
 
