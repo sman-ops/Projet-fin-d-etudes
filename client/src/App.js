@@ -21,6 +21,7 @@ import UpdatePass from './authentification/UpdatePass';
 function App() {
   const [authState,setAuthState]=useState(false);
   // if you able to access the value of the state and be able to change this state in any of components below here we can pass those to value={{}}
+  let auth = false;
   return (
     <div className="App">
       <AuthContext.Provider value={{authState,setAuthState}}>
@@ -30,17 +31,45 @@ function App() {
     
 
       <Routes>
-      <Route path="/login" element={<Login/>} />
-      <Route path="/Register" element={<Register/>} />
-      <Route path="/user" element={<Users/>} />
-      <Route path="/ex" element={<Exemple/>} />
-      <Route path="/forgotpass" element={<ForgotPassword/>} />
-      <Route path="/resetpass" element={<ResetPassword/>} />
-      <Route path="/template" element={<Template/>} />
-      <Route path="/profile" element={<Profile/>} />
-      <Route path="/edituser" element={<EditUser/>} />
-      <Route path="/adduser" element={<AddUser/>} />
-      <Route path="/updatepass" element={<UpdatePass/>} />
+
+        {auth ?(
+          <>
+            <Route path="/user" 
+              element={
+                <Template>
+                  <Users/> 
+                </Template>
+              }
+            />
+            <Route path="/ex" element={<Exemple/>} />
+            <Route path="/forgotpass" element={<ForgotPassword/>} />
+            <Route path="/resetpass" element={<ResetPassword/>} />
+            <Route path="/template" element={<Template/>} />
+            <Route path="/profile" element={<Profile/>} />
+            <Route path="/edituser" 
+              element={
+                <Template>
+                  <EditUser/> 
+                </Template>
+              }
+            />
+
+            <Route path="/adduser" element={
+                <Template>
+                  <AddUser/> 
+                </Template>
+              }
+            />
+            <Route path="/updatepass" element={<UpdatePass/>} />
+          </>
+        ):
+          <>
+            <Route path="/login" element={<Login/>} />
+            <Route path="/Register" element={<Register/>} />
+          </>
+        }
+      
+      
 
      
       </Routes>
