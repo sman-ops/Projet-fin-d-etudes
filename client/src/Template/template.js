@@ -1,9 +1,14 @@
 import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 
+<<<<<<< HEAD
 
 function Template({children}) {
 const navigate=  useNavigate();
+=======
+function Template({ children }) {
+  const navigate=  useNavigate();
+>>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
 
 const user=localStorage.getItem("user")
   return (

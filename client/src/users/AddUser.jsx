@@ -2,6 +2,12 @@ import React from 'react'
 
 function AddUser() {
   return (
+<<<<<<< HEAD
+=======
+    // <div class="col-12 grid-margin stretch-card" style={{
+      // margin:"70px 50px 200px 200px",
+      // alignItems:"center",width:"65%",height:"20%",marginRight:"90px"}}>
+>>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
     <div class="card">
       <div class="card-body" style={{marginRight:"80px"}}>
         <h4 class="card-title">Add New User</h4>
@@ -51,6 +57,10 @@ function AddUser() {
         </form>
       </div>
     </div>
+<<<<<<< HEAD
+=======
+  // </div>
+>>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
   )
 }
 
