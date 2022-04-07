@@ -1,14 +1,11 @@
 import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import { Children } from 'react/cjs/react.production.min';
 
-function Template(children) {
+
+function Template({children}) {
 const navigate=  useNavigate();
 
-  const logout=() =>{
-    localStorage.removeItem("accessToken");
-    navigate('/login')
-  }
+const user=localStorage.getItem("user")
   return (
     <div class="container-scroller">
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -26,7 +23,7 @@ const navigate=  useNavigate();
          
             </div>
             <div class="nav-profile-text d-flex flex-column pr-3">
-              <span class="font-weight-medium mb-2">Henry Klein</span>
+              <span class="font-weight-medium mb-2">{user.username}</span>
               <span class="font-weight-normal">$8,753.00</span>
             </div>
             <span class="badge badge-danger text-white ml-3 rounded">3</span>
@@ -67,13 +64,13 @@ const navigate=  useNavigate();
         <li class="nav-item">
           <a class="nav-link" href="pages/forms/basic_elements.html">
             <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-            <span class="menu-title">Forms</span>
+            <Link to="/adduser"><span class="menu-title"> ADD Users</span></Link>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="pages/charts/chartjs.html">
             <i class="mdi mdi-chart-bar menu-icon"></i>
-            <span class="menu-title">Charts</span>
+            <Link to="/edituser/:id"><span class="menu-title"> edit Users</span></Link>
           </a>
         </li>
         <li class="nav-item">
@@ -232,7 +229,11 @@ const navigate=  useNavigate();
                 <a class="dropdown-item" href="#">
                   <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
                 <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-logout mr-2 text-primary"></i><button onClick={logout}>Signout</button>  </a>
+                  <i class="mdi mdi-logout mr-2 text-primary"></i><button onClick={()=>{
+
+                    localStorage.clear()
+                    navigate('/')
+                  }}>Logout</button>  </a>
                   <a class="dropdown-item" href="#">
                     <Link to="/profile">
                   <i class="mdi mdi-cached mr-2 text-success"></i> Profile</Link> </a>
@@ -245,117 +246,12 @@ const navigate=  useNavigate();
         </div>
       </nav>
       <div class="main-panel">
-      {/* <div class="row">
-              <div class="col-xl-8 col-sm-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body px-0 overflow-auto">
-                    <h4 class="card-title pl-4">Purchase History</h4>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead class="bg-light">
-                          <tr>
-                            <th>Customer</th>
-                            <th>Project</th>
-                            <th>Invoice</th>
-                            <th>Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img src="assets/images/faces/face1.jpg" alt="image" />
-                                <div class="table-user-name ml-3">
-                                  <p class="mb-0 font-weight-medium"> Cecelia Cooper </p>
-                                  <small> Payment on hold</small>
-                                </div>
-                              </div>
-                            </td>
-                            <td>Angular Admin</td>
-                            <td>
-                              <div class="badge badge-inverse-success"> Completed </div>
-                            </td>
-                            <td>$ 77.99</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img src="assets/images/faces/face10.jpg" alt="image" />
-                                <div class="table-user-name ml-3">
-                                  <p class="mb-0 font-weight-medium"> Victor Watkins </p>
-                                  <small>Email verified</small>
-                                </div>
-                              </div>
-                            </td>
-                            <td>Angular Admin</td>
-                            <td>
-                              <div class="badge badge-inverse-success"> Completed </div>
-                            </td>
-                            <td>$245.30</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img src="assets/images/faces/face11.jpg" alt="image" />
-                                <div class="table-user-name ml-3">
-                                  <p class="mb-0 font-weight-medium"> Ada Burgess </p>
-                                  <small>Email verified</small>
-                                </div>
-                              </div>
-                            </td>
-                            <td>One page html</td>
-                            <td>
-                              <div class="badge badge-inverse-danger"> Completed </div>
-                            </td>
-                            <td>$ 160.25</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img src="assets/images/faces/face13.jpg" alt="image" />
-                                <div class="table-user-name ml-3">
-                                  <p class="mb-0 font-weight-medium"> Dollie Lynch </p>
-                                  <small>Email verified</small>
-                                </div>
-                              </div>
-                            </td>
-                            <td>Wordpress</td>
-                            <td>
-                              <div class="badge badge-inverse-success"> Declined </div>
-                            </td>
-                            <td>$ 123.21</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img src="assets/images/faces/face16.jpg" alt="image" />
-                                <div class="table-user-name ml-3">
-                                  <p class="mb-0 font-weight-medium"> Harry Holloway </p>
-                                  <small>Payment on process</small>
-                                </div>
-                              </div>
-                            </td>
-                            <td>VueJs Application</td>
-                            <td>
-                              <div class="badge badge-inverse-danger"> Declined </div>
-                            </td>
-                            <td>$ 150.00</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <a class="text-black mt-3 d-block pl-4" href="#">
-                      <span class="font-weight-medium h6">View all order history</span>
-                      <i class="mdi mdi-chevron-right"></i></a>
-                  </div>
-                </div>
+      <div class="row mt-2 mx-1">
+              <div class="col-xl-12 col-xs-6 grid-margin stretch-card">
+                {/* content will be changed as we change th children */}
+                {children}
               </div>
-              <div class="col-xl-4 col-sm-6 grid-margin stretch-card">
-               
-              </div>
-            </div> */}
-
-          
+            </div>  
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>

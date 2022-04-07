@@ -1,6 +1,5 @@
 import React,{useState,useContext} from 'react'
 import styles from "./styles.module.css";
-
 import axios from 'axios';
 import {Link} from "react-router-dom"
 import {useNavigate} from'react-router-dom'
@@ -9,10 +8,11 @@ import { toast,Zoom } from 'react-toastify';
 // import { ToastContainer, toast } from 'react-toastify';
 //   import 'react-toastify/dist/ReactToastify.css';
 function Login() {
+  
     const navigate =useNavigate();
     const [email,setEmail] = useState("");
     const [password,setPassword] =useState("");
-    const {setAuthState} = useContext(AuthContext)
+    const{setAuthState} = useContext(AuthContext)
 
 const login =(e) =>{
     e.preventDefault();
@@ -56,7 +56,9 @@ const login =(e) =>{
 				theme: "colored"
 			  })
         }else {
-          
+            localStorage.setItem("jwt",data.token)
+            localStorage.setItem("user",JSON.stringify(data.user))
+            setAuthState(true)
             toast.success("signedin successfuly",{
                 theme:"colored"
             })
@@ -97,10 +99,13 @@ const login =(e) =>{
                     required
                     className={styles.input}
                 />
-       
+                   
                 <button type="submit" className={styles.green_btn} onClick={login}>
                     Sing In
                 </button>
+                   <h6>
+                        <Link to="/forgotpass">Forgot password ?</Link>
+                    </h6>
             </form>
         </div>
         <div className={styles.right}>

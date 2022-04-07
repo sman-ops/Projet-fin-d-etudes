@@ -14,10 +14,14 @@ route.get('/user/:id',userContoller.getUser)
   
 route.get('/users',userContoller.getAllUsers)
 
-route.patch('/user/:id',userContoller.update);
+route.put('/user/:id',userContoller.update);
 
 route.delete('/user/:id',userContoller.delete);
 
+route.post('/reset-password',userContoller.resetpassword)
+
+
+route.post('/new-password',userContoller.newpassword)
 
 route.post('/Add',(fileUpload.single("image")),userContoller.uploadImage);
 

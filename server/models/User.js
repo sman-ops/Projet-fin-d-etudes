@@ -10,8 +10,23 @@ module.exports=(sequelize,Datatype)=>{
         },
         password:{
             type:Datatype.STRING,
-            allowNull:false
-        }
+            allowNull:true
+        },
+        // resetToken:{
+        //     type:Datatype.STRING
+        
+        // },
+        // expireToken:{
+        //     type:Datatype.DATE
+          
+        // }
+       
+        
+
+      
+
+
+
     })
     return User
 }

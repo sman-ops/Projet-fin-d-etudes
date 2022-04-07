@@ -54,7 +54,7 @@ function Register() {
               toast.success(data.message,{
 				  theme:"colored"
 			  })
-                navigate("/login")
+                navigate("/")
             }
         }).catch(err=>{
             console.log(err)
@@ -67,7 +67,7 @@ function Register() {
 			<div className={styles.signup_form_container}>
 				<div className={styles.left}>
 					<h1>Welcome Back</h1>
-                    <Link to="/login">
+                    <Link to="/">
 						<button type="button" className={styles.white_btn}>
 							Sing in
 						</button>
