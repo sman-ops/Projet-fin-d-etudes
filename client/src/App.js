@@ -28,7 +28,6 @@ import {AuthContext} from './helpers/AuthContext'
 function App() {
   
   // if you able to access the value of the state and be able to change this state in any of components below here we can pass those to value={{}}
-<<<<<<< HEAD
   
   const [authState,setAuthState]=useState(false);
 
@@ -38,9 +37,6 @@ function App() {
   
     }
   },[])
-=======
-  let auth = false;
->>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
   return (
     <div className="App">
    
@@ -93,61 +89,12 @@ function App() {
     
     
 
-<<<<<<< HEAD
    
     </Routes>
   </Router>
   </AuthContext.Provider>
  
   </div>
-=======
-      <Routes>
-
-        {auth ?(
-          <>
-            <Route path="/user" 
-              element={
-                <Template>
-                  <Users/> 
-                </Template>
-              }
-            />
-            <Route path="/ex" element={<Exemple/>} />
-            <Route path="/forgotpass" element={<ForgotPassword/>} />
-            <Route path="/resetpass" element={<ResetPassword/>} />
-            <Route path="/template" element={<Template/>} />
-            <Route path="/profile" element={<Profile/>} />
-            <Route path="/edituser" 
-              element={
-                <Template>
-                  <EditUser/> 
-                </Template>
-              }
-            />
-
-            <Route path="/adduser" element={
-                <Template>
-                  <AddUser/> 
-                </Template>
-              }
-            />
-            <Route path="/updatepass" element={<UpdatePass/>} />
-          </>
-        ):
-          <>
-            <Route path="/login" element={<Login/>} />
-            <Route path="/Register" element={<Register/>} />
-          </>
-        }
-      
-      
-
-     
-      </Routes>
-    </Router>
-    </AuthContext.Provider>
-    </div>
->>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
   );
   
 }

@@ -50,10 +50,6 @@ function EditUser() {
 
 }
   return (
-<<<<<<< HEAD
-=======
-    // <div class="col-12 grid-margin" style={{width:"70%",alignItems:"center",height:"30%",margin:"3% 10% 20% 15%"}}>
->>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
     <div class="card">
     <div class="card-body">
       <h4 class="card-title">Edit User</h4>
@@ -197,7 +193,7 @@ function EditUser() {
 <button type="button" class="btn btn-primary btn-rounded btn-fw" onClick={updateUser}  > Primary </button>
       </form>
     </div>
-  // </div>
+   </div>
   )
 }
 

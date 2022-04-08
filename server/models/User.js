@@ -12,14 +12,16 @@ module.exports=(sequelize,Datatype)=>{
             type:Datatype.STRING,
             allowNull:true
         },
-        // resetToken:{
-        //     type:Datatype.STRING
+        resetToken:{
+            type:Datatype.STRING,
+            allowNull:true
         
-        // },
-        // expireToken:{
-        //     type:Datatype.DATE
+        },
+        expireToken:{
+            type:Datatype.DATE,
+            allowNull:true
           
-        // }
+        }
        
         
 

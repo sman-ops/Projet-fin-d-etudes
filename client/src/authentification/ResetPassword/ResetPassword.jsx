@@ -7,8 +7,17 @@ function ResetPassword() {
     const [password,setPassword] = useState("")
     const {token} = useParams()
 
-    const PostData = ()=>{
-        fetch("http://localhost:3001/new-password",{
+
+    //debugger;
+
+    const handleChange = (e) => {
+        setPassword(e.target.value)
+    } 
+
+    const PostData =async (e)=>{
+        e.preventDefault();
+      
+     await   fetch("http://localhost:3001/new-password",{
             method:"post",
             headers:{
                 "Content-Type":"application/json"
@@ -16,11 +25,13 @@ function ResetPassword() {
             body:JSON.stringify({
                 password,
                 token
+               
             })
-        }).then(res=>res.json())
+        }).then(res=> { return res.json() })
         .then(data=>{
             console.log(data)
            if(data.error){
+            
 			toast.error(data.error,{
 				theme: "colored"
 			  })
@@ -30,12 +41,15 @@ function ResetPassword() {
                toast.success(data.message,{
 				   theme:"colored"
 			   })
-               navigate('/')
+              navigate('/')
            }
         }).catch(err=>{
+            
+            
             console.log(err)
         })
     }
+    console.log("Test")
   return (
     <div className={styles.signup_container}>
 			<div className={styles.signup_form_container}>
@@ -52,7 +66,7 @@ function ResetPassword() {
 							placeholder="New Password"
 						
 							
-							onChange={(e)=>setPassword(e.target.value)}
+							onChange={handleChange}
 							className={styles.input}
 						/>
                         
@@ -60,7 +74,7 @@ function ResetPassword() {
 						
 					
                         
-						<button type="submit" className={styles.green_btn}  onClick={PostData()} >
+						<button type="submit" className={styles.green_btn}  onClick={PostData} >
 							Update Password
 						</button>
                         

@@ -7,30 +7,34 @@ function ForgotPassword() {
     const [email,setEmail] = useState("")
 
 	
-	const Resetpassword = ()=>{
+	const resetpass = (e)=>{
+		e.preventDefault()
 	
 	
 	
-     if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
-			toast.error("email invalid ",{
-				transition:Zoom,
-				theme:"colored"
+    //   if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+	//  		toast.error("email invalid ",{
+	// 			transition:Zoom,
+	//  			theme:"colored"
 				
 				
-			} )
-        return
-        }
-    fetch('http://localhost:3001/reset-password',{
+	// 		} )
+			
+    //       }
+   fetch("http://localhost:3001/reset-password",{
             method:"post",
             headers:{
                 "Content-Type":"application/json"
             },
             body:JSON.stringify({
-                email
+                email 
             })
         }).then(res=>res.json())
+	
         .then(data=>{
+			console.log(data)
            if(data.error){
+			   
 			toast.error(data.error,{
 				theme: "colored"
 			  })
@@ -43,6 +47,7 @@ function ForgotPassword() {
 			navigate('/')
           
            }
+		  
         }).catch(err=>{
             console.log(err)
         })
@@ -61,14 +66,12 @@ function ForgotPassword() {
 							type="text"
 							placeholder="Email"
 							name="Email"
-							value={email}
 							onChange={(e)=>setEmail(e.target.value)}
 							className={styles.input}
 						/>
 			
-						<button type="submit" className={styles.green_btn}  onClick={Resetpassword()} >
-							Reset Password
-						</button>
+						<button type="submit" className={styles.green_btn}  onClick={resetpass} >
+							Reset Passwood</button>
                         
 					</form>
 				</div>

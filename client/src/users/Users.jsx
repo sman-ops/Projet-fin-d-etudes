@@ -25,7 +25,6 @@ function Users() {
       getUser();
       
     },[])
-<<<<<<< HEAD
 
     const onDeleteUser  =async (id) =>{
       if(window.confirm("Are you sure that  you wanted to delete that user ")) {
@@ -48,18 +47,6 @@ function Users() {
               <TextField id="standard-basic" label="Search" variant="standard" style={{textAlign:"center"}} />
               <br/>
         
-=======
-  return (
-
-          <div class="card">
-
-            <div class="card-body px-0 overflow-auto">
-              {/* <input type="text" placeholder='search...' onChange={event=> {setSearchTerm(event.target.value)}} /> */}
-
-              <TextField id="standard-basic" label="Search" variant="standard" style={{textAlign:"center"}} />
-              <br/>
-        
->>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
               <h4 class="card-title pl-4">All Users</h4>
               <div class="table-responsive">
                 <table class="table">
@@ -98,22 +85,12 @@ function Users() {
                           <button style={{width:'50px' ,color:"red"}}>Delete</button> */}
 
                           <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-<<<<<<< HEAD
                          <Link to={`/edituser/${value.id}`}><a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons" style={{color:"orange"}}>&#xE254;</i></a></Link> 
                           <a href="#myModal" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons" onClick={()=> onDeleteUser(value.id)} style={{color:"#ff4500"}}>&#xE872;</i></a>
                                                 {/* <Link class=" mr-2" to="/">
                           <i class="fa fa-edit" aria-hidden="true" style={{color:"orange",fontSize:"30px"}}></i> 
                           </Link>  */}
 
-=======
-
-                          <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons" style={{color:"orange"}}>&#xE254;</i></a>
-                          <a href="#myModal" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"  style={{color:"#ff4500"}}>&#xE872;</i></a>
-                                                {/* <Link class=" mr-2" to="/">
-                          <i class="fa fa-edit" aria-hidden="true" style={{color:"orange",fontSize:"30px"}}></i> 
-                          </Link>  */}
-
->>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
                         </td>
                       </tr> 
                     ); })}
@@ -138,10 +115,6 @@ function Users() {
                 <i class="mdi mdi-chevron-right"></i></a>
               </div>
           </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 1493e7aabaa5b1612be2e0f83104d9898581c8b8
       
         
   )
