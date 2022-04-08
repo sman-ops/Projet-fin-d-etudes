@@ -57,7 +57,12 @@ function App() {
           />
           <Route path="/ex" element={<Exemple/>} />
           <Route path="/template" element={<Template/>} />
-          <Route path="/profile" element={<Profile/>} />
+          <Route path="/profile" element={
+            <Template> 
+               <Profile/>
+            </Template>
+         } 
+         />
           <Route path="/edituser/:id" 
             element={
               <Template>

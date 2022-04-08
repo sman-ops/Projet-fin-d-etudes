@@ -2,10 +2,16 @@ import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 
 
+
+
+
 function Template({children}) {
 const navigate=  useNavigate();
+const users = JSON.parse(localStorage.getItem("user"))
 
-const user=localStorage.getItem("user")
+
+
+// const user=localStorage.getItem("user")
   return (
     <div className="container-scroller">
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
@@ -23,10 +29,10 @@ const user=localStorage.getItem("user")
          
             </div>
             <div className="nav-profile-text d-flex flex-column pr-3">
-              <span className="font-weight-medium mb-2">{user.username}</span>
-              <span className="font-weight-normal">$8,753.00</span>
+              <span className="font-weight-medium mb-2">{users.username}</span>
+              <span className="font-weight-normal">{users.username}</span>
             </div>
-            <span className="badge badge-danger text-white ml-3 rounded">3</span>
+           
           </a>
         </li>
         <li className="nav-item">
@@ -223,10 +229,10 @@ const user=localStorage.getItem("user")
             <li className="nav-item nav-profile dropdown border-0">
               <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
                 <img className="nav-profile-img mr-2" alt="" src="assets/images/faces/face1.jpg" />
-                <span className="profile-name">Henry Klein</span>
+                <span className="profile-name">{users.username}</span>
               </a>
               <div className="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" href="/profile">
                   <i className="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
                 <a className="dropdown-item" href="/">
                   <i className="mdi mdi-logout mr-2 text-primary"></i><button onClick={()=>{

@@ -4,6 +4,7 @@ import './Profile.css'
 
 
 function Profile() {
+    const user=JSON.parse(localStorage.getItem("user"))
   return (
     <div class="container">
     <div class="row">
@@ -14,7 +15,7 @@ function Profile() {
                    <div class="user-box">
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="user avatar" />
                   </div>
-                  <h5 class="mb-1 text-white">Jhon Doe</h5>
+                  <h5 class="mb-1 text-white">{user.username}</h5>
                   <h6 class="text-light">UI/UX Engineer</h6>
                  </div>
                   <div class="card-body">
@@ -33,7 +34,7 @@ function Profile() {
                         <i class="fa fa-envelope"></i>
                       </div>
                       <div class="list-details">
-                        <span>info@example.com</span>
+                        <span>{user.email}</span>
                         <small>Email Address</small>
                       </div>
                     </li>
