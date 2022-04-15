@@ -53,7 +53,10 @@ function Users() {
                   <thead className="bg-light">
                     <tr>
                       <th>No</th>
-                      <th>username</th>
+                      <th>Grade</th>
+                      <th>Picture</th>
+                      <th>Firstname</th>
+                      <th>Lastname</th>
                       <th>Email</th>
                       <th>Actions</th>
                     </tr>
@@ -69,16 +72,41 @@ function Users() {
                     return (
                       <tr key={key}>
                           <th>{key+1}</th>
-                        <td>
+                          <td>
                           <div className="d-flex align-items-center">
-                            <img src="assets/images/faces/face1.jpg" alt="image" />
                             <div className="table-user-name ml-3">
-                              <p className="mb-0 font-weight-medium"> {value.username} </p>
+                              <p className="mb-0 font-weight-medium"> {value.grade} </p>
                           
                             </div>
                           </div>
                         </td>
-                        <td>{value.email}</td>
+                          <td>
+                          <img src={value.picture} alt="img" />
+                          </td>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            <div className="table-user-name ml-3">
+                              <p className="mb-0 font-weight-medium"> {value.firstname} </p>
+                          
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                             <div className="d-flex align-items-center">
+                            <div className="table-user-name ml-3">
+                            <p className="mb-0 font-weight-medium"> {value.lastname} </p>
+                          
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                             <div className="d-flex align-items-center">
+                            <div className="table-user-name ml-3">
+                            <p className="mb-0 font-weight-medium"> {value.email} </p>
+                          
+                            </div>
+                          </div>
+                        </td>
                         <td>
                             
                           {/* <button style={{width:'50px' ,color:"green"}}>Edit</button>

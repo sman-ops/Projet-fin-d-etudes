@@ -3,12 +3,13 @@ import styles from "./styles.module.css";
 import {Link} from "react-router-dom"
 // import axios from 'axios'
 import {useNavigate} from 'react-router-dom';
-import M from 'materialize-css'
+
 import { toast,Zoom } from 'react-toastify';
 
 function Register() {
 	const navigate=useNavigate();
-	const [username, setUsername] = useState("");
+	const [firstname, setFirstName] = useState("");
+	const [lastname,setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -38,7 +39,8 @@ function Register() {
                 "Content-Type":"application/json"
             },
             body:JSON.stringify({
-                username,
+                firstname,
+				lastname,
 				email,
                 password
                 
@@ -80,10 +82,21 @@ function Register() {
 						<h1>Create Account</h1>
 						<input
 							type="text"
-							placeholder="UserName"
-							name="UserName"
+							placeholder="Firstname"
+							name="Firstname"
 							onChange={(event) => {
-								setUsername(event.target.value);
+								setFirstName(event.target.value);
+							  }}
+							
+					
+							className={styles.input}
+						/>
+							<input
+							type="text"
+							placeholder="Lastname"
+							name="Lastname"
+							onChange={(event) => {
+								setLastName(event.target.value);
 							  }}
 							
 					

@@ -1,5 +1,6 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
 
 
@@ -7,9 +8,34 @@ import {Link, useNavigate} from 'react-router-dom'
 
 function Template({children}) {
 const navigate=  useNavigate();
-const users = JSON.parse(localStorage.getItem("user"))
+const user=JSON.parse(localStorage.getItem("user"))
+
+const {id} = user
+
+        const [firstname,setFirstName] = useState("")
+        const [lastname, setLastName] = useState("")
+        const [email,setEmail] = useState("")
+        const [phone,setPhone] = useState("")
+        const [grade,setGrade] = useState("")
+        const [image,setImage] = useState("")
 
 
+
+
+        useEffect(() => {
+            const getSingleUser = async () => {
+                const {data} = await axios.get(`http://localhost:3001/user/${id}`)
+                setFirstName(data.firstname)
+                setLastName(data.lastname)
+                setEmail(data.email)
+                setPhone(data.telephone)
+                setGrade(data.grade)
+                setImage(data.picture)
+           
+            }
+      
+            getSingleUser()
+        },[id])
 
 // const user=localStorage.getItem("user")
   return (
@@ -24,13 +50,13 @@ const users = JSON.parse(localStorage.getItem("user"))
         <li className="nav-item nav-profile">
           <a href="#" className="nav-link">
             <div className="nav-profile-image">
-              <img src="assets/images/faces/face1.jpg" alt="profile" />
+              <img src={image} alt="profile" />
               <span className="login-status online"></span>
          
             </div>
             <div className="nav-profile-text d-flex flex-column pr-3">
-              <span className="font-weight-medium mb-2">{users.username}</span>
-              <span className="font-weight-normal">{users.username}</span>
+              <span className="font-weight-medium mb-2">{firstname}</span>
+              <span className="font-weight-normal">{lastname}</span>
             </div>
            
           </a>
@@ -228,8 +254,8 @@ const users = JSON.parse(localStorage.getItem("user"))
             </li>
             <li className="nav-item nav-profile dropdown border-0">
               <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                <img className="nav-profile-img mr-2" alt="" src="assets/images/faces/face1.jpg" />
-                <span className="profile-name">{users.username}</span>
+                <img className="nav-profile-img mr-2" alt="" src={image} />
+                <span className="profile-name">{firstname}</span>
               </a>
               <div className="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
                 <a className="dropdown-item" href="/profile">

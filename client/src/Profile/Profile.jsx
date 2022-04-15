@@ -1,10 +1,89 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React,{useState,useEffect} from 'react'
+import { useNavigate} from 'react-router-dom'
 import './Profile.css'
-
+import axios from 'axios'
+import { toast } from 'react-toastify';
 
 function Profile() {
-    const user=JSON.parse(localStorage.getItem("user"))
+
+const navigate= useNavigate()
+const user=JSON.parse(localStorage.getItem("user"))
+
+const {id} = user
+
+        const [firstname,setFirstName] = useState("")
+        const [lastname, setLastName] = useState("")
+        const [email,setEmail] = useState("")
+        const [phone,setPhone] = useState("")
+        const [grade,setGrade] = useState("")
+        const [image,setImage] = useState("")
+        const [url,setUrl] = useState("")
+
+
+
+        useEffect(() => {
+            const getSingleUser = async () => {
+                const {data} = await axios.get(`http://localhost:3001/user/${id}`)
+                setFirstName(data.firstname)
+                setLastName(data.lastname)
+                setEmail(data.email)
+                setPhone(data.telephone)
+                setGrade(data.grade)
+                setImage(data.picture)
+           
+            }
+      
+            getSingleUser()
+        },[id])
+      
+     const updateUser =  (e) => {
+
+             e.preventDefault()
+             uploadimage()
+            // update by put request
+                const data = {
+                firstname:firstname,
+                lastname:lastname,
+                email:email,
+                telephone:phone,
+                grade:grade,
+                pic:url
+        
+            }
+             axios.put(`http://localhost:3001/user/${id}`, data)
+             .then(response=>{
+               
+               if(response.status===200){
+                 console.log(response)
+                 toast.success(response.data.message)
+               }
+           
+             })
+            
+              
+        }
+  
+        const uploadimage = ()=>{
+            const data = new FormData()
+            data.append("file",image)
+            data.append("upload_preset","insta-clone")
+            data.append("cloud_name","deriv1tpa")
+            fetch("https://api.cloudinary.com/v1_1/deriv1tpa/image/upload",{
+                method:"post",
+                body:data
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                setUrl(data.url)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+    
+   
+        
+    }      
+
   return (
     <div class="container">
     <div class="row">
@@ -13,10 +92,10 @@ function Profile() {
                 <div class="card">
                   <div class="card-body text-center bg-primary rounded-top">
                    <div class="user-box">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="user avatar" />
+                    <img src={image} alt="user avatar" />
                   </div>
-                  <h5 class="mb-1 text-white">{user.username}</h5>
-                  <h6 class="text-light">UI/UX Engineer</h6>
+                  <h5 class="mb-1 text-white">{firstname}</h5>
+                  <h6 class="text-light">{grade}</h6>
                  </div>
                   <div class="card-body">
                     <ul class="list-group shadow-none">
@@ -25,7 +104,7 @@ function Profile() {
                         <i class="fa fa-phone-square"></i>
                       </div>
                       <div class="list-details">
-                        <span>9910XXXXXX</span>
+                        <span>{phone}</span>
                         <small>Mobile Number</small>
                       </div>
                     </li>
@@ -34,7 +113,7 @@ function Profile() {
                         <i class="fa fa-envelope"></i>
                       </div>
                       <div class="list-details">
-                        <span>{user.email}</span>
+                        <span>{email}</span>
                         <small>Email Address</small>
                       </div>
                     </li>
@@ -73,10 +152,7 @@ function Profile() {
                                 <p>
                                     Web Designer, UI/UX Engineer
                                 </p>
-                                <h6>Hobbies</h6>
-                                <p>
-                                    Indie music, skiing and hiking. I love the great outdoors.
-                                </p>
+                               
                             </div>
                            
                            
@@ -93,60 +169,33 @@ function Profile() {
                           <span><strong>Info!</strong> Lorem Ipsum is simply dummy text.</span>
                         </div>
                       </div>
-                        <table class="table table-hover table-striped">
-                            <tbody>                                    
-                                <tr>
-                                    <td>
-                                       <span class="float-right font-weight-bold">3 hrs ago</span> Here is your a link to the latest summary report from the..
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                       <span class="float-right font-weight-bold">Yesterday</span> There has been a request on your account since that was..
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                       <span class="float-right font-weight-bold">9/10</span> Porttitor vitae ultrices quis, dapibus id dolor. Morbi venenatis lacinia rhoncus. 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                       <span class="float-right font-weight-bold">9/4</span> Vestibulum tincidunt ullamcorper eros eget luctus. 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                       <span class="float-right font-weight-bold">9/4</span> Maxamillion ais the fix for tibulum tincidunt ullamcorper eros. 
-                                    </td>
-                                </tr>
-                            </tbody> 
-                        </table>
+                     
                     </div>
                     <div class="tab-pane" id="edit">
                         <form>
                             <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                                <label class="col-lg-3 col-form-label form-control-label" >First name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text"  />
+                                    <input class="form-control" type="text"  onChange={(e) => setFirstName(e.target.value)} value={firstname} />
+                                </div>
+                            </div>
+                     
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label" >Last name</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text"  onChange={(e) => setLastName(e.target.value)} value={lastname} />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                                <label class="col-lg-3 col-form-label form-control-label" >Email</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text"  />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="email" value="mark@example.com" />
+                                    <input class="form-control" type="email"  onChange={(e) => setEmail(e.target.value)} value={email} />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Change profile</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="file" />
+                                    <input class="form-control" type="file" onChange={(e)=>setImage(e.target.files[0])} />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -158,7 +207,7 @@ function Profile() {
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Address</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="" placeholder="Street" />
+                                    <input class="form-control" type="text"  onChange={(e) => setPhone(e.target.value)}  value={phone} placeholder="Street" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -174,7 +223,7 @@ function Profile() {
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Username</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="jhonsanmark"/>
+                                    <input class="form-control" type="text"  onChange={(e) => setGrade(e.target.value)} value={grade}/>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -192,8 +241,9 @@ function Profile() {
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label"></label>
                                 <div class="col-lg-9">
-                                    <input type="reset" class="btn btn-secondary" value="Cancel" />
-                                    <input type="button" class="btn btn-primary" value="Save Changes" />
+                                <button type="button" className="btn btn-primary btn-rounded btn-fw" style={{width:"20px"}} onClick={updateUser}  > Save Change </button>
+                                <button type="button" className="btn btn-primary btn-rounded btn-fw" style={{width:"20px"}}  > Annuler</button>
+                            
                                 </div>
                             </div>
                         </form>

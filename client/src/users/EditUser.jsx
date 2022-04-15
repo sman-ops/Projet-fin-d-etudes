@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {useParams,useNavigate} from 'react-router-dom'
 import axios from 'axios'
-import { toast,Zoom } from 'react-toastify';
+import { toast } from 'react-toastify';
 function EditUser() {
 
   const { id } = useParams()
@@ -9,20 +9,26 @@ function EditUser() {
   
 
 
-  const [username, setUsername] = useState("")
+  const [firstname,setFirstName] = useState("")
+  const [lastname, setLastName] = useState("")
   const [email,setEmail] = useState("")
+  const [phone,setPhone] = useState("")
+  const [grade,setGrade] = useState("")
 
  
 
   useEffect(() => {
       const getSingleUser = async () => {
           const {data} = await axios.get(`http://localhost:3001/user/${id}`)
-          setUsername(data.username)
+          setFirstName(data.firstname)
+          setLastName(data.lastname)
           setEmail(data.email)
+          setPhone(data.telephone)
+          setGrade(data.grade)
      
       }
 
-      getSingleUser()
+         getSingleUser()
   },[id])
 
   const updateUser =  (e) => {
@@ -30,8 +36,12 @@ function EditUser() {
     e.preventDefault()
     // update by put request
     const data = {
-        username:username,
-        email:email,  
+        firstname:firstname,
+        lastname:lastname,
+        email:email,
+        telephone:phone,
+        grade:grade
+
     }
      axios.put(`http://localhost:3001/user/${id}`, data)
      .then(response=>{
@@ -58,14 +68,26 @@ function EditUser() {
         <div className="row">
           <div className="col-md-6">
             <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Username</label>
+              <label className="col-sm-3 col-form-label">FirstName</label>
               <div className="col-sm-9">
-                <input type="text" className="form-control" value={username}
-                            onChange={(e) => setUsername(e.target.value)} />
+                <input type="text" className="form-control" value={firstname}
+                            onChange={(e) => setFirstName(e.target.value)} />
               </div>
             </div>
           </div>
           <div className="col-md-6">
+            <div className="form-group row">
+              <label className="col-sm-3 col-form-label">LastName</label>
+              <div className="col-sm-9">
+                <input type="text" className="form-control" value={lastname}
+                            onChange={(e) => setLastName(e.target.value)} />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+         
+        <div className="col-md-6">
             <div className="form-group row">
               <label className="col-sm-3 col-form-label">email</label>
               <div className="col-sm-9">
@@ -74,6 +96,25 @@ function EditUser() {
               </div>
             </div>
           </div>
+          <div className="col-md-6">
+            <div className="form-group row">
+              <label className="col-sm-3 col-form-label">Phone</label>
+              <div className="col-sm-9">
+                <input type="text" className="form-control" value={phone}
+                            onChange={(e) => setPhone(e.target.value)} />
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group row">
+              <label className="col-sm-3 col-form-label">Grade</label>
+              <div className="col-sm-9">
+                <input type="text" className="form-control" value={grade}
+                            onChange={(e) => setGrade(e.target.value)} />
+              </div>
+            </div>
+          </div>
+         
         </div>
         {/* <div className="row">
           <div className="col-md-6">

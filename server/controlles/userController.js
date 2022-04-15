@@ -39,8 +39,8 @@ let transporter = nodemailer.createTransport({
 
 
 exports.register = (req, res, next) => {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
+    const { firstname,lastname, email, password } = req.body;
+    if (!firstname ||!lastname|| !email || !password) {
         return res.status(422).json({ error: "please add all the fields" })
     }
 
@@ -51,7 +51,7 @@ exports.register = (req, res, next) => {
         bcrypt.hash(password, 10).then((hashedPassword) => {
 
             db.User.create({
-                username, email, password: hashedPassword
+                firstname,lastname, email, password: hashedPassword
             }).then(user => {
                 transporter.sendMail({
                     to: user.email,
@@ -88,11 +88,11 @@ exports.login = (req, res, next) => {
 
         bcrypt.compare(password, savedUser.password).then(doMatch => {
             if (doMatch) {
-                const token = jwt.sign({ id: savedUser.id, username: savedUser.username, role: "userrole" }, PrivateKey, {
+                const token = jwt.sign({ id: savedUser.id, firstname: savedUser.firstname, role: "userrole" }, PrivateKey, {
                     expiresIn: "2h"
                 })
-                const { id, username, email } = savedUser
-                res.json({ token, user: { id, username, email } })
+                const { id, firstname,lastname, email } = savedUser
+                res.json({ token, user: { id, firstname,lastname, email } })
             } else {
                 return res.status(422).json({ error: "Invalid Email or password" })
             }
@@ -103,6 +103,7 @@ exports.login = (req, res, next) => {
         console.log(err)
     })
 }
+
 
 
 exports.getUser = (req, res, next) => {
@@ -123,9 +124,14 @@ exports.getAllUsers = (req, res, next) => {
 
 exports.update = (req, res, next) => {
     db.User.update({
-        username: req.body.username,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         email: req.body.email,
-        password: req.body.password
+        telephone: req.body.telephone,
+        grade: req.body.grade,
+        password: req.body.password,
+        picture : req.body.pic
+
     }, { where: { id: req.params.id } })
         .then((response) => res.status(200).json({ message: "Updated successfly" }))
         .catch((err) => res.status(400).json({ error: "updated with echec" }))
@@ -242,3 +248,5 @@ exports.sendEmail = (req, res, next) => {
 
         });
 }
+
+
