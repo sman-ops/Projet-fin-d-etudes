@@ -4,6 +4,8 @@ const cors=require('cors')
 const db=require('./models')
 const path = require("path");
 const userRouters=require('./routers/user-routes')
+const eventRouters=require('./routers/event-routes')
+
 
 // permet bash  net3amlo mt3a data eli jayetna mn form
 app.use(express.urlencoded({extended:true}));
@@ -13,6 +15,7 @@ app.use(cors());
 
 app.use('/',userRouters);
 
+app.use('/',eventRouters)
 app.use("/uploads/images",express.static(path.join("uploads", "images")));
 
 

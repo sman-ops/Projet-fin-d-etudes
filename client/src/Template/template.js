@@ -106,6 +106,12 @@ const {id} = user
           </a>
         </li>
         <li className="nav-item">
+          <a className="nav-link" href="pages/charts/chartjs.html">
+            <i className="mdi mdi-chart-bar menu-icon"></i>
+            <Link to="/event"><span className="menu-title"> Event</span></Link>
+          </a>
+        </li>
+        <li className="nav-item">
           <a className="nav-link" href="pages/tables/basic-table.html">
             <i className="mdi mdi-table-large menu-icon"></i>
             <span className="menu-title">Tables</span>

@@ -19,6 +19,7 @@ import EditUser from './users/EditUser';
 import AddUser from './users/AddUser';
 import UpdatePass from './authentification/UpdatePass';
 import {AuthContext} from './helpers/AuthContext'
+import Event from './Events/pages/event'
 
 
 
@@ -77,6 +78,13 @@ function App() {
               </Template>
             }
           />
+            <Route path="/event" element={
+               <Template>
+                  <Event/>
+                </Template>
+               }        
+           />
+            
           <Route path="/updatepass" element={<UpdatePass/>} />
       
     </> ) : <>
@@ -84,6 +92,7 @@ function App() {
           
           <Route path="/" element={<Login/>} />
           <Route path="/Register" element={<Register/>} />
+        
           <Route path="/forgotpass" element={<ForgotPassword/>} />
           <Route path="/resetpass/:token" element={<ResetPassword/>} />
           

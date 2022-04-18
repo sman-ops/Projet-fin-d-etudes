@@ -60,6 +60,12 @@ module.exports=(sequelize,Datatype)=>{
                 onDelete:"cascade"
             })
         }
+        
+        User.associate=models=>{
+            User.hasMany(models.Events,{
+                onDelete:"cascade"
+            })
+        }
 
     return User
 }
