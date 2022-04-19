@@ -2,8 +2,9 @@ import React,{useState,useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
 import './Profile.css'
 import axios from 'axios'
+import Grid from '@mui/material/Grid'
 import { toast } from 'react-toastify';
-
+import TextField from '@mui/material/TextField'
 function Profile() {
 
 const navigate= useNavigate()
@@ -201,7 +202,9 @@ const {id} = user
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Website</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="url" value="" />
+                                <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Username' placeholder='johnDoe' defaultValue='johnDoe' />
+          </Grid>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -243,7 +246,8 @@ const {id} = user
                                 <div class="col-lg-9">
                                 <button type="button" className="btn btn-primary btn-rounded btn-fw" style={{width:"20px"}} onClick={updateUser}  > Save Change </button>
                                 <button type="button" className="btn btn-primary btn-rounded btn-fw" style={{width:"20px"}}  > Annuler</button>
-                            
+                   
+           
                                 </div>
                             </div>
                         </form>

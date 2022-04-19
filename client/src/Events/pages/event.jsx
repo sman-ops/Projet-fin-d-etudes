@@ -5,8 +5,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
 import moment from 'moment' ;
 import { Row, Col,Modal ,Card,Tag} from 'antd';
+
 // function 
-import { createEvents,listEvent, handleCurrentMonth } from '../functions/createEvent'
+import { createEvents,listEvent, handleCurrentMonth , updateEvent} from '../functions/createEvent'
 
 import './event.css'
 function Event() {
@@ -77,6 +78,25 @@ function Event() {
         })
         
     }
+
+    const handleChange = (info)=>{
+      // console.log((info.event.id))
+      // console.log(info.event.startStr,info.event.endStr)
+      const values = {
+        id: info.event.id,
+        start: info.event.startStr,
+        end : info.event.endStr
+      }
+      updateEvent(values)
+      .then(res=>{
+        console.log(res)
+      }).catch(err=>{
+        console.log(err)
+      })
+
+    }
+
+
     const onChangeTitle = (e) =>{
         console.log(e.target.value)
         setValues({...values,title: e.target.value})
@@ -178,7 +198,8 @@ function Event() {
                 selectable={true}
                 select={handleSelect}
                 datesSet={currentMonth}
-            
+                editable={true}
+                eventChange={handleChange}
            
                 />
                             <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>

@@ -2,6 +2,26 @@ import React,{useState,useEffect} from 'react'
 import {useParams,useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify';
+
+
+
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import MenuItem from '@mui/material/MenuItem'
+import TextField from '@mui/material/TextField'
+import CardHeader from '@mui/material/CardHeader'
+import InputLabel from '@mui/material/InputLabel'
+
+import Typography from '@mui/material/Typography'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
+import FormControl from '@mui/material/FormControl'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import Select from '@mui/material/Select'
+
 function EditUser() {
 
   const { id } = useParams()
@@ -60,181 +80,57 @@ function EditUser() {
 
 }
   return (
-    <div className="card">
-    <div className="card-body">
-      <h4 className="card-title">Edit User</h4>
-      <form className="form-sample">
-        <p className="card-description">Personal info</p>
-        <div className="row">
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">FirstName</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" value={firstname}
+    
+    
+    <Card style={{width:"80%",marginTop:"3%",marginLeft:"10%"}}>
+     <CardHeader title='Edit User' titleTypographyProps={{ variant: 'h6' }} />< CreditScoreIcon/> 
+    <Divider sx={{ margin: 0 }} />
+    <form onSubmit={e => e.preventDefault()}>
+      <CardContent>
+        <Grid container spacing={5}>
+          <Grid item xs={12}>
+            <Typography variant='body2' sx={{ fontWeight: 600 }}>
+              1. Account Details
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Firstname' placeholder='Alberto' value={firstname}
                             onChange={(e) => setFirstName(e.target.value)} />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">LastName</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" value={lastname}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth type='email' label='Lastname' placeholder='Jhon' value={lastname}
                             onChange={(e) => setLastName(e.target.value)} />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-         
-        <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">email</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" value={email}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com'  value={email}
                             onChange={(e) => setEmail(e.target.value)} />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Phone</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" value={phone}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth type='text' label='Phone' placeholder='3232323' value={phone}
                             onChange={(e) => setPhone(e.target.value)} />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Grade</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" value={grade}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth type='text' label='Grade' placeholder='Stagiaire,inge...' value={grade}
                             onChange={(e) => setGrade(e.target.value)} />
-              </div>
-            </div>
-          </div>
-         
-        </div>
-        {/* <div className="row">
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Gender</label>
-              <div className="col-sm-9">
-                <select className="form-control">
-                  <option>Male</option>
-                  <option>Female</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Date of Birth</label>
-              <div className="col-sm-9">
-                <input className="form-control" placeholder="dd/mm/yyyy" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Category</label>
-              <div className="col-sm-9">
-                <select className="form-control">
-                  <option>Category1</option>
-                  <option>Category2</option>
-                  <option>Category3</option>
-                  <option>Category4</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Membership</label>
-              <div className="col-sm-4">
-                <div className="form-check">
-                  <label className="form-check-label">
-                    <input type="radio" className="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked=""/> Free <i className="input-helper"></i></label>
-                </div>
-              </div>
-              <div className="col-sm-5">
-                <div className="form-check">
-                  <label className="form-check-label">
-                    <input type="radio" className="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2" /> Professional <i className="input-helper"></i></label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p className="card-description">Address</p>
-        <div className="row">
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Address 1</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control"/>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">State</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Address 2</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Postcode</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">City</label>
-              <div className="col-sm-9">
-                <input type="text" className="form-control" />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group row">
-              <label className="col-sm-3 col-form-label">Country</label>
-              <div className="col-sm-9">
-                <select className="form-control">
-                  <option>America</option>
-                  <option>Italy</option>
-                  <option>Russia</option>
-                  <option>Britain</option>
-                </select>
-              </div>
-              <button type="button" className="btn btn-primary btn-rounded btn-fw"> Primary </button>
-            </div>
-          </div>
-        </div> */}
-
-<button type="button" className="btn btn-primary btn-rounded btn-fw" onClick={updateUser}  > Primary </button>
-      </form>
-    </div>
-   </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth type='email' label='Phone' placeholder='2222222' />
+          </Grid>
+          
+          </Grid>
+          </CardContent>
+        
+        <Divider sx={{ margin: 0 }} />
+        <CardActions>
+          <Button style={{width:"25%",height:"50px"}} type='submit' sx={{ mr: 2 }} variant='contained' onClick={updateUser} >
+            Save change
+          </Button>
+        
+        </CardActions>
+        </form>
+    </Card>
+        
+   
   )
 }
 

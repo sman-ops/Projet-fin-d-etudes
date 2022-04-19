@@ -23,6 +23,15 @@
     cursor:move;
 }
 
+.ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger){
+width:40%,
+
+
+}
+.button:not(:disabled), [type="button"]:not(:disabled){
+    width:40%
+}
+
 
 
 

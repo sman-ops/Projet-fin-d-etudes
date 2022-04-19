@@ -1,148 +1,111 @@
-import React, { useEffect,useState } from 'react'
+import { useState } from 'react'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import { styled } from '@mui/material/styles'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableContainer from '@mui/material/TableContainer'
+import TableRow from '@mui/material/TableRow'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
+import React, { useEffect } from 'react'
 import axios from 'axios';
-import { color } from '@mui/system';
 import {Link} from 'react-router-dom'
 import { toast,Zoom } from 'react-toastify';
 // imports
 
 import {TextField} from '@material-ui/core'
-// render
-
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/DeleteSweep';
 
 function Users() {
 
-    const [users,setUsers]=  useState([]);
-    const [searchTerm,setSearchTerm]=useState("")
-
-    const getUser =async ()=> {
-     await axios.get("http://localhost:3001/users").then((response)=>{
-        // console.log(response.data)
-        setUsers(response.data)
-
-      })
-   }
-    useEffect(()=>{
-      getUser();
-      
-    },[])
-
-    const onDeleteUser  =async (id) =>{
-      if(window.confirm("Are you sure that  you wanted to delete that user ")) {
-        const response = await axios.delete(`http://localhost:3001/user/${id}`)
-        if(response.status===200){
-          toast.success("deleted success"  )
-          getUser()
-        }
-        
-      }
-
-
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      color: theme.palette.common.black,
+      backgroundColor: theme.palette.success.light
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14
     }
+  }))
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover
+    },
+  
+    // hide last border
+    '&:last-of-type td, &:last-of-type th': {
+      border: 0
+    }
+  }))
+  
+ 
+  
+  const [users,setUsers]=  useState([]);
+  const [searchTerm,setSearchTerm]=useState("")
+
+  const getUser =async ()=> {
+   await axios.get("http://localhost:3001/users").then((response)=>{
+      // console.log(response.data)
+      setUsers(response.data)
+
+    })
+ }
+  useEffect(()=>{
+    getUser();
+    
+  },[])
+
+  const onDeleteUser  =async (id) =>{
+    if(window.confirm("Are you sure that  you wanted to delete that user ")) {
+      const response = await axios.delete(`http://localhost:3001/user/${id}`)
+      if(response.status===200){
+        toast.success("deleted success"  )
+        getUser()
+      }
+      
+    }
+
+
+  }
   return (
-    <div className="card">
-
-            <div className="card-body px-0 overflow-auto">
-              {/* <input type="text" placeholder='search...' onChange={event=> {setSearchTerm(event.target.value)}} /> */}
-
-              <TextField id="standard-basic" label="Search" variant="standard" style={{textAlign:"center"}} />
-              <br/>
-        
-              <h4 className="card-title pl-4">All Users</h4>
-              <div className="table-responsive">
-                <table className="table">
-                  <thead className="bg-light">
-                    <tr>
-                      <th>No</th>
-                      <th>Grade</th>
-                      <th>Picture</th>
-                      <th>Firstname</th>
-                      <th>Lastname</th>
-                      <th>Email</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.filter((val)=>{
-                        if (searchTerm==""){
-                            return val
-                        } else if(val.username.toLowerCase().includes(searchTerm.toLocaleLowerCase())){
-                            return val
-                        }
-                    }).map((value,key)=>{
-                    return (
-                      <tr key={key}>
-                          <th>{key+1}</th>
-                          <td>
-                          <div className="d-flex align-items-center">
-                            <div className="table-user-name ml-3">
-                              <p className="mb-0 font-weight-medium"> {value.grade} </p>
-                          
-                            </div>
-                          </div>
-                        </td>
-                          <td>
-                          <img src={value.picture} alt="img" />
-                          </td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <div className="table-user-name ml-3">
-                              <p className="mb-0 font-weight-medium"> {value.firstname} </p>
-                          
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                             <div className="d-flex align-items-center">
-                            <div className="table-user-name ml-3">
-                            <p className="mb-0 font-weight-medium"> {value.lastname} </p>
-                          
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                             <div className="d-flex align-items-center">
-                            <div className="table-user-name ml-3">
-                            <p className="mb-0 font-weight-medium"> {value.email} </p>
-                          
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                            
-                          {/* <button style={{width:'50px' ,color:"green"}}>Edit</button>
-                          <button style={{width:'50px' ,color:"red"}}>Delete</button> */}
-
-                          <a href="#" className="view" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></a>
-                         <Link to={`/edituser/${value.id}`}><a href="#" className="edit" title="Edit" data-toggle="tooltip"><i className="material-icons" style={{color:"orange"}}>&#xE254;</i></a></Link> 
-                          <a href="#myModal" className="delete" title="Delete" data-toggle="tooltip"><i className="material-icons" onClick={()=> onDeleteUser(value.id)} style={{color:"#ff4500"}}>&#xE872;</i></a>
-                                                {/* <Link className=" mr-2" to="/">
-                          <i className="fa fa-edit" aria-hidden="true" style={{color:"orange",fontSize:"30px"}}></i> 
-                          </Link>  */}
-
-                        </td>
-                      </tr> 
-                    ); })}
-                    <nav aria-label="Page navigation example">
-                      <ul className="pagination justify-content-end">
-                        <li className="page-item disabled">
-                          <a className="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li className="page-item"><a className="page-link" href="#">1</a></li>
-                        <li className="page-item"><a className="page-link" href="#">2</a></li>
-                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">Next</a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </tbody>
-                </table>
-              </div>
-              <a className="text-black mt-3 d-block pl-4" href="#">
-                <span className="font-weight-medium h6">View all order history</span>
-                <i className="mdi mdi-chevron-right"></i></a>
-              </div>
-          </div>
+    <TableContainer component={Paper}>
+    <Table sx={{ minWidth: 700 }} aria-label='customized table'>
+      <TableHead>
+        <TableRow>
+         <StyledTableCell>Num</StyledTableCell>
+          <StyledTableCell>firstname</StyledTableCell>
+          <StyledTableCell align='right'>lastname</StyledTableCell>
+          <StyledTableCell align='right'>email</StyledTableCell>
+          <StyledTableCell align='right'>grade</StyledTableCell>
+          <StyledTableCell align='right'>picture</StyledTableCell>
+          <StyledTableCell align='right'>Actions</StyledTableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {users.map((user,key) => (
+          <StyledTableRow key={key}>
+          <StyledTableCell component='th' scope='row'>
+              {key+1}
+            </StyledTableCell>
+            <StyledTableCell component='th' scope='row'>
+              {user.firstname}
+            </StyledTableCell>
+            <StyledTableCell align='right'>{user.lastname}</StyledTableCell>
+            <StyledTableCell align='right'>{user.email}</StyledTableCell>
+            <StyledTableCell align='right'>{user.grade}</StyledTableCell>
+            <StyledTableCell align='right'>{user.picture}</StyledTableCell>
+            <StyledTableCell align='right'>
+            <Link to={`/edituser/${user.id}`}><EditIcon color="primary"/></Link>
+              <DeleteIcon color="secondary" onClick={()=> onDeleteUser(user.id)}/>
+            </StyledTableCell>
+            
+          </StyledTableRow>
+        ))}
+      </TableBody>
+    </Table>
+  </TableContainer>
       
         
   )

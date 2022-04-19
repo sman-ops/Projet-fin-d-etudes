@@ -30,6 +30,25 @@ module.exports.createEvent = async(req,res)=>{
     
     }
 
+    module.exports.updateEvent = async(req,res)=>{
+    
+        try{ 
+             console.log(req.body)
+    const result= await db.Events.update({
+        start: req.body.start,
+        end: req.body.end
+
+    },{where:{id:req.body.id}})
+
+    res.send(result)
+            
+        }catch(err){
+            console.log('server err')
+            res.status(500).send('server err')
+        }
+    
+    }
+
     module.exports.currentMonth = async(req,res)=>{
    
    

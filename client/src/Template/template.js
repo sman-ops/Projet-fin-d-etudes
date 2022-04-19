@@ -2,9 +2,9 @@ import React,{useEffect,useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 
-
-
-
+import TodayIcon from '@mui/icons-material/Today';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 function Template({children}) {
 const navigate=  useNavigate();
@@ -89,13 +89,13 @@ const {id} = user
         </li>
         <li className="nav-item">
           <a className="nav-link" href="pages/icons/mdi.html">
-            <i className="mdi mdi-account-multiple-outline menu-icon"></i>
+          <PeopleOutlineIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/user"><span className="menu-title">Users</span></Link>
           </a>
         </li>
         <li className="nav-item">
           <a className="nav-link" href="pages/forms/basic_elements.html">
-            <i className="mdi mdi-format-list-bulleted menu-icon"></i>
+          <PersonAddIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/adduser"><span className="menu-title"> ADD Users</span></Link>
           </a>
         </li>
@@ -107,14 +107,14 @@ const {id} = user
         </li>
         <li className="nav-item">
           <a className="nav-link" href="pages/charts/chartjs.html">
-            <i className="mdi mdi-chart-bar menu-icon"></i>
+          <TodayIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/event"><span className="menu-title"> Event</span></Link>
           </a>
         </li>
         <li className="nav-item">
           <a className="nav-link" href="pages/tables/basic-table.html">
             <i className="mdi mdi-table-large menu-icon"></i>
-            <span className="menu-title">Tables</span>
+            <Link to="/view"><span className="menu-title"> view user</span></Link>
           </a>
         </li>
         <li className="nav-item">

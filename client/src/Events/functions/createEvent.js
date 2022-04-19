@@ -33,3 +33,15 @@ export const handleCurrentMonth = async (values) =>{
     })
     return res
  }
+
+
+ export const updateEvent = async (values) =>{
+
+    const res = await axios.put('http://localhost:3001/api/update', values,{
+        headers:{
+            "Content-Type":"application/json"
+        }
+    })
+    return res
+ }
+

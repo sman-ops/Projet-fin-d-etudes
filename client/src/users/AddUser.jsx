@@ -1,56 +1,134 @@
 import React from 'react'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import MenuItem from '@mui/material/MenuItem'
+import TextField from '@mui/material/TextField'
+import CardHeader from '@mui/material/CardHeader'
+import InputLabel from '@mui/material/InputLabel'
+
+import Typography from '@mui/material/Typography'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
+import FormControl from '@mui/material/FormControl'
+import OutlinedInput from '@mui/material/OutlinedInput'
+
+import Select from '@mui/material/Select'
+
 
 function AddUser() {
   return (
-    <div className="card">
-      <div className="card-body" style={{marginRight:"80px"}}>
-        <h4 className="card-title">Add New User</h4>
-        <p className="card-description">Basic form elements</p>
-        <form className="forms-sample" >
-          <div className="form-group">
+    
+    <Card style={{width:"80%",marginTop:"3%",marginLeft:"10%"}}>
+      <CardHeader title='Add new user' titleTypographyProps={{ variant: 'h6' }} />
+      <Divider sx={{ margin: 0 }} />
+      <form onSubmit={e => e.preventDefault()}>
+        <CardContent>
+          <Grid container spacing={5}>
+            <Grid item xs={12}>
+              <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                1. Account Details
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label='Username' placeholder='carterLeonard' />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com' />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel htmlFor='form-layouts-separator-password'>Password</InputLabel>
+                <OutlinedInput
+                  label='Password'
+               
+                  id='form-layouts-separator-password'
+               
+                
+                 
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel htmlFor='form-layouts-separator-password-2'>Confirm Password</InputLabel>
+                <OutlinedInput
+              
+                  label='Confirm Password'
+                  id='form-layouts-separator-password-2'
+               
+               
+                />
+              </FormControl>
+            </Grid>
             
-            <label for="exampleInputName1">Name</label>
-            <input type="text" className="form-control" id="exampleInputName1" placeholder="Name" />
-          </div>
-          <div className="form-group">
-            <label for="exampleInputEmail3">Email address</label>
-            <input type="email" className="form-control" id="exampleInputEmail3" placeholder="Email" />
-          </div>
-          <div className="form-group">
-            <label for="exampleInputPassword4">Password</label>
-            <input type="password" className="form-control" id="exampleInputPassword4" placeholder="Password" />
-          </div>
-          <div className="form-group">
-            <label for="exampleSelectGender">Gender</label>
-            <select className="form-control" id="exampleSelectGender">
-              <option>Male</option>
-              <option>Female</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>File upload</label>
-            <input type="file" name="img[]" className="file-upload-default" />
-            <div className="input-group col-xs-12">
-              <input type="text" className="form-control file-upload-info" disabled="" placeholder="Upload Image" />
-              <span className="input-group-append">
-                <button className="file-upload-browse btn btn-primary" type="button"> Upload </button>
-              </span>
-            </div>
-          </div>
-          <div className="form-group">
-            <label for="exampleInputCity1">City</label>
-            <input type="text" className="form-control" id="exampleInputCity1" placeholder="Location" />
-          </div>
-  
-          <div className="form-group">
-            <label for="exampleTextarea1">Textarea</label>
-            <textarea className="form-control" id="exampleTextarea1" rows="4"></textarea>
-          </div>
-          <button type="button" className="btn btn-success btn-rounded btn-fw"> Success </button>
-          <button className="btn btn-light">Cancel</button>
-        </form>
-      </div>
-    </div>
+            <Grid item xs={12}>
+              <Divider sx={{ marginBottom: 0 }} />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                2. Personal Info
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label='First Name' placeholder='Leonard' />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label='Last Name' placeholder='Carter' />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id='form-layouts-separator-select-label'>Country</InputLabel>
+                <Select
+                  label='Country'
+                  defaultValue=''
+                  id='form-layouts-separator-select'
+                  labelId='form-layouts-separator-select-label'
+                >
+                  <MenuItem value='UK'>UK</MenuItem>
+                  <MenuItem value='USA'>USA</MenuItem>
+                  <MenuItem value='Australia'>Australia</MenuItem>
+                  <MenuItem value='Germany'>Germany</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id='form-layouts-separator-select-label'>Langage</InputLabel>
+                <Select
+                  label='Country'
+                  defaultValue=''
+                  id='form-layouts-separator-select'
+                  labelId='form-layouts-separator-select-label'
+                >
+                  <MenuItem value='UK'>UK</MenuItem>
+                  <MenuItem value='USA'>USA</MenuItem>
+                  <MenuItem value='Australia'>Australia</MenuItem>
+                  <MenuItem value='Germany'>Germany</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label='Phone No.' placeholder='+1-123-456-8790' />
+            </Grid>
+       
+         </Grid>
+       
+        </CardContent>
+        <Divider sx={{ margin: 0 }} />
+        <CardActions>
+          <Button style={{width:"25%",height:"50px"}} type='submit' sx={{ mr: 2 }} variant='contained'>
+            Submit
+          </Button>
+          <Button style={{width:"25%", height:"50px"}} color='secondary' variant='outlined'>
+            Cancel
+          </Button>
+        </CardActions>
+      </form>
+    </Card>
+        
+      
   )
 }
 

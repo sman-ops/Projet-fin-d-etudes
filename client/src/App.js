@@ -20,6 +20,7 @@ import AddUser from './users/AddUser';
 import UpdatePass from './authentification/UpdatePass';
 import {AuthContext} from './helpers/AuthContext'
 import Event from './Events/pages/event'
+import ViewUser from './users/ViewUser';
 
 
 
@@ -86,6 +87,11 @@ function App() {
            />
             
           <Route path="/updatepass" element={<UpdatePass/>} />
+
+          <Route path="/view" element={
+            <Template>
+          <ViewUser/></Template>} />
+      
       
     </> ) : <>
       
