@@ -49,6 +49,21 @@ module.exports.createEvent = async(req,res)=>{
     
     }
 
+
+
+    module.exports.removeEvent = (req,res)=>{
+    
+        try{ 
+            res.send(db.Events.destroy({ where:{id:req.params.id}}))
+
+             
+        }catch(err){
+            console.log('server err')
+            res.status(500).send('server err')
+        }
+    
+    }
+
     module.exports.currentMonth = async(req,res)=>{
    
    

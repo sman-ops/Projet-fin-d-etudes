@@ -33,5 +33,24 @@ width:40%,
 }
 
 
+.cancel:hover {
+    background-color: rgb(167, 167, 167);
+    }
+
+.del {
+background-color: rgb(255, 65, 65);
+}
+.del:hover {
+background-color: rgb(255, 7, 7);
+}
+
+.anticon svg {
+    display: inline-block;
+    margin-left: 170px;
+    margin-bottom: 30px;
+    color: #ff1010;
+}
+
+
 
 

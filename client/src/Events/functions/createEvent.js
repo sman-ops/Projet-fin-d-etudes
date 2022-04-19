@@ -45,3 +45,14 @@ export const handleCurrentMonth = async (values) =>{
     return res
  }
 
+ export const removeEvent = async (values) =>{
+
+    const res = await axios.delete('http://localhost:3001/api/delete/'+ values,{
+        headers:{
+            "Content-Type":"application/json"
+        }
+    })
+    return res
+ }
+ 
+

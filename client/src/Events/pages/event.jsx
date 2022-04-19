@@ -7,7 +7,7 @@ import moment from 'moment' ;
 import { Row, Col,Modal ,Card,Tag} from 'antd';
 
 // function 
-import { createEvents,listEvent, handleCurrentMonth , updateEvent} from '../functions/createEvent'
+import { createEvents,listEvent, handleCurrentMonth , updateEvent, removeEvent} from '../functions/createEvent'
 
 import './event.css'
 function Event() {
@@ -16,6 +16,7 @@ function Event() {
    const {id} = user
 
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible1, setIsModalVisible1] = useState(false);
     const [values,setValues] = useState({
         title:'',
         start:'',
@@ -27,6 +28,8 @@ function Event() {
 
     const [events,setEvents] = useState([])
     const [currentEvent,setCurrentEvent] = useState([])
+
+    const [idEvent,setIdEvent] = useState('')
 
     const department = [
       {id:'1',name:'event important',color:'red'},
@@ -51,6 +54,24 @@ function Event() {
         })
       }
   
+      const handleCLick = (info)=>{
+        showModal1()
+        console.log(info.event.id)
+        setIdEvent(info.event.id)
+      }
+
+      const handleRemove = ()=>{
+        // alert(idEvent)
+        removeEvent(idEvent)
+        .then(res=>{
+          console.log(res)
+
+        }).catch(err=>{
+          console.log(err)
+        })
+
+      }
+
       const currentMonth = (info) =>{
         const m =info.view.calendar.currentDataManager.data.currentDate
         const mm = moment(m).format('M')
@@ -130,6 +151,23 @@ function Event() {
         setIsModalVisible(false);
         setValues({...values,title:'' })
       };
+
+
+      const showModal1 = () => {
+        setIsModalVisible1(true);
+      };
+    
+      const handleOk1 = () => {
+          
+        setIsModalVisible1(false);
+     
+      };
+    
+      const handleCancel1 = () => {
+        setIsModalVisible1(false);
+      
+      };
+    
     
 
     console.log(events)
@@ -198,11 +236,12 @@ function Event() {
                 selectable={true}
                 select={handleSelect}
                 datesSet={currentMonth}
+                eventClick={handleCLick}
                 editable={true}
                 eventChange={handleChange}
            
                 />
-                            <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                   <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                     
                     <label> titre </label><input name="title" value={values.title}  onChange={onChangeTitle} /><br/>
                     <label> titredfdff </label> <input name="lieu" value={values.lieu}  onChange={onChangeLieu} />
@@ -214,7 +253,23 @@ function Event() {
                               >{item.name}</option>
                           )}
                      </select>
-                        </Modal>
+                  </Modal>
+                  <Modal 
+                  title="Delete an event"
+                   visible={isModalVisible1}
+                   onOk={handleOk1}
+                   onCancel={handleCancel1}
+                   footer={[
+                    <button className='del' style={{width:"150px",height:"50px"}} onClick={handleRemove}>Delete</button>,
+                    <button className='cancel' style={{width:"150px",height:"50px",marginRight:"90px"}} onClick={handleCancel1}>Cancel</button>
+                   
+                   ]}
+                   >
+
+                    
+                  <h1>Are you sure you want to delete your accountt</h1>
+                 
+                  </Modal>
             
                 </Col>
                 </Row>
