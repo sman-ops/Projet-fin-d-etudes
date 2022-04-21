@@ -1,0 +1,56 @@
+.fc-today-button{
+    width:50%
+}
+.fc-timeGridDay-button{
+    width:30%
+    
+}
+.fc-dayGridMonth-button{
+    width:30%
+}
+.fc-prev-button{
+    width:30%
+}
+.fc-next-button{
+    width:30%
+}
+.fc-timeGridWeek-button{
+    width:30%
+}
+
+.fc-event{
+    margin: 1em 0;
+    cursor:move;
+}
+
+.ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger){
+width:40%,
+
+
+}
+.button:not(:disabled), [type="button"]:not(:disabled){
+    width:40%
+}
+
+
+.cancel:hover {
+    background-color: rgb(167, 167, 167);
+    }
+
+.del {
+background-color: rgb(255, 65, 65);
+}
+.del:hover {
+background-color: rgb(255, 7, 7);
+}
+
+.anticon svg {
+    display: inline-block;
+    margin-left: 170px;
+    margin-bottom: 30px;
+    color: #ff1010;
+}
+
+
+
+

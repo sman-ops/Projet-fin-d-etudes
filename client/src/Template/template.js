@@ -88,11 +88,35 @@ const {id} = user
           </div>
         </li>
         <li className="nav-item">
+          <a className="nav-link" data-toggle="collapse" href="#event" aria-expanded="false" aria-controls="ui-basic">
+          <TodayIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span className="menu-title">Event</span>
+            <i className="menu-arrow"></i>
+          </a>
+          <div className="collapse" id="event">
+            <ul className="nav flex-column sub-menu">
+              <li className="nav-item">
+                <a className="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="pages/ui-features/typography.html">Typography</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        
+        <li className="nav-item">
           <a className="nav-link" href="pages/icons/mdi.html">
           <PeopleOutlineIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/user"><span className="menu-title">Users</span></Link>
           </a>
         </li>
+
+       
+
         <li className="nav-item">
           <a className="nav-link" href="pages/forms/basic_elements.html">
           <PersonAddIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -109,6 +133,19 @@ const {id} = user
           <a className="nav-link" href="pages/charts/chartjs.html">
           <TodayIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/event"><span className="menu-title"> Event</span></Link>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="pages/charts/chartjs.html">
+          <TodayIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Link to="/listevents"><span className="menu-title"> List of events</span></Link>
+          </a>
+        </li>
+        
+        <li className="nav-item">
+          <a className="nav-link" href="pages/charts/chartjs.html">
+          <TodayIcon color="primary"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Link to="/salon"><span className="menu-title"> salon</span></Link>
           </a>
         </li>
         <li className="nav-item">

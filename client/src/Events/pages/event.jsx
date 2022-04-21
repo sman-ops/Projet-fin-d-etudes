@@ -5,7 +5,13 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
 import moment from 'moment' ;
 import { Row, Col,Modal ,Card,Tag} from 'antd';
-
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import MenuItem from '@mui/material/MenuItem'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
 // function 
 import { createEvents,listEvent, handleCurrentMonth , updateEvent, removeEvent} from '../functions/createEvent'
 
@@ -23,7 +29,11 @@ function Event() {
         end:'',
         lieu:'',
         UserId:id,
-        color:''
+        color:'',
+        email:'',
+        description:'',
+        typeEvent:'',
+        langueEvent:''
     })
 
     const [events,setEvents] = useState([])
@@ -32,9 +42,9 @@ function Event() {
     const [idEvent,setIdEvent] = useState('')
 
     const department = [
-      {id:'1',name:'event important',color:'red'},
-      {id:'2',name:'event soir ',color:'#55A9F7'},
-      {id:'3',name:'event  matin ',color:'green'}
+      {id:'1',name:'event important',color:'#FAAA8D'},
+      {id:'2',name:'event soir ',color:'#8ca6fa'},
+      {id:'3',name:'event  matin ',color:'#169505'}
     ]
 
 
@@ -64,11 +74,13 @@ function Event() {
         // alert(idEvent)
         removeEvent(idEvent)
         .then(res=>{
+          loadData()
           console.log(res)
 
         }).catch(err=>{
           console.log(err)
         })
+        setIsModalVisible1(false)
 
       }
 
@@ -95,7 +107,11 @@ function Event() {
             color:values.color,
             UserId:values.UserId,
             start: info.startStr,
-            end:info.endStr
+            end:info.endStr,
+            email:values.email,
+            description:values.description,
+            typeEvent:values.typeEvent,
+            langueEvent:values.langueEvent
         })
         
     }
@@ -133,6 +149,26 @@ function Event() {
       setValues({...values,lieu: e.target.value})
       
   }
+  const onChangeEmail = (e) =>{
+    console.log(e.target.value)
+    setValues({...values,email: e.target.value})
+    
+}
+const onChangeDescription = (e) =>{
+  console.log(e.target.value)
+  setValues({...values,description: e.target.value})
+  
+}
+const onChangeType = (e) =>{
+  console.log(e.target.value)
+  setValues({...values,typeEvent: e.target.value})
+  
+}
+const onChangeLangue = (e) =>{
+  console.log(e.target.value)
+  setValues({...values,langueEvent: e.target.value})
+  
+}
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -208,7 +244,7 @@ function Event() {
                               )}
                             </ul>
                      </Card>
-                      <Card>
+                      <Card style={{backgroundColor:"#e5eaf5"}}>
                         <ol>
                           {currentEvent.map((item,index)=>
                             <li key={index}>
@@ -241,10 +277,81 @@ function Event() {
                 eventChange={handleChange}
            
                 />
-                   <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                    
-                    <label> titre </label><input name="title" value={values.title}  onChange={onChangeTitle} /><br/>
-                    <label> titredfdff </label> <input name="lieu" value={values.lieu}  onChange={onChangeLieu} />
+                   <Modal title="Add New Event" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                   <Grid item xs={12}  mb={2}>
+                    <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                     1. Profil d'évenement
+                     </Typography>
+                   </Grid>
+                        <Grid item xs={12} sm={6} mb={4}>
+                          <TextField fullWidth label='Ajouter un titre' value={values.title}  onChange={onChangeTitle} placeholder='Event of project name' />
+                        </Grid>
+                        <Grid item xs={12} sm={6} mb={4} >
+                          <TextField fullWidth label='Liste des paricitpants' value={values.email}  onChange={onChangeEmail} placeholder='email.' />
+                        </Grid>
+                        <Grid item xs={12} sm={6} mb={4}>
+                              <FormControl fullWidth>
+                                <InputLabel id='form-layouts-separator-select-label'>type event</InputLabel>
+                                <Select onChange={onChangeType}
+                                  label='Country'
+                                  defaultValue=''
+                                
+                                >
+                                  <MenuItem value='Public'>Public</MenuItem>
+                                  <MenuItem value='Privé'>Privé</MenuItem>
+                                
+                                </Select>
+                              </FormControl>
+                          </Grid>
+                        <Grid item xs={12} sm={6} mb={4}>
+                                <FormControl fullWidth>
+                                  <InputLabel id='form-layouts-separator-select-label'>Langage</InputLabel>
+                                  <Select onChange={onChangeLangue}
+                                    label='Country'
+                                    defaultValue=''
+                                    
+                                  >
+                                    <MenuItem value='Francais'>Francais</MenuItem>
+                                    <MenuItem value='English'>English</MenuItem>
+                              
+                                  </Select>
+                                </FormControl>
+                        </Grid>
+                       
+                        <Grid item xs={12}  mb={2}>
+                          <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                          2. Planning de l'événement 
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6} mb={4}>
+                          <TextField fullWidth label='Start of event' value={values.start}   placeholder='Start of event' />
+                        </Grid>
+                        <Grid item xs={12} sm={6} mb={4}>
+                          <TextField fullWidth label='End of event' value={values.end}  placeholder='End of event' />
+                        </Grid>
+
+                        <Grid item xs={12} mb={2}>
+                          <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                          3. Informations supplémentaires
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6} mb={4} >
+                          <TextField fullWidth label='lieu de event' value={values.lieu}  onChange={onChangeLieu} placeholder='tunis,....' />
+                        </Grid>
+                       
+                      
+                       <Grid item sm={6} mb={2}>
+                                <TextField
+                                value={values.description}  onChange={onChangeDescription}
+                                    fullWidth
+                                    multiline
+                                    label="Description de l'événement"
+                                  
+                                        rows= {3}  
+                                  />
+                       </Grid>
+                    {/* <label> titre </label><input name="title" value={values.title}  onChange={onChangeTitle} /><br/>
+                    <label> lieu </label> <input name="lieu" value={values.lieu}  onChange={onChangeLieu} /> */}
                      <select name="color" onChange={onChangeColor}>
                           {department.map((item,index)=>
                               <option key={index} 

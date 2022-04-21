@@ -20,6 +20,9 @@ import AddUser from './users/AddUser';
 import UpdatePass from './authentification/UpdatePass';
 import {AuthContext} from './helpers/AuthContext'
 import Event from './Events/pages/event'
+import ListEvents from './Events/pages/ListEvents';
+import ViewEvent from './Events/pages/ViewEvent';
+import Salon from './Salon/pages/salon'
 import ViewUser from './users/ViewUser';
 
 
@@ -84,6 +87,26 @@ function App() {
                   <Event/>
                 </Template>
                }        
+           />
+              <Route path="/listevents" element={
+               <Template>
+                  <ListEvents/>
+                </Template>
+               }        
+           />
+
+            <Route path="/viewevent/:id" element={
+                          <Template>
+                              <ViewEvent/>
+                            </Template>
+                          }        
+                      />
+
+          <Route path="/salon" element={
+                        <Template>
+                            <Salon/>
+                          </Template>
+                        }        
            />
             
           <Route path="/updatepass" element={<UpdatePass/>} />

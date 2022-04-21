@@ -1,5 +1,5 @@
 module.exports=(sequelize,Datatype)=>{
-    const Events=sequelize.define("Events",{
+    const Salon=sequelize.define("Salon",{
 
     
         title:{
@@ -12,8 +12,6 @@ module.exports=(sequelize,Datatype)=>{
             allowNull:false
         
         },
-      
-        
         end:{
             type:Datatype.STRING,
             allowNull:false
@@ -22,22 +20,9 @@ module.exports=(sequelize,Datatype)=>{
             type:Datatype.STRING,
             allowNull:false
             },
-
-       
-        typeEvent:{
-            type:Datatype.STRING
-        },
-        langueEvent:{
-            type:Datatype.STRING
-        },
-        lieu:{
-            type:Datatype.STRING
-        },
-
-        description:{
-            type:Datatype.STRING
-        },
-
+         mdp:{
+                type:Datatype.STRING
+            },
         color:{
             type:Datatype.STRING
         }
@@ -47,10 +32,10 @@ module.exports=(sequelize,Datatype)=>{
 
         })
 
-        Events.associate=models=>{
-            Events.belongsTo(models.User,{
+        Salon.associate=models=>{
+            Salon.belongsTo(models.User,{
                 onDelete:"cascade"
             })
         }
-        return Events
+        return Salon
 }
