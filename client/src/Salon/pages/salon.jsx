@@ -13,6 +13,9 @@ import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import Button from '@mui/material/Button'
+// generate a unique id
+import shordid from 'shortid';
 // function 
 import { createSalon,listSalon, handleCurrentMonthSalon , updateSalon, removeSalon} from '../functions/Salon'
 
@@ -144,11 +147,12 @@ function Salon() {
       console.log(e.target.value)
       setValues({...values,color: e.target.value})
   }
-    const onChangeMdp = (e) =>{
-      console.log(e.target.value)
-      setValues({...values,mdp: e.target.value})
-      
+
+  const generateShortId = ()=>{
+    const uid= shordid.generate()
+    setValues({...values,mdp:uid})
   }
+  
   const onChangeEmail = (e) =>{
     console.log(e.target.value)
     setValues({...values,email: e.target.value})
@@ -295,8 +299,13 @@ function Salon() {
                 3. Informations supplémentaires
                 </Typography>
               </Grid>
+              <Grid item xs={12} mb={2}>
+              <Button onClick={generateShortId}  style={{width:"25%",height:"50px"}} type='submit' sx={{ mr: 2 }} variant='contained'>
+                  Generate url unique
+              </Button>
+               </Grid>
               <Grid item xs={12} sm={6} mb={4} >
-                <TextField fullWidth label='Mot de passe Salon' value={values.mdp}  onChange={onChangeMdp} placeholder='tunis,....' />
+                <TextField fullWidth label='Mot de passe Salon' value={values.mdp}  placeholder='tunis,....' />
               </Grid>
              
          

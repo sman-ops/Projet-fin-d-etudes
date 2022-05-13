@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const { Op } = require('sequelize')
+const multer= require('multer')
+const path=require('path')
+const { validateToken } = require("../middlewares/AuthMiddleware");
 // send email
 require('dotenv').config();
 const nodemailer = require('nodemailer');
@@ -12,9 +15,6 @@ const { sequelize } = require('../models')
 
 // to send mail using nodemailer we need what we call transporter
 // transporter connect you to host domain 
-
-
-
 
 //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
 
@@ -51,8 +51,10 @@ exports.register = (req, res, next) => {
         bcrypt.hash(password, 10).then((hashedPassword) => {
 
             db.User.create({
-                firstname,lastname, email, password: hashedPassword
+                firstname,lastname, email, password: hashedPassword,
+                picture:"slimengh.jpg"
             }).then(user => {
+    
                 transporter.sendMail({
                     to: user.email,
                     from: 'slimen.ghnimi@etudiant-fst.utm.tn',
@@ -122,7 +124,45 @@ exports.getAllUsers = (req, res, next) => {
 
 }
 
+//  upload image  controller
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'Images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+})
+
+exports.upload = multer({
+    storage: storage,
+    limits: { fileSize: '1000000' },
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png|gif/
+        const mimeType = fileTypes.test(file.mimetype)  
+        const extname = fileTypes.test(path.extname(file.originalname))
+
+        if(mimeType && extname) {
+            return cb(null, true)
+        }
+        cb('Give proper files formate to upload')
+    }
+}).single('picture')
+ 
+
+
+
+
+
 exports.update = (req, res, next) => {
+    let image ;
+    if(req.file){
+        image = req.file.filename;
+    }else{
+        image= req.body.avatar;
+    }
+
     db.User.update({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -130,10 +170,13 @@ exports.update = (req, res, next) => {
         telephone: req.body.telephone,
         grade: req.body.grade,
         password: req.body.password,
-        picture : req.body.pic
-
+        adresse: req.body.adresse,
+        dateNaissance:req.body.dateNaissance,
+        picture :image
+  
     }, { where: { id: req.params.id } })
-        .then((response) => res.status(200).json({ message: "Updated successfly" }))
+        .then((response) => 
+        res.status(200).json({ message: "Updated successfly" }))
         .catch((err) => res.status(400).json({ error: "updated with echec" }))
 }
 
@@ -200,7 +243,24 @@ exports.newpassword = (req, res) => {
         })
 }
 
+exports.changePassword = async (req,res)=>{
+    const {oldPassword,newPassword,confirmPassword,email} = req.body
+    const user= await db.User.findOne({ where: { email:email } })
+    bcrypt.compare(oldPassword, user.password).then(doMatch => {
+        if (!doMatch) {
+         return res.json({error:"wrong  password entered "})
 
+      }else if(newPassword!=confirmPassword) {
+                return res.json({notmatch:"not matched password "})
+
+      }
+          bcrypt.hash(newPassword, 10).then((hashedPassword) => {
+            db.User.update({password:hashedPassword},{where:{email:req.body.email}})
+            return  res.status(200).json({message:"password change with success"});
+        })
+        
+    })
+}
 
 
 exports.uploadImage = (req, res, next) => {

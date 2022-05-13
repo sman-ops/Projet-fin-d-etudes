@@ -30,7 +30,10 @@ module.exports.createSalon = async(req,res)=>{
             // //             <h5>click in this <a href="http://localhost:3000">link</a> to signin in our platform </h5>`
             // })
              res.json(data)
-            
+             db.Room.create({
+                url:data.mdp,
+                SalonId:data.id
+             })
         }catch(err){
             console.log('server err')
             res.status(500).send('server err')

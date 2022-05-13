@@ -18,9 +18,7 @@ const {id} = user
         const [phone,setPhone] = useState("")
         const [grade,setGrade] = useState("")
         const [image,setImage] = useState("")
-        const [url,setUrl] = useState("")
-
-
+       
 
         useEffect(() => {
             const getSingleUser = async () => {
@@ -31,27 +29,33 @@ const {id} = user
                 setPhone(data.telephone)
                 setGrade(data.grade)
                 setImage(data.picture)
-           
+        
+                
+                
             }
+
+         console.log(image)
       
             getSingleUser()
         },[id])
       
      const updateUser =  (e) => {
-
              e.preventDefault()
-             uploadimage()
-            // update by put request
-                const data = {
-                firstname:firstname,
-                lastname:lastname,
-                email:email,
-                telephone:phone,
-                grade:grade,
-                pic:url
         
-            }
-             axios.put(`http://localhost:3001/user/${id}`, data)
+            // update by put request
+          const formData = new FormData()
+          formData.append('firstname',firstname)
+          formData.append('lastname',lastname)
+          formData.append('email',email)
+          formData.append('telephone',phone)
+          formData.append('grade',grade)
+          formData.append('picture',image)
+          const config= {
+              headers:{
+                  'content-type' : 'multipart/form-data',
+              },
+          };
+           axios.put(`http://localhost:3001/user/${id}`, formData,config)
              .then(response=>{
                
                if(response.status===200){
@@ -64,27 +68,7 @@ const {id} = user
               
         }
   
-        const uploadimage = ()=>{
-            const data = new FormData()
-            data.append("file",image)
-            data.append("upload_preset","insta-clone")
-            data.append("cloud_name","deriv1tpa")
-            fetch("https://api.cloudinary.com/v1_1/deriv1tpa/image/upload",{
-                method:"post",
-                body:data
-            })
-            .then(res=>res.json())
-            .then(data=>{
-                setUrl(data.url)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
-    
-   
-        
-    }      
-
+      
   return (
     <div class="container">
     <div class="row">
@@ -172,8 +156,8 @@ const {id} = user
                       </div>
                      
                     </div>
-                    <div class="tab-pane" id="edit">
-                        <form>
+                       <div class="tab-pane" id="edit">
+                        <form onSubmit={updateUser} method="POST" encType='multipart/form-data' >
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label" >First name</label>
                                 <div class="col-lg-9">
@@ -195,8 +179,8 @@ const {id} = user
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Change profile</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="file" onChange={(e)=>setImage(e.target.files[0])} />
+                                <div class="col-lg-9" id="fileName" >
+                                    <input class="form-control" type="file"  name="picture" onChange={(e)=>setImage(e.target.files[0])} />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -208,7 +192,7 @@ const {id} = user
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Address</label>
+                                <label class="col-lg-3 col-form-label form-control-label">phone</label>
                                 <div class="col-lg-9">
                                     <input class="form-control" type="text"  onChange={(e) => setPhone(e.target.value)}  value={phone} placeholder="Street" />
                                 </div>
@@ -224,7 +208,7 @@ const {id} = user
                             </div>
                            
                             <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                                <label class="col-lg-3 col-form-label form-control-label">grade</label>
                                 <div class="col-lg-9">
                                     <input class="form-control" type="text"  onChange={(e) => setGrade(e.target.value)} value={grade}/>
                                 </div>
@@ -244,7 +228,7 @@ const {id} = user
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label"></label>
                                 <div class="col-lg-9">
-                                <button type="button" className="btn btn-primary btn-rounded btn-fw" style={{width:"20px"}} onClick={updateUser}  > Save Change </button>
+                                <button type="button" className="btn btn-primary btn-rounded btn-fw" style={{width:"20px"}} onClick={updateUser} > Save Change </button>
                                 <button type="button" className="btn btn-primary btn-rounded btn-fw" style={{width:"20px"}}  > Annuler</button>
                    
            

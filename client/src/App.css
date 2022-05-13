@@ -106,3 +106,9 @@ button {
   right: 20px !important;
   left: auto !important;
 }
+.green {
+  background: #00796b !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+ 
+}

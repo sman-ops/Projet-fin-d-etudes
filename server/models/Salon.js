@@ -37,5 +37,11 @@ module.exports=(sequelize,Datatype)=>{
                 onDelete:"cascade"
             })
         }
+        Salon.associate=models=>{
+            Salon.hasMany(models.Room,{
+                onDelete:"cascade"
+            })
+        }
+        
         return Salon
 }

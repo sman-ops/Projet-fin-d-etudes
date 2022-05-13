@@ -1,35 +1,134 @@
-const express=require('express');
-const app=express();
-const cors=require('cors')
-const db=require('./models')
+const express = require("express");
+const app = express();
+const http = require("http").createServer(app);
+const cors = require("cors");
+const io = require("socket.io")(http, {
+  // telling cors that  our client is * or "http://localhost:3000"
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+const db = require("./models");
 const path = require("path");
-const userRouters=require('./routers/user-routes')
-const eventRouters=require('./routers/event-routes')
-const salonRouters=require('./routers/salon-routes')
-
+const userRouters = require("./routers/user-routes");
+const eventRouters = require("./routers/event-routes");
+const salonRouters = require("./routers/salon-routes");
 
 // permet bash  net3amlo mt3a data eli jayetna mn form
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 // bash  najmo nt3malo m3a  data eli jayetna sous forme json
 app.use(express.json());
 app.use(cors());
 
-app.use('/',userRouters);
+app.use("/", userRouters);
 
-app.use('/',eventRouters)
+app.use("/", eventRouters);
 
-app.use('/',salonRouters)
+app.use("/", salonRouters);
 
+// static image folder
+app.use("/Images", express.static("./Images"));
 
+let socketList = {};
 
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/uploads/images",express.static(path.join("uploads", "images")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
 
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
+}
 
+// Socket
+io.on("connection", (socket) => {
+  console.log(`New User connected: ${socket.id}`);
 
-db.sequelize.sync().then(()=>{
-    app.listen(3001,()=>console.log("server running in port 3001"))
-})
+  socket.on("disconnect", () => {
+    socket.disconnect();
+    console.log("User disconnected!");
+  });
 
+  socket.on("BE-check-user", ({ roomId, userName }) => {
+    let error = false;
+    console.log("in back");
+    io.sockets.in(roomId).clients((err, clients) => {
+      clients.forEach((client) => {
+        if (socketList[client] == userName) {
+          error = true;
+        }
+      });
+      socket.emit("FE-error-user-exist", { error });
+    });
+  });
 
+  /**
+   * Join Room
+   */
+  socket.on("BE-join-room", ({ roomId, userName }) => {
+    // Socket Join RoomName
+    socket.join(roomId);
 
+    socketList[socket.id] = { userName, video: true, audio: true };
+
+    // Set User List
+    io.sockets.in(roomId).clients((err, clients) => {
+      try {
+        const users = [];
+        clients.forEach((client) => {
+          // Add User to List
+          users.push({ userId: client, info: socketList[client] });
+        });
+        socket.broadcast.to(roomId).emit("FE-user-join", users);
+        // io.sockets.in(roomId).emit('FE-user-join', users);
+      } catch (e) {
+        io.sockets.in(roomId).emit("FE-error-user-exist", { err: true });
+      }
+    });
+  });
+
+  socket.on("BE-call-user", ({ userToCall, from, signal }) => {
+    io.to(userToCall).emit("FE-receive-call", {
+      signal,
+      from,
+      info: socketList[socket.id],
+    });
+  });
+
+  socket.on("BE-accept-call", ({ signal, to }) => {
+    io.to(to).emit("FE-call-accepted", {
+      signal,
+      answerId: socket.id,
+    });
+  });
+
+  socket.on("BE-send-message", ({ roomId, msg, sender }) => {
+    io.sockets.in(roomId).emit("FE-receive-message", { msg, sender });
+  });
+
+  socket.on("BE-leave-room", ({ roomId, leaver }) => {
+    delete socketList[socket.id];
+    console.log("left");
+    socket.broadcast
+      .to(roomId)
+      .emit("FE-user-leave", { userId: socket.id, userName: [socket.id] });
+    io.sockets.sockets[socket.id].leave(roomId);
+  });
+
+  socket.on("BE-toggle-camera-audio", ({ roomId, switchTarget }) => {
+    if (switchTarget === "video") {
+      socketList[socket.id].video = !socketList[socket.id].video;
+    } else {
+      socketList[socket.id].audio = !socketList[socket.id].audio;
+    }
+    socket.broadcast
+      .to(roomId)
+      .emit("FE-toggle-camera", { userId: socket.id, switchTarget });
+  });
+});
+
+db.sequelize.sync().then(() => {
+  http.listen(3001, () => console.log("server running in port 3001"));
+});

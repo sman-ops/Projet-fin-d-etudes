@@ -52,5 +52,10 @@ module.exports=(sequelize,Datatype)=>{
                 onDelete:"cascade"
             })
         }
+
+      
+
+
+
         return Events
 }

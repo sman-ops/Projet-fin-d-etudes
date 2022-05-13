@@ -31,6 +31,7 @@ module.exports.createEvent = async(req,res)=>{
             })
              res.json(data)
             
+             
         }catch(err){
             console.log('server err')
             res.status(500).send('server err')
