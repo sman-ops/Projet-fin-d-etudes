@@ -19,13 +19,14 @@ import Register from "./authentification/Register/Register";
 import ForgotPassword from "./authentification/ForgotPassword/ForgotPassword";
 import ResetPassword from "./authentification/ResetPassword/ResetPassword";
 import Template from "./Template/template";
-import Profile from "./Profile/Profile";
+// import Profile from "./Profile/Profile";
+// import UpdatePass from "./authentification/UpdatePass";
 import EditUser from "./users/EditUser";
 import AddUser from "./users/AddUser";
-import UpdatePass from "./authentification/UpdatePass";
 import { AuthContext } from "./helpers/AuthContext";
 import Event from "./Events/pages/event";
 import ListEvents from "./Events/pages/ListEvents";
+import ListEventOnline from "./Salon/pages/listEventOnline";
 import ViewEvent from "./Events/pages/ViewEvent";
 import Salon from "./Salon/pages/salon";
 import ViewUser from "./users/ViewUser";
@@ -34,6 +35,7 @@ import Error404 from "./authentification/Error404";
 import HomePage from "./components/HomePage/HomePage";
 import CallPage from "./components/CallPage/CallPage";
 import Dashboard from "./Dashboard/dashboard";
+import AddEvent from "./AddEventUI/Addevent";
 function App() {
   // if you able to access the value of the state and be able to change this state in any of components below here we can pass those to value={{}}
 
@@ -61,6 +63,15 @@ function App() {
               })} */}
 
                 <Route
+                  path="/template"
+                  element={
+                    <Template>
+                      <Dashboard />
+                    </Template>
+                  }
+                />
+
+                <Route
                   path="/user"
                   element={
                     <Template>
@@ -69,27 +80,10 @@ function App() {
                   }
                 />
                 <Route
-                  path="/template"
+                  path="/adduser"
                   element={
                     <Template>
-                      <Dashboard />
-                    </Template>
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <Template>
-                      <Profile />
-                    </Template>
-                  }
-                />
-
-                <Route
-                  path="/profile1"
-                  element={
-                    <Template>
-                      <AccountSettings />
+                      <AddUser />
                     </Template>
                   }
                 />
@@ -101,17 +95,32 @@ function App() {
                     </Template>
                   }
                 />
-
                 <Route
-                  path="/adduser"
+                  path="/view"
                   element={
                     <Template>
-                      <AddUser />
+                      <ViewUser />
                     </Template>
                   }
                 />
                 <Route
-                  path="/event"
+                  path="/profile1"
+                  element={
+                    <Template>
+                      <AccountSettings />
+                    </Template>
+                  }
+                />
+                <Route
+                  path="/addevent"
+                  element={
+                    <Template>
+                      <AddEvent />
+                    </Template>
+                  }
+                />
+                <Route
+                  path="/PresentEvent"
                   element={
                     <Template>
                       <Event />
@@ -119,10 +128,27 @@ function App() {
                   }
                 />
                 <Route
-                  path="/listevents"
+                  path="/EventOnline"
+                  element={
+                    <Template>
+                      <Salon />
+                    </Template>
+                  }
+                />
+
+                <Route
+                  path="/listeventsPresentiel"
                   element={
                     <Template>
                       <ListEvents />
+                    </Template>
+                  }
+                />
+                <Route
+                  path="/listeventonline"
+                  element={
+                    <Template>
+                      <ListEventOnline />
                     </Template>
                   }
                 />
@@ -132,26 +158,6 @@ function App() {
                   element={
                     <Template>
                       <ViewEvent />
-                    </Template>
-                  }
-                />
-
-                <Route
-                  path="/salon"
-                  element={
-                    <Template>
-                      <Salon />
-                    </Template>
-                  }
-                />
-
-                <Route path="/updatepass" element={<UpdatePass />} />
-
-                <Route
-                  path="/view"
-                  element={
-                    <Template>
-                      <ViewUser />
                     </Template>
                   }
                 />

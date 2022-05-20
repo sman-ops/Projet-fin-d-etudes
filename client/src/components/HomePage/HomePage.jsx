@@ -46,16 +46,11 @@ function HomePage() {
       <div className="body">
         <div className="left-side">
           <div className="content">
-            <h2>Premium video meetings. Now free for everyone.</h2>
-            <p>
-              We re-engineered the service we built for secure business
-              meetings, Google Meet, to make it free and available for all.
-            </p>
             <div className="action-btn">
-              <button className="btn green">
+              {/* <button className="btn green">
                 <FontAwesomeIcon className="icon-block" icon={faVideo} />
                 New Meeting
-              </button>
+              </button> */}
               <div className="input-block">
                 <div className="input-section">
                   <FontAwesomeIcon className="icon-block" icon={faKeyboard} />
@@ -65,14 +60,15 @@ function HomePage() {
                   <FontAwesomeIcon className="icon-block" icon={faKeyboard} />
                   <input placeholder="Room" ref={roomRef} />
                 </div>
-                <button className="btn no-bg" onClick={clickJoin}>
+                <button
+                  style={{ background: "#4169E1" }}
+                  className="btn no-bg"
+                  onClick={clickJoin}
+                >
                   Join
                 </button>
               </div>
             </div>
-          </div>
-          <div className="help-text">
-            <a href="">Learn more</a> about Google Meet
           </div>
         </div>
         <div className="right-side">

@@ -1,7 +1,7 @@
 import React from "react";
 
 function Error404() {
-  return <div>Error404</div>;
+  return <div> you are not authentifid </div>;
 }
 
 export default Error404;

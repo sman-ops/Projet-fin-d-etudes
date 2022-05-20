@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { useReactMediaRecorder } from "react-media-recorder";
 import {
   faVideo,
   faMicrophone,
@@ -26,6 +26,9 @@ function CallPageFooter({
   showVideoDevices,
   setShowVideoDevices,
 }) {
+  const { status, startRecording, stopRecording, mediaBlobUrl } =
+    useReactMediaRecorder({ video: true, screen: true });
+
   return (
     <div className="footer-item">
       <div className="left-item">
@@ -34,12 +37,13 @@ function CallPageFooter({
           <FontAwesomeIcon className="icon" icon={faAngleUp} />
         </div>
       </div>
+
       <div className="center-item">
         <div className="icon-block" onClick={toggleAudio}>
           {userVideoAudio.audio ? (
             <FontAwesomeIcon className="icon" icon={faMicrophone} />
           ) : (
-            <FontAwesomeIcon className="icon" icon={faMicrophoneSlash} />
+            <FontAwesomeIcon className="icon red" icon={faMicrophoneSlash} />
           )}
         </div>
         <div className="icon-block" onClick={goToBack}>
@@ -49,7 +53,7 @@ function CallPageFooter({
           {userVideoAudio.video ? (
             <FontAwesomeIcon className="icon" icon={faVideo} />
           ) : (
-            <FontAwesomeIcon className="icon" icon={faVideoSlash} />
+            <FontAwesomeIcon className="icon red" icon={faVideoSlash} />
           )}
         </div>
       </div>
@@ -58,6 +62,10 @@ function CallPageFooter({
           <FontAwesomeIcon className="icon red" icon={faClosedCaptioning} />
           <p className="title">Turn on captions</p>
         </div>
+        <button onClick={startRecording}>Start Recording</button>
+        <button onClick={stopRecording}>Stop Recording</button>
+
+        <video src={mediaBlobUrl} controls autoPlay loop />
 
         <div className="icon-block" onClick={clickScreenSharing}>
           <FontAwesomeIcon className="icon red" icon={faDesktop} />

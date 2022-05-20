@@ -3,9 +3,15 @@ import { listEvent } from "../functions/createEvent";
 import ReactPaginate from "react-paginate";
 import EditIcon from "@material-ui/icons/Edit";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import "./event.css";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 function ListEvents() {
   const [events, setEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  //  const  present =async (id,etat)=>{
 
+  //  }
   useEffect(() => {
     loadData();
   }, []);
@@ -27,30 +33,39 @@ function ListEvents() {
 
   const displayUsers = events
     .slice(pagesVisited, pagesVisited + usersPerPage)
+    .filter((val) => {
+      if (searchTerm == "") {
+        return val;
+      } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return val;
+      }
+    })
     .map((event) => {
       return (
         <div className="user">
           <h4>Event Presentiel</h4>
-          <div style={{ marginLeft: "400px", marginBottom: "10%" }}>
+          <div style={{ marginLeft: "400px", marginBottom: "5%" }}>
             <EditIcon color="primary" />
             <VisibilityOutlinedIcon color="primary" />
           </div>
-          <h3>{event.title}</h3>
-          <h3>{event.start}</h3>
-          <h3>{event.typeEvent}</h3>
-          <div>
+          <h3>Name of event : {event.title}</h3>
+          <h3>Start in : {event.start}</h3>
+          <h3>Type of the event : {event.typeEvent}</h3>
+          <div style={{ marginTop: "2%" }}>
             <button
               type="button"
-              style={{ height: "60px" }}
+              style={{ height: "55px", width: "90px", borderRadius: "3px" }}
               class="btn btn-inverse-info btn-fw"
+              // onClick={()=>{present(event.id,"Present")}}
             >
               Present
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button
               type="button"
-              style={{ height: "60px" }}
+              style={{ height: "55px", width: "90px", borderRadius: "3px" }}
               class="btn btn-inverse-warning btn-fw"
+              // onClick={()=>{present(event.id,"Absent")}}
             >
               Absent
             </button>
@@ -67,6 +82,17 @@ function ListEvents() {
 
   return (
     <div className="App">
+      <div style={{ marginBottom: "10%", marginLeft: "1%" }}>
+        <Grid item xs={8} sm={3} minWidth={2} mt={5} ml={10}>
+          <TextField
+            label="Search"
+            placeholder="search..."
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+          />
+        </Grid>
+      </div>
       {displayUsers}
       <div style={{ marginLeft: "90%" }}>
         <ReactPaginate

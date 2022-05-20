@@ -12,6 +12,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 // imports
 import "./paginate.css";
 import ReactPaginate from "react-paginate";
@@ -23,6 +25,7 @@ function Users() {
     [`&.${tableCellClasses.head}`]: {
       color: theme.palette.common.black,
       backgroundColor: theme.palette.action.disabledBackground,
+      fontSize: 20,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -42,8 +45,8 @@ function Users() {
 
   const [users, setUsers] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
-
-  const usersPerPage = 1;
+  const [searchTerm, setSearchTerm] = useState("");
+  const usersPerPage = 2;
   const pagesVisited = pageNumber * usersPerPage;
   const getUser = async () => {
     await axios.get("http://localhost:3001/users").then((response) => {
@@ -73,10 +76,19 @@ function Users() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px", marginLeft: "5%", marginTop: "5%" }}>
+      <div style={{ marginBottom: "20px", marginLeft: "2%", marginTop: "5%" }}>
+        <TextField
+          style={{ marginRight: "50%" }}
+          label="Search"
+          placeholder="search..."
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+        />
+
         <Link to="/adduser">
           <Button
-            style={{ width: "25%", height: "50px" }}
+            style={{ width: "25%", height: "50px", marginTop: "1%" }}
             type="submit"
             sx={{ mr: 2 }}
             variant="contained"
@@ -88,7 +100,7 @@ function Users() {
       <div>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} mb={4} aria-label="customized table">
-            <TableHead>
+            <TableHead style={{ width: "30px" }}>
               <TableRow style={{ width: "30px" }}>
                 <StyledTableCell>Num</StyledTableCell>
                 <StyledTableCell>Picture</StyledTableCell>
@@ -96,21 +108,36 @@ function Users() {
                 <StyledTableCell align="right">lastname</StyledTableCell>
                 <StyledTableCell align="right">email</StyledTableCell>
                 <StyledTableCell align="right">grade</StyledTableCell>
-                <StyledTableCell align="right">picture</StyledTableCell>
+
                 <StyledTableCell align="right">Actions</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users
                 .slice(pagesVisited, pagesVisited + usersPerPage)
+                .filter((val) => {
+                  if (searchTerm == "") {
+                    return val;
+                  } else if (
+                    val.firstname
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                  ) {
+                    return val;
+                  }
+                })
                 .map((user, key) => (
                   <StyledTableRow key={key}>
                     <StyledTableCell component="th" scope="row">
                       {key + 1}
                     </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
+                    <StyledTableCell
+                      component="th"
+                      scope="row"
+                      style={{ width: "35%" }}
+                    >
                       <img
-                        style={{ width: "30%" }}
+                        style={{ width: "15%" }}
                         src={`http://localhost:3001/Images/${user.picture}`}
                       />
                     </StyledTableCell>
@@ -126,9 +153,7 @@ function Users() {
                     <StyledTableCell align="right">
                       {user.grade}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {user.picture}
-                    </StyledTableCell>
+
                     <StyledTableCell align="right">
                       <Link to={`/edituser/${user.id}`}>
                         <EditIcon color="primary" />

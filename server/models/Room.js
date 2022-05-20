@@ -6,7 +6,7 @@ module.exports = (sequelize, Datatype) => {
   });
 
   Room.associate = (models) => {
-    Room.belongsTo(models.Salon, {
+    Room.belongsTo(models.EventOnline, {
       onDelete: "cascade",
     });
   };

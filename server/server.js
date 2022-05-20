@@ -27,12 +27,12 @@ app.use("/", eventRouters);
 
 app.use("/", salonRouters);
 
+// app.use("/", presenceRouters);
+
 // static image folder
 app.use("/Images", express.static("./Images"));
 
 let socketList = {};
-
-app.use(express.static(path.join(__dirname, "public")));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));

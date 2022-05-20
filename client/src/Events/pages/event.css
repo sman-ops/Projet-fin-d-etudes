@@ -1,4 +1,4 @@
-.fc-today-button {
+.fc-today-button .fc-button .fc-button-primary {
   width: 50%;
 }
 .fc-timeGridDay-button {
@@ -20,6 +20,8 @@
 .fc-event {
   margin: 1em 0;
   cursor: move;
+}
+.fc-direction-ltr .fc-toolbar {
 }
 
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {

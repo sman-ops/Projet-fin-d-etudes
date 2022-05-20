@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import FormControl from "@mui/material/FormControl";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -13,7 +13,9 @@ import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
-
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 function EditUser() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -58,8 +60,14 @@ function EditUser() {
   };
   return (
     <Card style={{ width: "80%", marginTop: "3%", marginLeft: "10%" }}>
-      <CardHeader title="Edit User" titleTypographyProps={{ variant: "h6" }} />
       <CreditScoreIcon />
+
+      <CardHeader
+        title="Edit User"
+        titleTypographyProps={{ variant: "h6" }}
+        style={{ marginLeft: "5%", marginTop: "0%" }}
+      />
+
       <Divider sx={{ margin: 0 }} />
       <form onSubmit={(e) => e.preventDefault()}>
         <CardContent>
@@ -103,7 +111,7 @@ function EditUser() {
                 fullWidth
                 type="text"
                 label="Phone"
-                placeholder="3232323"
+                placeholder="+216232332"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
@@ -119,12 +127,20 @@ function EditUser() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                type="email"
-                label="Phone"
-                placeholder="2222222"
-              />
+              <FormControl fullWidth>
+                <InputLabel id="form-layouts-separator-select-label">
+                  rôle
+                </InputLabel>
+                <Select
+                  label="Role"
+                  defaultValue=""
+                  id="form-layouts-separator-select"
+                  labelId="form-layouts-separator-select-label"
+                >
+                  <MenuItem value="Administrateur">Administrateur</MenuItem>
+                  <MenuItem value="Collaborateur">Collaborateur</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
         </CardContent>

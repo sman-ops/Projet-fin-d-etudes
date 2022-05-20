@@ -55,10 +55,10 @@ function Template({ children }) {
               </div>
               <div className="nav-profile-text d-flex flex-column pr-3">
                 <span className="font-weight-medium mb-2">{firstname}</span>
-                <span className="font-weight-normal">{lastname}</span>
               </div>
             </a>
           </li>
+
           <li className="nav-item">
             <a className="nav-link" href="#">
               <i className="mdi mdi-home menu-icon"></i>
@@ -67,44 +67,7 @@ function Template({ children }) {
               </Link>
             </a>
           </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              data-toggle="collapse"
-              href="#ui-basic"
-              aria-expanded="false"
-              aria-controls="ui-basic"
-            >
-              <i className="mdi mdi-crosshairs-gps menu-icon"></i>
-              <span className="menu-title">Basic UI Elements</span>
-              <i className="menu-arrow"></i>
-            </a>
-            <div className="collapse" id="ui-basic">
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item">
-                  <a className="nav-link" href="pages/ui-features/buttons.html">
-                    Buttons
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="pages/ui-features/dropdowns.html"
-                  >
-                    Dropdowns
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="pages/ui-features/typography.html"
-                  >
-                    Typography
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
+
           <li className="nav-item">
             <a
               className="nav-link"
@@ -121,25 +84,35 @@ function Template({ children }) {
             <div className="collapse" id="event">
               <ul className="nav flex-column sub-menu">
                 <li className="nav-item">
-                  <a className="nav-link" href="pages/ui-features/buttons.html">
-                    Buttons
-                  </a>
+                  <Link to="/listeventsPresentiel">
+                    <a
+                      className="nav-link"
+                      href="pages/ui-features/buttons.html"
+                    >
+                      Liste event presentiel
+                    </a>
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to="/addevent">
+                    <a
+                      className="nav-link"
+                      href="pages/ui-features/dropdowns.html"
+                    >
+                      Add Event
+                    </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="pages/ui-features/dropdowns.html"
-                  >
-                    Dropdowns
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="pages/ui-features/typography.html"
-                  >
-                    Typography
-                  </a>
+                  <Link to="/listeventonline">
+                    <a
+                      className="nav-link"
+                      href="pages/ui-features/typography.html"
+                    >
+                      Liste event en ligne
+                    </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -151,6 +124,15 @@ function Template({ children }) {
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Link to="/user">
                 <span className="menu-title">Users</span>
+              </Link>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="pages/icons/mdi.html">
+              <PeopleOutlineIcon color="primary" />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <Link to="/user">
+                <span className="menu-title">Salon</span>
               </Link>
             </a>
           </li>
@@ -172,7 +154,7 @@ function Template({ children }) {
               </Link>
             </a>
           </li> */}
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a className="nav-link" href="pages/charts/chartjs.html">
               <TodayIcon color="primary" />
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -196,24 +178,37 @@ function Template({ children }) {
               <TodayIcon color="primary" />
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Link to="/salon">
-                <span className="menu-title"> salon</span>
+                <span className="menu-title"> Event EN ligne</span>
               </Link>
             </a>
-          </li>
-          <li className="nav-item">
+          </li> */}
+          {/* <li className="nav-item">
             <a className="nav-link" href="pages/tables/basic-table.html">
               <i className="mdi mdi-table-large menu-icon"></i>
               <Link to="/view">
                 <span className="menu-title"> view user</span>
               </Link>
             </a>
-          </li>
+          </li> */}
           <li className="nav-item">
             <a className="nav-link" href="pages/tables/basic-table.html">
               <i className="mdi mdi-table-large menu-icon"></i>
               <Link to="/homepage">
                 <span className="menu-title"> Join room</span>
               </Link>
+            </a>
+          </li>
+          <li>
+            <a className="dropdown-item" href="/">
+              <i
+                className="mdi mdi-logout mr-2 text-primary"
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/");
+                }}
+              >
+                logout
+              </i>
             </a>
           </li>
         </ul>
@@ -400,26 +395,22 @@ function Template({ children }) {
                   className="dropdown-menu navbar-dropdown w-100"
                   aria-labelledby="profileDropdown"
                 >
-                  <a className="dropdown-item" href="/profile">
-                    <i className="mdi mdi-cached mr-2 text-success"></i>{" "}
-                    Activity Log{" "}
-                  </a>
                   <a className="dropdown-item" href="/">
-                    <i className="mdi mdi-logout mr-2 text-primary"></i>
-                    <button
+                    <i
+                      className="mdi mdi-logout mr-2 text-primary"
                       onClick={() => {
                         localStorage.clear();
                         navigate("/");
                       }}
                     >
-                      Logout
-                    </button>{" "}
+                      logout
+                    </i>
                   </a>
                   <a className="dropdown-item" href="#">
                     <Link to="/profile1">
                       <i className="mdi mdi-cached mr-2 text-success"></i>{" "}
                       Profile
-                    </Link>{" "}
+                    </Link>
                   </a>
                 </div>
               </li>

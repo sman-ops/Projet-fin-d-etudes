@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { toast, Zoom } from "react-toastify";
 // function
 import {
   createEvents,
@@ -25,7 +26,6 @@ import "./event.css";
 function Event() {
   const user = JSON.parse(localStorage.getItem("user"));
   const { id } = user;
-
   //  const [radio, setRadio] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisible1, setIsModalVisible1] = useState(false);
@@ -210,7 +210,7 @@ function Event() {
   console.log("between", betweenDate);
 
   return (
-    <div className="card">
+    <div className="card" style={{ marginTop: "5%" }}>
       <div className="col-md-18">
         <Row>
           <Col span={5}>
@@ -230,7 +230,7 @@ function Event() {
             <Card style={{ backgroundColor: "#e5eaf5" }}>
               <ol>
                 {currentEvent.map((item, index) => (
-                  <li key={index}>
+                  <li key={index} style={{ fontSize: "15px" }}>
                     {d == moment(item.start).format("DD/MM/YYYY") ? (
                       <>
                         {moment(item.start).format("DD/MM/YYYY") +
@@ -381,7 +381,6 @@ function Event() {
                   placeholder="tunis,...."
                 />
               </Grid>
-
               <Grid item sm={6} mb={2}>
                 <TextField
                   value={values.description}
@@ -401,6 +400,21 @@ function Event() {
                   </option>
                 ))}
               </select>
+              {/* <Grid item sm={6} mb={2}>
+                <Select
+                  style={{ width: "70%" }}
+                  name="color"
+                  defaultValue=" color"
+                  id="form-layouts-separator-select"
+                  labelId="form-layouts-separator-select-label"
+                >
+                  {department.map((item, index) => (
+                    <MenuItem key={index} value={item.color}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid> */}
             </Modal>
             <Modal
               title="Delete an event"
@@ -410,7 +424,12 @@ function Event() {
               footer={[
                 <button
                   className="del"
-                  style={{ width: "150px", height: "50px" }}
+                  style={{
+                    width: "150px",
+                    height: "50px",
+                    marginRight: "2%",
+                    borderRadius: "2px",
+                  }}
                   onClick={handleRemove}
                 >
                   Delete
@@ -421,6 +440,7 @@ function Event() {
                     width: "150px",
                     height: "50px",
                     marginRight: "90px",
+                    borderRadius: "2px",
                   }}
                   onClick={handleCancel1}
                 >
