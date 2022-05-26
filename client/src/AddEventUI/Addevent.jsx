@@ -28,12 +28,17 @@ function AddEvent() {
         flexDirection: " column",
       }}
     >
-      <h4 style={{ marginLeft: "3%", marginTop: "3%" }}>
+      <img
+        src="assets/images/schedule.png"
+        style={{ width: "10%", marginLeft: "20px", marginTop: "20px" }}
+        alt="logo"
+      />
+      {/* <h4 style={{ marginLeft: "3%", marginTop: "3%" }}>
         Chose type of the event
-      </h4>
+      </h4> */}
       <Grid item mt={2} width={700} ml={3} xs={6} sm={2}>
         <FormControl fullWidth>
-          <InputLabel>Event</InputLabel>
+          <InputLabel>Event type</InputLabel>
           <Select
             onChange={(e) => fnNavigate(e.target.value)}
             label="Country"

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { listSalon } from "../functions/Salon";
 import ReactPaginate from "react-paginate";
-
+import { useNavigate } from "react-router-dom";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import "./salon.css";
 function ListEventOnline() {
   const [events, setEvents] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     loadData();
   }, []);
@@ -30,17 +30,35 @@ function ListEventOnline() {
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((event) => {
       return (
-        <div className="user">
-          <h4>Online Event</h4>
-          <div style={{ marginLeft: "400px", marginBottom: "5%" }}>
-            <VisibilityOutlinedIcon color="primary" />
+        <div
+          className="user"
+          onClick={() => {
+            navigate(`/vieweventOnline/${event.id}`);
+          }}
+        >
+          <img
+            src="assets/images/event.png"
+            style={{
+              width: "15%",
+              marginRight: "70%",
+              marginTop: "13%",
+              marginBottom: "10px",
+            }}
+            alt="logo"
+          />
+          <h2 style={{ background: "#6495ED", color: "white" }}>
+            Online Event
+          </h2>
+
+          <div style={{ marginLeft: "400px", marginBottom: "15%" }}>
+            {/* <VisibilityOutlinedIcon color="primary" /> */}
           </div>
 
-          <h3>{event.title}</h3>
-          <h3>{event.start}</h3>
-          <h3>{event.end}</h3>
+          <h3 style={{ marginBottom: "30%" }}>
+            Name of the event : {event.title}
+          </h3>
 
-          <div style={{ marginTop: "5%" }}>
+          {/* <div style={{ marginTop: "5%" }}>
             <button
               type="button"
               style={{ height: "55px", width: "90px", borderRadius: "3px" }}
@@ -56,7 +74,7 @@ function ListEventOnline() {
             >
               Absent
             </button>
-          </div>
+          </div> */}
         </div>
       );
     });

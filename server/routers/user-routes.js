@@ -1,33 +1,33 @@
-const express= require('express')
-const route=express.Router();
+const express = require("express");
+const route = express.Router();
 
-const db= require('../models')
+const db = require("../models");
 const fileUpload = require("../middleware/file-aploader");
 
-const userContoller=require('../controlles/userController');
+const userContoller = require("../controlles/userController");
 
-route.post('/register',userContoller.register)
+route.post("/register", userContoller.register);
 
-route.post('/login',userContoller.login)
+route.post("/login", userContoller.login);
 
-route.get('/user/:id',userContoller.getUser)
-  
-route.get('/users',userContoller.getAllUsers)
+route.get("/user/:id", userContoller.getUser);
 
-route.put('/user/:id',userContoller.upload,userContoller.update);
+route.get("/users", userContoller.getAllUsers);
 
-route.delete('/user/:id',userContoller.delete);
+route.put("/user/:id", userContoller.upload, userContoller.update);
 
-route.post('/reset-password',userContoller.resetpassword)
+route.delete("/user/:id", userContoller.delete);
 
+route.post("/reset-password", userContoller.resetpassword);
 
-route.post('/new-password',userContoller.newpassword)
+route.post("/new-password", userContoller.newpassword);
 
-route.post('/Add',(fileUpload.single("image")),userContoller.uploadImage);
+route.post("/Add", fileUpload.single("image"), userContoller.uploadImage);
 
-route.post('/sendEmail',userContoller.sendEmail)
+route.post("/sendEmail", userContoller.sendEmail);
 
-route.put('/changepassword',userContoller.changePassword)
+route.put("/changepassword", userContoller.changePassword);
 
-module.exports=route
+route.get("/countusers", userContoller.countUsers);
 
+module.exports = route;

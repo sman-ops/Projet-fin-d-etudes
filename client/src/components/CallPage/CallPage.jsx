@@ -204,7 +204,7 @@ function CallPage() {
     e.preventDefault();
     socket.emit("BE-leave-room", { roomId, leaver: currentUser });
     sessionStorage.removeItem("user");
-    window.location.href = "/";
+    window.location.href = "/homepage";
   };
 
   const toggleCamera = (e) => {
@@ -353,7 +353,7 @@ function CallPage() {
   let video_6 = "w-full h-full grid grid-cols-3 gap-4 bg-black  pb-28 p-4 ";
   let video_8 = "w-full h-full grid grid-cols-1 gap-4 bg-black  pb-28 p-4";
   if (peers.length === 1) {
-    video_8 = "w-full h-full grid grid-cols-2 gap-4 bg-black  pb-28 p-4";
+    video_8 = "w-full h-full grid grid-cols-1 gap-4 bg-black  pb-28 p-4";
   } else if (peers.length === 2) {
     video_8 = "w-full h-full grid grid-cols-3 gap-4 bg-black  pb-28 p-4";
   } else if (peers.length === 0) {
@@ -365,25 +365,39 @@ function CallPage() {
   return (
     <div className="callpage-container w-screen" onClick={clickBackground}>
       <div
-        className={
-          peers.length % 3 !== 0 || peers.length === 1 || peers.length === 0
-            ? video_8
-            : video_6
-        }
+        className={` w-full h-full grid gap-4 bg-black  pb-28 p-4 ${
+          peers.length === 0
+            ? "grid-cols-1"
+            : peers.length === 1
+            ? "grid-cols-2"
+            : peers.length === 2
+            ? "grid-cols-3"
+            : peers.length === 3
+            ? "grid-cols-4"
+            : peers.length === 4
+            ? "grid-cols-3"
+            : `grid-cols-${peers.length + (1 % 2)}`
+        }  `}
         style={{ maxHeight: "90vh", minHeight: "90vh" }}
       >
-        <video
-          className="rounded"
-          src=""
-          playsInline
-          autoPlay
-          muted
-          onClick={expandScreen}
-          ref={userVideoRef}
-        />
+        <div className="w-full h-full flex justify-center items-center">
+          <video
+            className="rounded"
+            src=""
+            playsInline
+            autoPlay
+            muted
+            onClick={expandScreen}
+            ref={userVideoRef}
+          />
+        </div>
         {peers &&
           peers.map((peer, idx, arr) => (
-            <div key={idx} onClick={expandScreen}>
+            <div
+              key={idx}
+              className="w-full h-full flex justify-center items-center"
+              onClick={expandScreen}
+            >
               <VideoCard peer={peer} number={arr.length} />
             </div>
           ))}

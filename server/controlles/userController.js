@@ -34,7 +34,16 @@ let transporter = nodemailer.createTransport({
 });
 
 exports.register = (req, res, next) => {
-  const { firstname, lastname, email, password, confirmPassword } = req.body;
+  const {
+    firstname,
+    lastname,
+    email,
+    password,
+    confirmPassword,
+    telephone,
+    grade,
+    role,
+  } = req.body;
   if (!firstname || !lastname || !email || !password) {
     return res.status(422).json({ error: "please add all the fields" });
   }
@@ -54,6 +63,9 @@ exports.register = (req, res, next) => {
           lastname,
           email,
           password: hashedPassword,
+          telephone,
+          grade,
+          role,
           picture: "slimengh.jpg",
         })
           .then((user) => {
@@ -65,7 +77,7 @@ exports.register = (req, res, next) => {
               html: `<h1>Welcome to our Talan Platform meeting online</h1>
                             <h5>click in this <a href="http://localhost:3000">link</a> to signin in our platform </h5>`,
             });
-            res.json({ message: "saved successfully" });
+            res.json({ message: "Account created with success" });
           })
           .catch((err) => console.log(err));
       });
@@ -101,8 +113,8 @@ exports.login = (req, res, next) => {
               expiresIn: "2h",
             }
           );
-          const { id, firstname, lastname, email } = savedUser;
-          res.json({ token, user: { id, firstname, lastname, email } });
+          const { id, firstname, lastname, email, role } = savedUser;
+          res.json({ token, user: { id, firstname, lastname, email, role } });
         } else {
           return res.status(422).json({ error: "Invalid Email or password" });
         }
@@ -295,4 +307,9 @@ exports.sendEmail = (req, res, next) => {
     .catch(function (err) {
       console.log("error in sent the email ");
     });
+};
+
+exports.countUsers = async (req, res) => {
+  const users = await db.User.count();
+  res.json({ users });
 };

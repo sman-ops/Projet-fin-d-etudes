@@ -1,17 +1,15 @@
 const db = require("../models");
 var sequelize = require("sequelize");
 
-// const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
-// let transporter = nodemailer.createTransport({
-
-//     service: 'gmail',
-//     auth: {
-//         user: process.env.EMAIL,
-//         pass: process.env.PASSWORD
-
-//     }
-// });
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
 
 module.exports.createSalon = async (req, res) => {
   const { title, start, end, email, mdp, color, UserId } = req.body;
@@ -28,14 +26,13 @@ module.exports.createSalon = async (req, res) => {
       color,
       UserId,
     });
-    // //  transporter.sendMail({
-    // //     to: data.email,
-    // //     from: 'slimen.ghnimi@etudiant-fst.utm.tn',
-    // //     subject: "create an event",
-    // //     cc: 'slimen.ghenimi@gmail.com',
-    // //     html: `<h1>Welcome to our Talan Platform meeting online</h1>
-    // //             <h5>click in this <a href="http://localhost:3000">link</a> to signin in our platform </h5>`
-    // })
+    transporter.sendMail({
+      to: data.email,
+      from: "slimen.ghnimi@etudiant-fst.utm.tn",
+      subject: "Online Event",
+      cc: "slimen.ghenimi@gmail.com",
+      html: `<h1>Welcome ,You are invited to online event</h1> `,
+    });
     res.json(data);
     db.Room.create({
       url: data.mdp,
@@ -54,6 +51,12 @@ module.exports.listSalon = async (req, res) => {
     console.log("server err");
     res.status(500).send("server err");
   }
+};
+
+module.exports.getEventOnline = (req, res, next) => {
+  db.EventOnline.findOne({ where: { id: req.params.id } })
+    .then((response) => res.status(200).send(response))
+    .catch((err) => res.status(400).send(err));
 };
 
 module.exports.updateSalon = async (req, res) => {
@@ -77,6 +80,13 @@ module.exports.updateSalon = async (req, res) => {
 module.exports.removeSalon = (req, res) => {
   try {
     const result = db.EventOnline.destroy({ where: { id: req.params.id } });
+    transporter.sendMail({
+      to: result.email,
+      from: "slimen.ghnimi@etudiant-fst.utm.tn",
+      subject: "Conceled Online Event ",
+      cc: "slimen.ghenimi@gmail.com",
+      html: `<h1>Sorry,the Online  event  is conceled </h1> `,
+    });
     res.json({ result, message: "Event deleted with success" });
   } catch (err) {
     console.log("server err");
@@ -99,4 +109,9 @@ module.exports.currentMonth = async (req, res) => {
     console.log("server err");
     res.status(500).send("server err");
   }
+};
+
+exports.countOnlineEvent = async (req, res) => {
+  const eventsonline = await db.EventOnline.count();
+  res.json({ eventsonline });
 };

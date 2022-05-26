@@ -35,6 +35,7 @@ module.exports = (sequelize, Datatype) => {
     role: {
       type: Datatype.STRING,
       allowNull: true,
+      defaultValue: "Collaborateur",
     },
     grade: {
       type: Datatype.STRING,

@@ -46,6 +46,22 @@ function HomePage() {
       <div className="body">
         <div className="left-side">
           <div className="content">
+            <button
+              style={{
+                background: "#7cd1f9",
+                width: "410px",
+                border: " 1px solid #ccc",
+                borderRadius: "5px",
+                fontSize: "30px",
+                marginLeft: "22px",
+                marginBottom: "60px",
+              }}
+              className="btn no-bg"
+              onClick={clickJoin}
+            >
+              Join
+            </button>
+
             <div className="action-btn">
               {/* <button className="btn green">
                 <FontAwesomeIcon className="icon-block" icon={faVideo} />
@@ -53,20 +69,13 @@ function HomePage() {
               </button> */}
               <div className="input-block">
                 <div className="input-section">
-                  <FontAwesomeIcon className="icon-block" icon={faKeyboard} />
-                  <input placeholder="Email" ref={userRef} />
+                  {/* <FontAwesomeIcon className="icon-block" icon={faKeyboard} /> */}
+                  <input placeholder="Username" ref={userRef} />
                 </div>
                 <div className="input-section">
-                  <FontAwesomeIcon className="icon-block" icon={faKeyboard} />
-                  <input placeholder="Room" ref={roomRef} />
+                  {/* <FontAwesomeIcon className="icon-block" icon={faKeyboard} /> */}
+                  <input placeholder="Room name" ref={roomRef} />
                 </div>
-                <button
-                  style={{ background: "#4169E1" }}
-                  className="btn no-bg"
-                  onClick={clickJoin}
-                >
-                  Join
-                </button>
               </div>
             </div>
           </div>

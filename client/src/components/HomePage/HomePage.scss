@@ -20,7 +20,7 @@
           font-weight: 300;
         }
         .action-btn {
-          margin-top: 60px;
+          margin-top: -220px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -58,12 +58,12 @@
                 color: #5f6368;
               }
               input {
-                font-size: 16px;
-                height: 48px;
+                font-size: 20px;
+                height: 60px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
-                padding-left: 35px;
-                width: 100%;
+                padding-left: 50px;
+                width: 200px;
                 box-sizing: border-box;
                 outline: none;
               }
@@ -98,4 +98,8 @@
       }
     }
   }
+}
+.swal-button {
+  width: 90%;
+  margin-right: 330px;
 }

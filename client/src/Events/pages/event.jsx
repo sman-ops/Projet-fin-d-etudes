@@ -77,6 +77,9 @@ function Event() {
     // alert(idEvent)
     removeEvent(idEvent)
       .then((res) => {
+        toast.success(res.data.message, {
+          theme: "colored",
+        });
         loadData();
         console.log(res);
       })
@@ -92,7 +95,7 @@ function Event() {
     handleCurrentMonth({ mm })
       .then((res) => {
         setCurrentEvent(res.data);
-        console.log(currentEvent);
+        // console.log(currentEvent);
       })
       .catch((err) => {
         console.log(err);
@@ -243,7 +246,7 @@ function Event() {
                         {moment(item.start).format("DD/MM/YYYY") +
                           "-" +
                           item.title}
-                        <Tag color="red">today passé</Tag>
+                        <Tag color="red">event passé</Tag>
                       </>
                     ) : (
                       <>
@@ -327,7 +330,7 @@ function Event() {
               <Grid item xs={12} sm={6} mb={4}>
                 <FormControl fullWidth>
                   <InputLabel id="form-layouts-separator-select-label">
-                    Langage
+                    Langue
                   </InputLabel>
                   <Select
                     onChange={onChangeLangue}

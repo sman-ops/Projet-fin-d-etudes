@@ -14,7 +14,8 @@ const path = require("path");
 const userRouters = require("./routers/user-routes");
 const eventRouters = require("./routers/event-routes");
 const salonRouters = require("./routers/salon-routes");
-
+const presenceRouters = require("./routers/presence-routes");
+const roomRouters = require("./routers/room-routes");
 // permet bash  net3amlo mt3a data eli jayetna mn form
 app.use(express.urlencoded({ extended: true }));
 // bash  najmo nt3malo m3a  data eli jayetna sous forme json
@@ -27,12 +28,16 @@ app.use("/", eventRouters);
 
 app.use("/", salonRouters);
 
-// app.use("/", presenceRouters);
+app.use("/", presenceRouters);
+
+app.use("/", roomRouters);
 
 // static image folder
 app.use("/Images", express.static("./Images"));
 
 let socketList = {};
+
+app.use(express.static(path.join(__dirname, "public")));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));

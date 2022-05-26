@@ -16,24 +16,46 @@ function Register() {
 
   const Register = (e) => {
     e.preventDefault();
+    const nameRegex = /^[a-zA-Z\-]{5,20}$/;
+    if (!nameRegex.test(firstname)) {
+      toast.error(" Firstname  must at least 5 characters  ", {
+        transition: Zoom,
+        theme: "colored",
+      });
+      return;
+    }
+    if (!nameRegex.test(lastname)) {
+      toast.error(" Lastname  must at least 5 characters  ", {
+        transition: Zoom,
+        theme: "colored",
+      });
+      return;
+    }
+    if (
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email
+      )
+    ) {
+      toast.error("please enter valid email  ", {
+        transition: Zoom,
+        theme: "colored",
+      });
+      return;
+    }
 
+    if (!nameRegex.test(password)) {
+      toast.error(" password  must at least 6 characters  ", {
+        transition: Zoom,
+        theme: "colored",
+      });
+      return;
+    }
     // const data = { username: username,email:email, password: password };
     // axios.post("http://localhost:3001/register", data).then((response) => {
     //      console.log(response.data);
     //      navigate('/login')
     //     });
 
-    if (
-      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email
-      )
-    ) {
-      toast.error("email invalid ", {
-        transition: Zoom,
-        theme: "colored",
-      });
-      return;
-    }
     fetch("http://localhost:3001/register", {
       method: "post",
       headers: {

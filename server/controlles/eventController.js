@@ -43,10 +43,9 @@ module.exports.createEvent = async (req, res) => {
     transporter.sendMail({
       to: data.email,
       from: "slimen.ghnimi@etudiant-fst.utm.tn",
-      subject: "Event Presentiel ",
+      subject: "Present Event ",
       cc: "slimen.ghenimi@gmail.com",
-      html: `<h1>Welcome ,You have a present event </h1>
-                       `,
+      html: `<h1>Welcome ,You are invited to   present event </h1> `,
     });
     res.json(data);
   } catch (err) {
@@ -93,6 +92,13 @@ module.exports.updateEvent = async (req, res) => {
 module.exports.removeEvent = (req, res) => {
   try {
     const result = db.Events.destroy({ where: { id: req.params.id } });
+    transporter.sendMail({
+      to: result.email,
+      from: "slimen.ghnimi@etudiant-fst.utm.tn",
+      subject: " Conceled Present Event ",
+      cc: "slimen.ghenimi@gmail.com",
+      html: `<h1>Sorry,the Present  event  is conceled </h1> `,
+    });
     res.json({ result, message: "Event deleted with success" });
   } catch (err) {
     console.log("server err");
@@ -115,4 +121,8 @@ module.exports.currentMonth = async (req, res) => {
     console.log("server err");
     res.status(500).send("server err");
   }
+};
+exports.countPresentEvent = async (req, res) => {
+  const events = await db.Events.count();
+  res.json({ events });
 };

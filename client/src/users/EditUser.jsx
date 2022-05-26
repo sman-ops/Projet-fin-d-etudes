@@ -25,6 +25,7 @@ function EditUser() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [grade, setGrade] = useState("");
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     const getSingleUser = async () => {
@@ -34,6 +35,7 @@ function EditUser() {
       setEmail(data.email);
       setPhone(data.telephone);
       setGrade(data.grade);
+      setRole(data.role);
     };
 
     getSingleUser();
@@ -48,6 +50,7 @@ function EditUser() {
       email: email,
       telephone: phone,
       grade: grade,
+      role: role,
     };
     axios.put(`http://localhost:3001/user/${id}`, data).then((response) => {
       if (response.status === 200) {
@@ -132,6 +135,8 @@ function EditUser() {
                   rôle
                 </InputLabel>
                 <Select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
                   label="Role"
                   defaultValue=""
                   id="form-layouts-separator-select"

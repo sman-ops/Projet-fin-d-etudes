@@ -28,6 +28,7 @@ import Event from "./Events/pages/event";
 import ListEvents from "./Events/pages/ListEvents";
 import ListEventOnline from "./Salon/pages/listEventOnline";
 import ViewEvent from "./Events/pages/ViewEvent";
+import ViewEvenOnline from "./Salon/pages/ViewEvenOnline";
 import Salon from "./Salon/pages/salon";
 import ViewUser from "./users/ViewUser";
 import AccountSettings from "./account-setting/index";
@@ -154,10 +155,18 @@ function App() {
                 />
 
                 <Route
-                  path="/viewevent/:id"
+                  path="/vieweventPresent/:id"
                   element={
                     <Template>
                       <ViewEvent />
+                    </Template>
+                  }
+                />
+                <Route
+                  path="/vieweventOnline/:id"
+                  element={
+                    <Template>
+                      <ViewEvenOnline />
                     </Template>
                   }
                 />

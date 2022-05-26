@@ -6,7 +6,10 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import "./event.css";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import { useNavigate } from "react-router-dom";
+
 function ListEvents() {
+  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   //  const  present =async (id,etat)=>{
@@ -42,16 +45,34 @@ function ListEvents() {
     })
     .map((event) => {
       return (
-        <div className="user">
-          <h4>Event Presentiel</h4>
-          <div style={{ marginLeft: "400px", marginBottom: "5%" }}>
-            <EditIcon color="primary" />
-            <VisibilityOutlinedIcon color="primary" />
+        <div
+          className="user"
+          onClick={() => {
+            navigate(`/vieweventPresent/${event.id}`);
+          }}
+        >
+          <img
+            src="assets/images/event.png"
+            style={{
+              width: "15%",
+              marginRight: "70%",
+              marginTop: "10%",
+              marginBottom: "10px",
+            }}
+            alt="logo"
+          />
+          <h6 style={{ background: "#6495ED", color: "white" }}>
+            Present Event
+          </h6>
+          <div style={{ marginLeft: "400px", marginBottom: "15%" }}>
+            {/* <EditIcon color="primary" /> */}
+            {/* <VisibilityOutlinedIcon color="primary" /> */}
           </div>
-          <h3>Name of event : {event.title}</h3>
-          <h3>Start in : {event.start}</h3>
-          <h3>Type of the event : {event.typeEvent}</h3>
-          <div style={{ marginTop: "2%" }}>
+          <h3 style={{ marginBottom: "30%", height: "50%" }}>
+            Name of event : {event.title}
+          </h3>
+
+          {/* <div style={{ marginBottom: "10%" }}>
             <button
               type="button"
               style={{ height: "55px", width: "90px", borderRadius: "3px" }}
@@ -69,7 +90,7 @@ function ListEvents() {
             >
               Absent
             </button>
-          </div>
+          </div> */}
         </div>
       );
     });

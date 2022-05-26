@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -14,39 +14,87 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function AddUser() {
-  const phoneRegExp = /^[2-9]{2}[0-9]{8}/;
-  const passwordRegExp =
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  const navigate = useNavigate();
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [grade, setGrade] = useState("");
+  const [role, setRole] = useState("");
 
-  const initialValues = {
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    phone: "",
-    grade: "",
-    role: "",
+  const AddUser = async (e) => {
+    e.preventDefault();
+    const data = {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+      telephone: phone,
+      grade: grade,
+      role: role,
+    };
+
+    await axios
+      .post("http://localhost:3001/register", data)
+      .then((response) => {
+        console.log(response);
+        if (response.data.error) {
+          toast.error(response.data.error, {
+            theme: "colored",
+          });
+        } else if (response.data.notmatch) {
+          toast.error(data.notmatch, {
+            theme: "colored",
+          });
+        } else {
+          toast.success(response.data.message, {
+            theme: "colored",
+          });
+          navigate("/user");
+        }
+      })
+      .catch((err) => console.log(err));
   };
-  const validationSchema = Yup.object().shape({
-    firstname: Yup.string().min(4).required("Required"),
-    lastname: Yup.string().min(4).required("Required"),
-    email: Yup.string().email("Enter valid email").required("Required"),
-    password: Yup.string()
-      .min(8, "Minimum characters should be 8")
-      .matches(
-        passwordRegExp,
-        "Password must have one upper, lower case, number, special symbol"
-      )
-      .required("Required"),
-    phone: Yup.string()
-      .matches(phoneRegExp, "Enter valid Phone number")
-      .required("Required"),
-    grade: Yup.string().min(5).required("Required"),
-  });
-  const onSubmit = (values, props) => {
-    console.log(values);
-  };
+
+  // const phoneRegExp = /^[2-9]{2}[0-9]{8}/;
+  // const passwordRegExp =
+  //   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+
+  // const initialValues = {
+  //   firstname: "",
+  //   lastname: "",
+  //   email: "",
+  //   password: "",
+  //   phone: "",
+  //   grade: "",
+  //   role: "",
+  // };
+  // const validationSchema = Yup.object().shape({
+  //   firstname: Yup.string().min(4).required("Required"),
+  //   lastname: Yup.string().min(4).required("Required"),
+  //   email: Yup.string().email("Enter valid email").required("Required"),
+  //   password: Yup.string()
+  //     .min(8, "Minimum characters should be 8")
+  //     .matches(
+  //       passwordRegExp,
+  //       "Password must have one upper, lower case, number, special symbol"
+  //     )
+  //     .required("Required"),
+  //   phone: Yup.string()
+  //     .matches(phoneRegExp, "Enter valid Phone number")
+  //     .required("Required"),
+  //   grade: Yup.string().min(5).required("Required"),
+  // });
+  // const onSubmit = (values, props) => {
+  //   console.log(values);
+  // };
 
   return (
     <Card
@@ -64,9 +112,9 @@ function AddUser() {
       />
       <Divider sx={{ margin: 0 }} />
       <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
+      // initialValues={initialValues}
+      // onSubmit={onSubmit}
+      // validationSchema={validationSchema}
       >
         {(props) => (
           <Form>
@@ -85,10 +133,8 @@ function AddUser() {
                     placeholder="carter"
                     name="firstname"
                     error={props.errors.firstname}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
-                  <ErrorMessage name="firstname">
-                    {(msg) => <div style={{ color: "red" }}>{msg}</div>}
-                  </ErrorMessage>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field
@@ -98,6 +144,7 @@ function AddUser() {
                     name="lastname"
                     placeholder="Leonard"
                     error={props.errors.lastname}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                   <ErrorMessage name="lastname">
                     {(msg) => <div style={{ color: "red" }}>{msg}</div>}
@@ -113,6 +160,7 @@ function AddUser() {
                     placeholder="carterleonard@gmail.com"
                     name="email"
                     error={props.errors.email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <ErrorMessage name="email">
                     {(msg) => <div style={{ color: "red" }}>{msg}</div>}
@@ -127,6 +175,22 @@ function AddUser() {
                     placeholder="password"
                     name="password"
                     error={props.errors.password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <ErrorMessage name="password">
+                    {(msg) => <div style={{ color: "red" }}>{msg}</div>}
+                  </ErrorMessage>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Field
+                    as={TextField}
+                    fullWidth
+                    type="password"
+                    label="Confirm password"
+                    placeholder="Confirm password"
+                    name="confirm"
+                    error={props.errors.password}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                   <ErrorMessage name="password">
                     {(msg) => <div style={{ color: "red" }}>{msg}</div>}
@@ -149,6 +213,7 @@ function AddUser() {
                     placeholder="+216 3423424"
                     name="phone"
                     error={props.errors.phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                   <ErrorMessage name="phone">
                     {(msg) => <div style={{ color: "red" }}>{msg}</div>}
@@ -162,6 +227,7 @@ function AddUser() {
                     placeholder="Stagiaire..."
                     name="grade"
                     error={props.errors.grade}
+                    onChange={(e) => setGrade(e.target.value)}
                   />
                   <ErrorMessage name="grade">
                     {(msg) => <div style={{ color: "red" }}>{msg}</div>}
@@ -183,6 +249,7 @@ function AddUser() {
                     rôle
                   </InputLabel>
                   <Select
+                    onChange={(e) => setRole(e.target.value)}
                     label="Role"
                     defaultValue=""
                     id="form-layouts-separator-select"
@@ -202,10 +269,12 @@ function AddUser() {
                 type="submit"
                 sx={{ mr: 2 }}
                 variant="contained"
+                onClick={AddUser}
               >
-                Submit
+                Add User
               </Button>
               <Button
+                type="reset"
                 style={{ width: "25%", height: "50px" }}
                 color="secondary"
                 variant="outlined"

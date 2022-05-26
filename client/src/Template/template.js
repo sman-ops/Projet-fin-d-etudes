@@ -15,12 +15,14 @@ function Template({ children }) {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [role, setRole] = useState("");
 
   const getSingleUser = async () => {
     const { data } = await axios.get(`http://localhost:3001/user/${id}`);
     setFirstName(data.firstname);
     setLastName(data.lastname);
     setAvatar(data.picture);
+    setRole(data.role);
   };
 
   useEffect(() => {
@@ -51,8 +53,9 @@ function Template({ children }) {
                   src={`http://localhost:3001/Images/${avatar}`}
                   alt="profile"
                 />
-                <span className="login-status online"></span>
+                {/* <span className="login-status online"></span> */}
               </div>
+
               <div className="nav-profile-text d-flex flex-column pr-3">
                 <span className="font-weight-medium mb-2">{firstname}</span>
               </div>
@@ -77,7 +80,7 @@ function Template({ children }) {
               aria-controls="ui-basic"
             >
               <TodayIcon color="primary" />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <span className="menu-title">Event</span>
               <i className="menu-arrow"></i>
             </a>
@@ -117,20 +120,21 @@ function Template({ children }) {
               </ul>
             </div>
           </li>
-
+          {user && user.role === "Administrateur" ? (
+            <li className="nav-item">
+              <a className="nav-link" href="pages/icons/mdi.html">
+                <PeopleOutlineIcon color="primary" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Link to="/user">
+                  <span className="menu-title">Users</span>
+                </Link>
+              </a>
+            </li>
+          ) : null}
           <li className="nav-item">
             <a className="nav-link" href="pages/icons/mdi.html">
               <PeopleOutlineIcon color="primary" />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Link to="/user">
-                <span className="menu-title">Users</span>
-              </Link>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="pages/icons/mdi.html">
-              <PeopleOutlineIcon color="primary" />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Link to="/user">
                 <span className="menu-title">Salon</span>
               </Link>
@@ -198,19 +202,6 @@ function Template({ children }) {
               </Link>
             </a>
           </li>
-          <li>
-            <a className="dropdown-item" href="/">
-              <i
-                className="mdi mdi-logout mr-2 text-primary"
-                onClick={() => {
-                  localStorage.clear();
-                  navigate("/");
-                }}
-              >
-                logout
-              </i>
-            </a>
-          </li>
         </ul>
       </nav>
 
@@ -251,7 +242,7 @@ function Template({ children }) {
               <i className="mdi mdi-menu"></i>
             </button>
             <ul className="navbar-nav">
-              <li className="nav-item nav-search border-0 ml-1 ml-md-1 ml-lg-2 d-none d-md-flex">
+              {/* <li className="nav-item nav-search border-0 ml-1 ml-md-1 ml-lg-2 d-none d-md-flex">
                 <form className="nav-link form-inline mt-2 mt-md-0">
                   <div className="input-group">
                     <input
@@ -266,8 +257,8 @@ function Template({ children }) {
                     </div>
                   </div>
                 </form>
-              </li>
-              <li className="nav-item dropdown">
+              </li> */}
+              {/* <li className="nav-item dropdown">
                 <a
                   className="nav-link count-indicator dropdown-toggle"
                   id="notificationDropdown"
@@ -344,10 +335,10 @@ function Template({ children }) {
                   <div className="dropdown-divider"></div>
                   <p className="p-3 mb-0">View all activities</p>
                 </div>
-              </li>
+              </li> */}
             </ul>
             <ul className="navbar-nav navbar-nav-right ml-lg-auto">
-              <li className="nav-item dropdown d-none d-xl-flex border-0">
+              {/* <li className="nav-item dropdown d-none d-xl-flex border-0">
                 <a
                   className="nav-link dropdown-toggle"
                   id="languageDropdown"
@@ -377,7 +368,7 @@ function Template({ children }) {
                     Japanese{" "}
                   </a>
                 </div>
-              </li>
+              </li> */}
               <li className="nav-item nav-profile dropdown border-0">
                 <a
                   className="nav-link dropdown-toggle"
@@ -385,11 +376,12 @@ function Template({ children }) {
                   data-toggle="dropdown"
                 >
                   <img
+                    style={{ marginLeft: "25%" }}
                     className="nav-profile-img mr-2"
                     alt=""
                     src={`http://localhost:3001/Images/${avatar}`}
                   />
-                  <span className="profile-name">{firstname}</span>
+                  <span className="profile-name">{role}</span>
                 </a>
                 <div
                   className="dropdown-menu navbar-dropdown w-100"

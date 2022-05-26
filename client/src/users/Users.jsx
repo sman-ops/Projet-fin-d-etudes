@@ -25,7 +25,7 @@ function Users() {
     [`&.${tableCellClasses.head}`]: {
       color: theme.palette.common.black,
       backgroundColor: theme.palette.action.disabledBackground,
-      fontSize: 20,
+      fontSize: 17,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -46,7 +46,7 @@ function Users() {
   const [users, setUsers] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const usersPerPage = 2;
+  const usersPerPage = 4;
   const pagesVisited = pageNumber * usersPerPage;
   const getUser = async () => {
     await axios.get("http://localhost:3001/users").then((response) => {

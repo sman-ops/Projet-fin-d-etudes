@@ -8,6 +8,7 @@ const {
   updateEvent,
   removeEvent,
   getEvent,
+  countPresentEvent,
 } = require("../controlles/eventController");
 
 // create an event
@@ -15,6 +16,7 @@ route.post("/api/events", createEvent);
 
 // get all events
 route.get("/api/events", listEvents);
+
 // get event by id
 route.get("/api/event/:id", getEvent);
 
@@ -29,5 +31,7 @@ route.put("/api/update", updateEvent);
 //Method     DELETE
 //@Access    Public
 route.delete("/api/delete/:id", removeEvent);
+
+route.get("/countPevents", countPresentEvent);
 
 module.exports = route;
