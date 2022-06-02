@@ -1,6 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  faVideo,
+  faMicrophone,
+  faPhone,
+  faAngleUp,
+  faClosedCaptioning,
+  faDesktop,
+  faMicrophoneSlash,
+  faVideoSlash,
+  faRecordVinyl,
+  faStop,
+} from "@fortawesome/free-solid-svg-icons";
+
 import VideoCard from "../video/VideoCard";
 import "./CallPage.scss";
 import socket from "../../socket";
@@ -144,8 +159,8 @@ function CallPage() {
     return () => {
       socket.disconnect();
     };
-    // console.log(peers);
-    // eslint-disable-next-line
+
+    console.log(peers);
   }, []);
 
   function createPeer(userId, caller, stream) {
@@ -349,19 +364,7 @@ function CallPage() {
         });
     }
   };
-
-  let video_6 = "w-full h-full grid grid-cols-3 gap-4 bg-black  pb-28 p-4 ";
-  let video_8 = "w-full h-full grid grid-cols-1 gap-4 bg-black  pb-28 p-4";
-  if (peers.length === 1) {
-    video_8 = "w-full h-full grid grid-cols-1 gap-4 bg-black  pb-28 p-4";
-  } else if (peers.length === 2) {
-    video_8 = "w-full h-full grid grid-cols-3 gap-4 bg-black  pb-28 p-4";
-  } else if (peers.length === 0) {
-    video_8 = "w-full h-full grid grid-cols-1 gap-4 bg-black  pb-28 p-4";
-  } else {
-    video_8 = "w-full h-full grid grid-cols-4 gap-4 bg-black  pb-28 p-4";
-  }
-
+  console.log(userVideoAudio);
   return (
     <div className="callpage-container w-screen" onClick={clickBackground}>
       <div
@@ -380,9 +383,24 @@ function CallPage() {
         }  `}
         style={{ maxHeight: "90vh", minHeight: "90vh" }}
       >
-        <div className="w-full h-full flex justify-center items-center">
+        <div
+          className={`w-full h-full flex  flex-col rounded justify-center items-center  ${
+            userVideoAudio.localUser.video ? null : "border-4 border-gray-50"
+          }`}
+        >
+          {userVideoAudio.localUser.video ? null : (
+            <div className="w-full flex justify-end text-white ">
+              <FontAwesomeIcon
+                className="mt-6 mr-6 text-red-700 text-2xl"
+                icon={faVideoSlash}
+              />
+            </div>
+          )}
+
           <video
-            className="rounded"
+            className={`rounded m-auto ${
+              userVideoAudio.localUser.video ? null : "hidden"
+            }`}
             src=""
             playsInline
             autoPlay
@@ -390,17 +408,41 @@ function CallPage() {
             onClick={expandScreen}
             ref={userVideoRef}
           />
+          {userVideoAudio.localUser.video ? null : (
+            <div className="rounded-full w-36 h-36 m-auto flex justify-center items-center border-4 border-gray-50 text-2xl text-white font-mono bg-blue-600 ">
+              {currentUser}
+            </div>
+          )}
         </div>
         {peers &&
-          peers.map((peer, idx, arr) => (
-            <div
-              key={idx}
-              className="w-full h-full flex justify-center items-center"
-              onClick={expandScreen}
-            >
-              <VideoCard peer={peer} number={arr.length} />
-            </div>
-          ))}
+          peers.map((peer, idx, arr) => {
+            // console.log(userVideoAudio[peer.userName].video);
+            let video = userVideoAudio[peer.userName];
+            if (video) {
+              console.log(video.video);
+            }
+
+            return (
+              <div
+                key={idx}
+                // className="w-full h-full flex justify-center items-center"
+                className={`w-full h-full flex  flex-col rounded justify-center items-center  ${
+                  video && video.video ? null : "border-4 border-gray-50"
+                }`}
+                onClick={expandScreen}
+              >
+                {video && video.video ? null : (
+                  <div className="w-full flex justify-end text-white ">
+                    <FontAwesomeIcon
+                      className="mt-6 mr-6 text-red-700 text-2xl"
+                      icon={faVideoSlash}
+                    />
+                  </div>
+                )}
+                <VideoCard videodata={video} peer={peer} number={arr.length} />
+              </div>
+            );
+          })}
         {/* <div className="border w-full h-full border-black">
             here we go
           </div>

@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import socket from "../../../socket";
+import { SocketContext } from "../../../Contexte/socketContext";
 import "./Messenger.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,13 +9,14 @@ import {
   faCommentAlt,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
-
+import moment from "moment";
 function Messenger({ setIsMessenger, display, roomId }) {
+  let time = moment(new Date()).format("hh:mm A");
   const currentUser = sessionStorage.getItem("user");
   const [text, setText] = useState("");
   const [msg, setMsg] = useState([]);
   const messagesEndRef = useRef(null);
-
+  const { chat } = useContext(SocketContext);
   useEffect(() => {
     socket.on("FE-receive-message", ({ msg, sender }) => {
       setMsg((msgs) => [...msgs, { sender, msg }]);
@@ -36,6 +38,7 @@ function Messenger({ setIsMessenger, display, roomId }) {
         roomId,
         msg: text,
         sender: currentUser,
+        time,
       });
       setText("");
     }
@@ -65,12 +68,12 @@ function Messenger({ setIsMessenger, display, roomId }) {
       </div>
 
       <div className="chat-section">
-        {msg &&
-          msg.map(({ sender, msg }, idx) => {
+        {chat &&
+          chat.map(({ sender, msg, time }, idx) => {
             return (
               <div key={idx} className="chat-block">
                 <div className="sender">
-                  {sender} <small>10:50 pm</small>
+                  {sender} <small>{time}</small>
                 </div>
                 {/* <p className="msg">here commes an actual msg </p> */}
                 <p className="msg">{msg} </p>

@@ -117,7 +117,7 @@ function AddUser() {
       // validationSchema={validationSchema}
       >
         {(props) => (
-          <Form>
+          <form>
             <CardContent>
               <Grid container spacing={4}>
                 <Grid item xs={12}>
@@ -282,7 +282,7 @@ function AddUser() {
                 Cancel
               </Button>
             </CardActions>
-          </Form>
+          </form>
         )}
       </Formik>
     </Card>

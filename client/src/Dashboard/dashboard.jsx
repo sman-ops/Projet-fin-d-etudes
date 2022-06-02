@@ -5,9 +5,10 @@ import { Chart as ChartJS } from "chart.js/auto";
 import { Col, Row, Card, Container } from "react-bootstrap";
 import axios from "axios";
 import Linechart from "./Linechart";
+import Lineechart from "./Lineechart";
 function Dashboard() {
   // const [userDATA, setUserData] = useState({
-  //   labels: UserData.map((data) => data.year),
+  //   labels: months,
   //   datasets: [
   //     {
   //       label: "Users Gained",
@@ -50,32 +51,21 @@ function Dashboard() {
   return (
     <Container>
       <Row>
-        <Col md={6}>
-          <div style={{ width: 500, height: 300 }}>
-            {/* <Bar data={userDATA} />
-        <Pie data={userDATA} />{" "} */}
-            <Linechart />
-          </div>
-        </Col>
-        <Col md={6}>
-          <div style={{ width: 500, height: 300 }}>
-            {/* <Bar data={userDATA} />
-        <Pie data={userDATA} />{" "} */}
-            <Linechart />
-          </div>
-        </Col>
-        <Row className="mt-5 ml-md-5  d-flex justify-content-center ">
+        <Row className="mt-12 ml-md-5  d-flex justify-content-center mb-5 ">
           <Col md={4}>
-            <Card className=" shadow mt-md-2  rounded">
+            <Card
+              style={{ width: "270px", height: "130px" }}
+              className=" shadow mt-md-2  rounded"
+            >
               <Card.Body>
                 <Row>
                   <Col>
                     <span className="h6 font-semibold text-muted text-sm d-block mb-2">
                       Nouveaux
-                    </span>{" "}
+                    </span>
                     <span className="h3 font-bold mb-0">{countusers}</span>{" "}
                   </Col>
-                  <div className="col-auto">
+                  <div className="">
                     <div
                       className="icon icon-shape bg-primary text-white text-lg rounded-circle"
                       style={{ width: "40px", paddingLeft: "10px" }}
@@ -86,21 +76,21 @@ function Dashboard() {
                   </div>
                 </Row>
                 <div className="mt-2 mb-0 text-sm">
-                  {" "}
                   <span className="badge badge-pill bg-soft-success text-success me-2">
-                    {" "}
                     <i className="bi bi-arrow-up me-1" />
-                    30%{" "}
-                  </span>{" "}
+                  </span>
                   <span className="text-nowrap text-xs text-muted">
-                    Depuis le mois dernier
+                    Number of users
                   </span>
                 </div>
               </Card.Body>
             </Card>
           </Col>
           <Col md={4}>
-            <Card className=" shadow mt-md-2  rounded">
+            <Card
+              style={{ width: "270px", height: "130px" }}
+              className=" shadow mt-md-2  rounded"
+            >
               <Card.Body>
                 <Row>
                   <Col>
@@ -109,7 +99,7 @@ function Dashboard() {
                     </span>{" "}
                     <span className="h3 font-bold mb-0">{countpresevents}</span>{" "}
                   </Col>
-                  <div className="col-auto">
+                  <div className="">
                     <div
                       className="icon icon-shape bg-primary text-white text-lg rounded-circle"
                       style={{ width: "40px", paddingLeft: "10px" }}
@@ -124,17 +114,19 @@ function Dashboard() {
                   <span className="badge badge-pill bg-soft-success text-success me-2">
                     {" "}
                     <i className="bi bi-arrow-up me-1 " />
-                    30%{" "}
                   </span>{" "}
                   <span className="text-nowrap text-xs text-muted">
-                    Depuis le mois dernier
+                    Event Presentiel
                   </span>
                 </div>
               </Card.Body>
             </Card>
           </Col>
           <Col md={4}>
-            <Card className=" shadow mt-md-2  rounded">
+            <Card
+              style={{ width: "270px", height: "130px" }}
+              className=" shadow mt-md-2 rounded"
+            >
               <Card.Body>
                 <Row>
                   <Col>
@@ -145,13 +137,12 @@ function Dashboard() {
                       {countonlineevents}
                     </span>{" "}
                   </Col>
-                  <div className="col-auto">
+                  <div className="">
                     <div
                       className="icon icon-shape bg-primary text-white text-lg rounded-circle"
                       style={{ width: "40px", paddingLeft: "10px" }}
                     >
-                      {" "}
-                      <i className="bi bi-calendar-event"></i>
+                      <i className="bi bi-calendar2-event"></i>
                     </div>
                   </div>
                 </Row>
@@ -160,16 +151,29 @@ function Dashboard() {
                   <span className="badge badge-pill bg-soft-success text-success me-2">
                     {" "}
                     <i className="bi bi-arrow-up me-1" />
-                    30%{" "}
                   </span>{" "}
                   <span className="text-nowrap text-xs text-muted">
-                    Depuis le mois dernier
+                    Event Online
                   </span>
                 </div>
               </Card.Body>
             </Card>
           </Col>
         </Row>
+        <Col md={6}>
+          <div style={{ width: 500, height: 300 }}>
+            {/* <Bar data={userDATA} /> */}
+            {/* <Pie data={userDATA} />{" "}  */}
+            <Linechart />
+          </div>
+        </Col>
+        <Col md={6}>
+          <div style={{ width: 500, height: 300 }}>
+            {/* <Bar data={userDATA} />
+        <Pie data={userDATA} />{" "} */}
+            <Lineechart />
+          </div>
+        </Col>
       </Row>
     </Container>
   );

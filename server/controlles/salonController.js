@@ -1,6 +1,6 @@
 const db = require("../models");
 var sequelize = require("sequelize");
-
+const handlebars = require("handlebars");
 const nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
@@ -12,7 +12,8 @@ let transporter = nodemailer.createTransport({
 });
 
 module.exports.createSalon = async (req, res) => {
-  const { title, start, end, email, mdp, color, UserId } = req.body;
+  const { title, start, end, email, description, mdp, color, UserId } =
+    req.body;
   if (!title) {
     throw new Error("no data!");
   }
@@ -22,16 +23,35 @@ module.exports.createSalon = async (req, res) => {
       start,
       end,
       email,
+      description,
       mdp,
       color,
       UserId,
     });
+    const htmlsend = `<h3>Welcome,</h3>  <br>You are invited to <U>{{title}}</U> Online  event. <br> <br><U><strong>Details Event : </strong></U>  <br>
+    <ul>
+    <li>Name of the event :  {{title}}</li>
+    <li>Start in :  {{start}}</li>
+    <li>End in :{{end}}</li>
+    <li>Mot de passe room : {{mdp}}</li>
+    <li>Description :{{description}}</li>
+    </ul> <br><br>Click to this <a href="http://localhost:3000/homepage/{{mdp}}">link</a> to join the room<br><br> Cordialement, `;
+    const template = handlebars.compile(htmlsend);
+    const replacement = {
+      title: data.title,
+      start: data.start,
+      end: data.end,
+      mdp: data.mdp,
+      description: data.description,
+    };
+    const html = template(replacement);
+
     transporter.sendMail({
       to: data.email,
       from: "slimen.ghnimi@etudiant-fst.utm.tn",
       subject: "Online Event",
       cc: "slimen.ghenimi@gmail.com",
-      html: `<h1>Welcome ,You are invited to online event</h1> `,
+      html,
     });
     res.json(data);
     db.Room.create({
@@ -46,7 +66,7 @@ module.exports.createSalon = async (req, res) => {
 
 module.exports.listSalon = async (req, res) => {
   try {
-    res.send(await db.EventOnline.findAll({}));
+    res.send(await db.EventOnline.findAll({ order: [["createdAt", "DESC"]] }));
   } catch (err) {
     console.log("server err");
     res.status(500).send("server err");

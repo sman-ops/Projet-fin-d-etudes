@@ -37,6 +37,9 @@ import HomePage from "./components/HomePage/HomePage";
 import CallPage from "./components/CallPage/CallPage";
 import Dashboard from "./Dashboard/dashboard";
 import AddEvent from "./AddEventUI/Addevent";
+import Room from "./Room/Room";
+import ViewRoom from "./Room/ViewRoom";
+
 function App() {
   // if you able to access the value of the state and be able to change this state in any of components below here we can pass those to value={{}}
 
@@ -167,6 +170,22 @@ function App() {
                   element={
                     <Template>
                       <ViewEvenOnline />
+                    </Template>
+                  }
+                />
+                <Route
+                  path="/room"
+                  element={
+                    <Template>
+                      <Room />
+                    </Template>
+                  }
+                />
+                <Route
+                  path="/viewroom/:id"
+                  element={
+                    <Template>
+                      <ViewRoom />
                     </Template>
                   }
                 />

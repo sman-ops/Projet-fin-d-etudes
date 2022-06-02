@@ -1,6 +1,6 @@
 const db = require("../models");
 var sequelize = require("sequelize");
-
+const handlebars = require("handlebars");
 const nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
@@ -40,12 +40,34 @@ module.exports.createEvent = async (req, res) => {
       color,
       UserId,
     });
+    const htmlsend = `<h3>Welcome,</h3>  <br>You are invited to <U>{{title}}</U> present  event. <br> <br><U><strong>Details Event : </strong></U>  <br>
+    <ul>
+    <li>Name of the event :  {{title}}</li>
+    <li>Start in :  {{start}}</li>
+    <li>End in :{{end}}</li>
+    <li>Location : {{lieu}}</li>
+    <li>typeEvent : {{typeEvent}}</li>
+    <li>langueEvent : {{langueEvent}}</li>
+    <li>Description : {{description}} </li>
+    </ul>  <br><br> Cordialement, `;
+    const template = handlebars.compile(htmlsend);
+    const replacement = {
+      title: data.title,
+      start: data.start,
+      end: data.end,
+      lieu: data.lieu,
+      typeEvent: data.typeEvent,
+      langueEvent: data.langueEvent,
+      description: data.description,
+    };
+    const html = template(replacement);
+
     transporter.sendMail({
       to: data.email,
       from: "slimen.ghnimi@etudiant-fst.utm.tn",
       subject: "Present Event ",
       cc: "slimen.ghenimi@gmail.com",
-      html: `<h1>Welcome ,You are invited to   present event </h1> `,
+      html,
     });
     res.json(data);
   } catch (err) {
@@ -56,7 +78,7 @@ module.exports.createEvent = async (req, res) => {
 
 module.exports.listEvents = async (req, res) => {
   try {
-    res.send(await db.Events.findAll({}));
+    res.send(await db.Events.findAll({ order: [["createdAt", "DESC"]] }));
   } catch (err) {
     console.log("server err");
     res.status(500).send("server err");

@@ -38,6 +38,7 @@ function Salon() {
     start: "",
     end: "",
     mdp: "",
+    description: "",
     UserId: id,
     color: "",
     email: "",
@@ -114,6 +115,7 @@ function Salon() {
       start: info.startStr,
       end: info.endStr,
       email: values.email,
+      description: values.description,
     });
   };
 
@@ -152,6 +154,10 @@ function Salon() {
   const onChangeEmail = (e) => {
     console.log(e.target.value);
     setValues({ ...values, email: e.target.value });
+  };
+  const onChangeDescription = (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, description: e.target.value });
   };
 
   const showModal = () => {
@@ -344,10 +350,31 @@ function Salon() {
                   placeholder="tunis,...."
                 />
               </Grid>
+              <Grid item sm={6} mb={2}>
+                <TextField
+                  value={values.description}
+                  onChange={onChangeDescription}
+                  fullWidth
+                  multiline
+                  label="Description de l'événement"
+                  rows={3}
+                />
+              </Grid>
 
               {/* <label> titre </label><input name="title" value={values.title}  onChange={onChangeTitle} /><br/>
           <label> lieu </label> <input name="lieu" value={values.lieu}  onChange={onChangeLieu} /> */}
-              <select name="color" onChange={onChangeColor}>
+              <select
+                name="color"
+                onChange={onChangeColor}
+                style={{
+                  width: "100%",
+                  height: "80%",
+                  border: "1px solid ",
+                  borderRadius: "5px",
+                  textAlign: "3px",
+                  padding: "10px",
+                }}
+              >
                 {department.map((item, index) => (
                   <option key={index} value={item.color}>
                     {item.name}
@@ -387,7 +414,9 @@ function Salon() {
                 </button>,
               ]}
             >
-              <h1>Are you sure you want to delete your accountt</h1>
+              <h1 style={{ textAlign: "center" }}>
+                Are you sure you want to delete this event ?
+              </h1>
             </Modal>
           </Col>
         </Row>

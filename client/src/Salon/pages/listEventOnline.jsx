@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { listSalon } from "../functions/Salon";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import "./salon.css";
 function ListEventOnline() {
@@ -22,11 +24,19 @@ function ListEventOnline() {
   };
 
   const [pageNumber, setPageNumber] = useState(0);
-
+  const [searchTerm, setSearchTerm] = useState("");
   const usersPerPage = 3;
   const pagesVisited = pageNumber * usersPerPage;
 
   const displayUsers = events
+    .filter((val) => {
+      if (searchTerm == "") {
+        return val;
+      } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return val;
+      }
+    })
+
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((event) => {
       return (
@@ -41,14 +51,23 @@ function ListEventOnline() {
             style={{
               width: "15%",
               marginRight: "70%",
-              marginTop: "13%",
+              marginTop: "4%",
               marginBottom: "10px",
             }}
             alt="logo"
           />
-          <h2 style={{ background: "#6495ED", color: "white" }}>
-            Online Event
-          </h2>
+          <div
+            style={{
+              background: "#6495ED",
+              width: "150px",
+              color: "white",
+              padding: "10px",
+              borderRadius: 7,
+              textAlign: "center",
+            }}
+          >
+            Online event
+          </div>
 
           <div style={{ marginLeft: "400px", marginBottom: "15%" }}>
             {/* <VisibilityOutlinedIcon color="primary" /> */}
@@ -86,6 +105,17 @@ function ListEventOnline() {
   };
   return (
     <div className="App">
+      <div style={{ marginBottom: "10%", marginLeft: "1%" }}>
+        <Grid item xs={8} sm={3} minWidth={2} mt={5} ml={10}>
+          <TextField
+            label="Search"
+            placeholder="search..."
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+          />
+        </Grid>
+      </div>
       {displayUsers}
       <div style={{ marginLeft: "90%" }}>
         <ReactPaginate

@@ -28,9 +28,9 @@ function Linechart() {
       );
       setEventData((data) => [
         ...data,
-        { month: item, PresentEvent: res.data.length },
+        { months: item, PresentEvent: res.data.length },
       ]);
-      console.log(eventdata);
+      // console.log(eventdata);
     });
   };
 

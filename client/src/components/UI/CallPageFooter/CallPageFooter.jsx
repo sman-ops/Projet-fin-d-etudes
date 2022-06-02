@@ -54,9 +54,9 @@ function CallPageFooter({
       <div className="center-item">
         <div className="icon-block" onClick={toggleAudio}>
           {userVideoAudio.audio ? (
-            <FontAwesomeIcon className="icon" icon={faMicrophone} />
+            <FontAwesomeIcon className="icon " icon={faMicrophone} />
           ) : (
-            <FontAwesomeIcon className="icon" icon={faMicrophoneSlash} />
+            <FontAwesomeIcon className="icon " icon={faMicrophoneSlash} />
           )}
         </div>
         <div className="icon-block" onClick={goToBack}>
@@ -87,7 +87,7 @@ function CallPageFooter({
               icon={faStop}
               onClick={stopRecording}
             />
-            <p className="title">Start Recording</p>
+            <p className="title">Stop Recording</p>
           </div>
         )}
 

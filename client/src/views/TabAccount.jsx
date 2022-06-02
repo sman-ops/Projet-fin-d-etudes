@@ -163,6 +163,7 @@ const TabAccount = () => {
             <TextField
               label="Phone"
               fullWidth
+              value={phone}
               placeholder="+2165656565"
               onChange={(e) => setPhone(e.target.value)}
             />

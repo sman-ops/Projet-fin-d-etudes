@@ -109,8 +109,18 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("BE-send-message", ({ roomId, msg, sender }) => {
-    io.sockets.in(roomId).emit("FE-receive-message", { msg, sender });
+  socket.on("BE-send-message", ({ roomId, msg, sender, time }) => {
+    // sebnder : sender try catch
+    try {
+      db.Data.create({
+        sender: sender,
+        msg: msg,
+        room: roomId,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    io.sockets.in(roomId).emit("FE-receive-message", { msg, sender, time });
   });
 
   socket.on("BE-leave-room", ({ roomId, leaver }) => {

@@ -13,7 +13,7 @@ function HomePage() {
   const navigate = useNavigate();
   const roomRef = useRef();
   const userRef = useRef();
-
+  const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     socket.on("FE-error-user-exist", ({ error }) => {
       if (!error) {
@@ -70,7 +70,11 @@ function HomePage() {
               <div className="input-block">
                 <div className="input-section">
                   {/* <FontAwesomeIcon className="icon-block" icon={faKeyboard} /> */}
-                  <input placeholder="Username" ref={userRef} />
+                  <input
+                    placeholder="Username"
+                    value={user.firstname}
+                    ref={userRef}
+                  />
                 </div>
                 <div className="input-section">
                   {/* <FontAwesomeIcon className="icon-block" icon={faKeyboard} /> */}

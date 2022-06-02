@@ -7,6 +7,7 @@ const { Op } = require("sequelize");
 const multer = require("multer");
 const path = require("path");
 const { validateToken } = require("../middlewares/AuthMiddleware");
+const handlebars = require("handlebars");
 // send email
 require("dotenv").config();
 const nodemailer = require("nodemailer");
@@ -69,13 +70,28 @@ exports.register = (req, res, next) => {
           picture: "slimengh.jpg",
         })
           .then((user) => {
+            const htmlsend = `<h3>Bonjour  <strong> {{firstname}} {{lastname}} </strong>,</h3><br> 
+            <h3><U><strong><center>Account details</center> </strong></U></h3> <br>
+            <U><strong>Paramétres d'accés : </strong></U>  <br><br>
+            URL : <a href="http://localhost:3000">http://localhost:3000</a> <br><br>
+            Login : {{email}}  <br><br>
+            Mot de passe : {{password}}  <br><br>
+            
+            Cordialement, `;
+            const template = handlebars.compile(htmlsend);
+            const replacement = {
+              firstname: user.firstname,
+              lastname: user.lastname,
+              email: user.email,
+              password: req.body.password,
+            };
+            const html = template(replacement);
             transporter.sendMail({
               to: user.email,
               from: "slimen.ghnimi@etudiant-fst.utm.tn",
-              subject: "Congrats! you signed with success",
+              subject: "Create an account   ",
               cc: "slimen.ghenimi@gmail.com",
-              html: `<h1>Welcome to our Talan Platform meeting online</h1>
-                            <h5>click in this <a href="http://localhost:3000">link</a> to signin in our platform </h5>`,
+              html,
             });
             res.json({ message: "Account created with success" });
           })
@@ -132,7 +148,7 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.getAllUsers = (req, res, next) => {
-  db.User.findAll()
+  db.User.findAll({ order: [["createdAt", "DESC"]] })
     .then((response) => res.status(200).send(response))
     .catch((err) => res.status(400).send(err));
 };
@@ -252,6 +268,9 @@ exports.newpassword = (req, res) => {
 
 exports.changePassword = async (req, res) => {
   const { oldPassword, newPassword, confirmPassword, email } = req.body;
+  if (!oldPassword || !newPassword || !confirmPassword) {
+    return res.json({ fild: "please add all the fields" });
+  }
   const user = await db.User.findOne({ where: { email: email } });
   bcrypt.compare(oldPassword, user.password).then((doMatch) => {
     if (!doMatch) {

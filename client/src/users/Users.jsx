@@ -7,6 +7,7 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import { Avatar } from "@material-ui/core";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -23,9 +24,9 @@ import DeleteIcon from "@material-ui/icons/DeleteSweep";
 function Users() {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      color: theme.palette.common.black,
-      backgroundColor: theme.palette.action.disabledBackground,
-      fontSize: 17,
+      color: theme.palette.getContrastText(theme.palette.primary.dark),
+      backgroundColor: theme.palette.primary.dark,
+      fontWeight: "bold",
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -102,7 +103,7 @@ function Users() {
           <Table sx={{ minWidth: 700 }} mb={4} aria-label="customized table">
             <TableHead style={{ width: "30px" }}>
               <TableRow style={{ width: "30px" }}>
-                <StyledTableCell>Num</StyledTableCell>
+                <StyledTableCell className="">Num</StyledTableCell>
                 <StyledTableCell>Picture</StyledTableCell>
                 <StyledTableCell>firstname</StyledTableCell>
                 <StyledTableCell align="right">lastname</StyledTableCell>
@@ -114,7 +115,7 @@ function Users() {
             </TableHead>
             <TableBody>
               {users
-                .slice(pagesVisited, pagesVisited + usersPerPage)
+
                 .filter((val) => {
                   if (searchTerm == "") {
                     return val;
@@ -126,6 +127,7 @@ function Users() {
                     return val;
                   }
                 })
+                .slice(pagesVisited, pagesVisited + usersPerPage)
                 .map((user, key) => (
                   <StyledTableRow key={key}>
                     <StyledTableCell component="th" scope="row">

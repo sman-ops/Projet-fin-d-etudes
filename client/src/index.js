@@ -4,11 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.min.css"; // or 'antd/dist/antd.less'
-
+import { ProvideContext } from "./Contexte/socketContext";
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ProvideContext>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ProvideContext>,
 
   document.getElementById("root")
 );

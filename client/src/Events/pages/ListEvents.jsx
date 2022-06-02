@@ -35,7 +35,7 @@ function ListEvents() {
   const pagesVisited = pageNumber * usersPerPage;
 
   const displayUsers = events
-    .slice(pagesVisited, pagesVisited + usersPerPage)
+
     .filter((val) => {
       if (searchTerm == "") {
         return val;
@@ -43,6 +43,7 @@ function ListEvents() {
         return val;
       }
     })
+    .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((event) => {
       return (
         <div
@@ -56,14 +57,23 @@ function ListEvents() {
             style={{
               width: "15%",
               marginRight: "70%",
-              marginTop: "10%",
+              marginTop: "4%",
               marginBottom: "10px",
             }}
             alt="logo"
           />
-          <h6 style={{ background: "#6495ED", color: "white" }}>
+          <div
+            style={{
+              background: "#6495ED",
+              width: "150px",
+              color: "white",
+              padding: "10px",
+              borderRadius: 7,
+              textAlign: "center",
+            }}
+          >
             Present Event
-          </h6>
+          </div>
           <div style={{ marginLeft: "400px", marginBottom: "15%" }}>
             {/* <EditIcon color="primary" /> */}
             {/* <VisibilityOutlinedIcon color="primary" /> */}

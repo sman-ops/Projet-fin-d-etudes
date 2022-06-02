@@ -4,29 +4,23 @@ import axios from "axios";
 // ** MUI Imports
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import InputLabel from "@mui/material/InputLabel";
 import IconButton from "@mui/material/IconButton";
-import { toast, Zoom } from "react-toastify";
+import { toast } from "react-toastify";
 import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-
 // ** Icons Imports
 import EyeOutline from "mdi-material-ui/EyeOutline";
-
 import EyeOffOutline from "mdi-material-ui/EyeOffOutline";
-import LockOpenOutline from "mdi-material-ui/LockOpenOutline";
-
 const TabSecurity = () => {
   // ** States
 
   const user = JSON.parse(localStorage.getItem("user"));
   const { email } = user;
-  console.log(email);
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -46,8 +40,12 @@ const TabSecurity = () => {
         email: email,
       })
       .then((response) => {
-        console.log(response.data.message);
-        if (response.data.error) {
+        console.log(response.data.fild);
+        if (response.data.fild) {
+          toast.error(response.data.fild, {
+            theme: "colored",
+          });
+        } else if (response.data.error) {
           toast.error(response.data.error, {
             theme: "colored",
           });
@@ -135,7 +133,7 @@ const TabSecurity = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12} sx={{ marginTop: 4 }}>
+              <Grid item xs={12} sx={{ marginTop: 1 }}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor="account-settings-new-password">
                     New Password
@@ -222,7 +220,7 @@ const TabSecurity = () => {
       <CardContent>
         <Box sx={{ mt: 1.75, display: "flex", alignItems: "center" }}></Box>
 
-        <Box sx={{ mt: 3.75, display: "flex", justifyContent: "center" }}>
+        <Box sx={{ mt: 0, display: "flex", justifyContent: "center" }}>
           <Box
             sx={{
               maxWidth: 368,

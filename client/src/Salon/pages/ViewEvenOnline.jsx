@@ -8,17 +8,29 @@ function ViewEvenOnline() {
       style={{
         width: "100%",
         marginLeft: "5%",
-        height: "65%",
+        height: "90%",
         marginRight: "5%",
+        position: "relative",
+        paddingBottom: 40,
+        paddingInline: 20,
       }}
     >
-      <h2
-        style={{ background: "#6495ED", color: "white", borderRadius: "3px" }}
+      <div
+        style={{
+          background: "#6495ED",
+          width: "150px",
+          color: "white",
+          padding: "10px",
+          borderRadius: 7,
+          textAlign: "center",
+          position: "absolute",
+          top: -23,
+        }}
       >
-        Online Event
-      </h2>
+        Online event
+      </div>
 
-      <h3 style={{ marginBottom: "30%" }}>Name of event</h3>
+      <h3 style={{ marginBottom: "30%" }}>Name of event </h3>
     </div>
   );
 }

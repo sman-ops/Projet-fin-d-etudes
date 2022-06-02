@@ -11,7 +11,7 @@ function Header() {
   return (
     <div className="header">
       <div className="logo">
-        <img src="logotalanaa.png" />
+        <img src="logotalanaa.PNG" />
       </div>
     </div>
   );

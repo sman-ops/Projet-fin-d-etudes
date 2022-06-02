@@ -18,6 +18,10 @@ module.exports = (sequelize, Datatype) => {
     mdp: {
       type: Datatype.STRING,
     },
+    description: {
+      type: Datatype.STRING,
+    },
+
     color: {
       type: Datatype.STRING,
     },
