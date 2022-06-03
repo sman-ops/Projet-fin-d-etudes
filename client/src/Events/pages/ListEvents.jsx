@@ -1,46 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { listEvent } from "../functions/createEvent";
-import ReactPaginate from "react-paginate";
-import EditIcon from "@material-ui/icons/Edit";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import "./event.css";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { listEvent } from '../functions/createEvent'
+import ReactPaginate from 'react-paginate'
+import EditIcon from '@material-ui/icons/Edit'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import './event.css'
+import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
+import { useNavigate } from 'react-router-dom'
 
 function ListEvents() {
-  const navigate = useNavigate();
-  const [events, setEvents] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate()
+  const [events, setEvents] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
   //  const  present =async (id,etat)=>{
 
   //  }
   useEffect(() => {
-    loadData();
-  }, []);
+    loadData()
+  }, [])
 
   const loadData = () => {
     listEvent()
       .then((res) => {
-        setEvents(res.data);
+        setEvents(res.data)
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0)
 
-  const usersPerPage = 3;
-  const pagesVisited = pageNumber * usersPerPage;
+  const usersPerPage = 3
+  const pagesVisited = pageNumber * usersPerPage
 
   const displayUsers = events
 
     .filter((val) => {
-      if (searchTerm == "") {
-        return val;
+      if (searchTerm == '') {
+        return val
       } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return val;
+        return val
       }
     })
     .slice(pagesVisited, pagesVisited + usersPerPage)
@@ -49,36 +49,36 @@ function ListEvents() {
         <div
           className="user"
           onClick={() => {
-            navigate(`/vieweventPresent/${event.id}`);
+            navigate(`/vieweventPresent/${event.id}`)
           }}
         >
           <img
             src="assets/images/event.png"
             style={{
-              width: "15%",
-              marginRight: "70%",
-              marginTop: "4%",
-              marginBottom: "10px",
+              width: '15%',
+              marginRight: '70%',
+              marginTop: '4%',
+              marginBottom: '10px'
             }}
             alt="logo"
           />
           <div
             style={{
-              background: "#6495ED",
-              width: "150px",
-              color: "white",
-              padding: "10px",
+              background: '#6495ED',
+              width: '150px',
+              color: 'white',
+              padding: '10px',
               borderRadius: 7,
-              textAlign: "center",
+              textAlign: 'center'
             }}
           >
             Present Event
           </div>
-          <div style={{ marginLeft: "400px", marginBottom: "15%" }}>
+          <div style={{ marginLeft: '400px', marginBottom: '15%' }}>
             {/* <EditIcon color="primary" /> */}
             {/* <VisibilityOutlinedIcon color="primary" /> */}
           </div>
-          <h3 style={{ marginBottom: "30%", height: "50%" }}>
+          <h3 style={{ marginBottom: '30%', height: '50%' }}>
             Name of event : {event.title}
           </h3>
 
@@ -102,47 +102,47 @@ function ListEvents() {
             </button>
           </div> */}
         </div>
-      );
-    });
+      )
+    })
 
-  const pageCount = Math.ceil(events.length / usersPerPage);
+  const pageCount = Math.ceil(events.length / usersPerPage)
 
   const changePage = ({ selected }) => {
-    setPageNumber(selected);
-  };
+    setPageNumber(selected)
+  }
 
   return (
     <div className="App">
-      <div style={{ marginBottom: "10%", marginLeft: "1%" }}>
+      <div style={{ marginBottom: '10%', marginLeft: '1%' }}>
         <Grid item xs={8} sm={3} minWidth={2} mt={5} ml={10}>
           <TextField
             label="Search"
             placeholder="search..."
             onChange={(e) => {
-              setSearchTerm(e.target.value);
+              setSearchTerm(e.target.value)
             }}
           />
         </Grid>
       </div>
       {displayUsers}
-      <div style={{ marginLeft: "90%" }}>
+      <div style={{ marginLeft: '90%' }}>
         <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
           pageCount={pageCount}
           onPageChange={changePage}
-          containerClassName={"paginationBttns"}
-          previousLinkClassName={"previousBttn"}
-          nextLinkClassName={"nextBttn"}
-          disabledClassName={"paginationDisabled"}
-          activeClassName={"paginationActive"}
+          containerClassName={'paginationBttns'}
+          previousLinkClassName={'previousBttn'}
+          nextLinkClassName={'nextBttn'}
+          disabledClassName={'paginationDisabled'}
+          activeClassName={'paginationActive'}
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default ListEvents;
+export default ListEvents
 
 // import React from 'react'
 // import Box from '@mui/material/Box'

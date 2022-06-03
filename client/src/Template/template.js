@@ -1,40 +1,91 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import TodayIcon from "@mui/icons-material/Today";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import TodayIcon from '@mui/icons-material/Today'
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline'
+import { Collapse } from '@mui/material'
 
 function Template({ children }) {
-  const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem('user'))
 
-  const { id } = user;
-
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [role, setRole] = useState("");
+  const [firstname, setFirstName] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [avatar, setAvatar] = useState('')
+  const [role, setRole] = useState('')
 
   const getSingleUser = async () => {
-    const { data } = await axios.get(`http://localhost:3001/user/${id}`);
-    setFirstName(data.firstname);
-    setLastName(data.lastname);
-    setAvatar(data.picture);
-    setRole(data.role);
-  };
+    const { data } = await axios.get(`http://localhost:3001/user/${user?.id}`)
+    setFirstName(data.firstname)
+    setLastName(data.lastname)
+    setAvatar(data.picture)
+    setRole(data.role)
+  }
 
   useEffect(() => {
-    getSingleUser();
-  }, [id]);
+    getSingleUser()
+  }, [user?.id])
 
+  let location = useLocation()
+  console.log({ location })
+
+  const sideBarItems = [
+    {
+      label: 'Dashboard',
+      path: '/dashboard',
+      icon: 'fa fa-home'
+    },
+    {
+      label: 'Event',
+      icon: 'fa fa-calendar',
+      subItems: [
+        {
+          label: 'Add Event',
+          path: '/addevent'
+        },
+        {
+          label: 'Face To Face  Events',
+          path: '/listeventsPresentiel'
+        },
+
+        {
+          label: 'Online Events',
+          path: '/listeventonline'
+        }
+      ]
+    },
+    {
+      label: 'Users',
+      path: '/user',
+      icon: 'fa fa-users'
+    },
+    {
+      label: 'Salon',
+      path: '/room',
+      icon: 'fa fa-video-camera'
+    },
+    {
+      label: 'Rejoindre le salon',
+      path: '/homepage',
+      icon: 'fa fa-user-plus'
+    }
+  ]
   // const user=localStorage.getItem("user")
   return (
     <div className="container-scroller">
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
-        <div className="text-center sidebar-brand-wrapper d-flex align-items-center">
-          <a className="sidebar-brand brand-logo" href="index.html">
-            <img src="assets/images/logo-talan.png" alt="logo" />
-          </a>
+        <div className="logo text-center sidebar-brand-wrapper d-flex align-items-center">
+          <span
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontSize: 30,
+              fontWeight: 'bold',
+              fontStyle: 'italic'
+            }}
+          >
+            Talent
+          </span>
           <a
             className="sidebar-brand brand-logo-mini pl-4 pt-3"
             href="index.html"
@@ -44,109 +95,67 @@ function Template({ children }) {
         </div>
 
         <ul className="nav">
-          <li className="nav-item nav-profile">
-            <a href="#" className="nav-link">
-              <div className="nav-profile-image">
-                <img
-                  src={`http://localhost:3001/Images/${avatar}`}
-                  alt="profile"
-                />
-                {/* <span className="login-status online"></span> */}
-              </div>
-
-              <div className="nav-profile-text d-flex flex-column pr-3">
-                <span className="font-weight-medium mb-2">{firstname}</span>
-              </div>
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              <i className="mdi mdi-home menu-icon"></i>
-              <Link to="/template">
-                <span className="menu-title">Dashboard</span>
-              </Link>
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              data-toggle="collapse"
-              href="#event"
-              aria-expanded="false"
-              aria-controls="ui-basic"
-            >
-              <TodayIcon color="primary" />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span className="menu-title">Event</span>
-              <i className="menu-arrow"></i>
-            </a>
-            <div className="collapse" id="event">
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item">
-                  <Link to="/listeventsPresentiel">
+          {sideBarItems.map((i, idx) => {
+            if (user.role !== 'Administrateur' && i.label == 'Users')
+              return null
+            return (
+              <>
+                <li
+                  style={{
+                    height: 60,
+                    display: 'flex',
+                    alignitems: 'center'
+                  }}
+                  className="nav-item"
+                >
+                  <>
                     <a
-                      className="nav-link"
-                      href="pages/ui-features/buttons.html"
+                      style={{ width: '100%' }}
+                      className={`nav-link ${
+                        location.pathname === i.path ? 'active' : ''
+                      } `}
+                      href={i.path ? i.path : '#event'}
+                      data-toggle={i.path ? '' : 'collapse'}
+                      aria-expanded={i.path ? '' : 'false'}
+                      aria-controls={i.path ? '' : 'ui-basic'}
                     >
-                      Liste event presentiel
+                      <i className={i.icon}></i>
+                      <span
+                        className={`menu-title ${
+                          location.pathname === i.path ? 'active' : ''
+                        }`}
+                      >
+                        {i.label}
+                      </span>
+                      {i.subItems && <i className="menu-arrow"></i>}
                     </a>
-                  </Link>
+                  </>
                 </li>
-
-                <li className="nav-item">
-                  <Link to="/addevent">
-                    <a
-                      className="nav-link"
-                      href="pages/ui-features/dropdowns.html"
-                    >
-                      Add Event
-                    </a>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/listeventonline">
-                    <a
-                      className="nav-link"
-                      href="pages/ui-features/typography.html"
-                    >
-                      Liste event en ligne
-                    </a>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </li>
-          {user && user.role === "Administrateur" ? (
-            <li className="nav-item">
-              <a className="nav-link" href="pages/icons/mdi.html">
-                <PeopleOutlineIcon color="primary" />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/user">
-                  <span className="menu-title">Users</span>
-                </Link>
-              </a>
-            </li>
-          ) : null}
-          <li className="nav-item">
-            <a className="nav-link" href="pages/icons/mdi.html">
-              <PeopleOutlineIcon color="primary" />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Link to="/room">
-                <span className="menu-title">Salon</span>
-              </Link>
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <a className="nav-link" href="pages/tables/basic-table.html">
-              <i className="mdi mdi-table-large menu-icon"></i>
-              <Link to="/homepage">
-                <span className="menu-title"> Join room</span>
-              </Link>
-            </a>
-          </li>
+                {i.subItems && (
+                  <div
+                    style={{ marginLeft: 15 }}
+                    className="collapse"
+                    id="event"
+                  >
+                    <ul className="nav flex-column sub-menu">
+                      {i.subItems.map((itm, idex) => (
+                        <li className="nav-item" key={idex}>
+                          <a
+                            className={`nav-link ${
+                              location.pathname === itm.path ? 'active' : ''
+                            }`}
+                            href={itm.path}
+                          >
+                            {itm.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </>
+            )
+          })}
         </ul>
       </nav>
 
@@ -158,11 +167,11 @@ function Template({ children }) {
             className="sidebar-bg-options selected"
             id="sidebar-default-theme"
           >
-            <div className="img-ss rounded-circle bg-light border mr-3"></div>{" "}
+            <div className="img-ss rounded-circle bg-light border mr-3"></div>{' '}
             Default
           </div>
           <div className="sidebar-bg-options" id="sidebar-dark-theme">
-            <div className="img-ss rounded-circle bg-dark border mr-3"></div>{" "}
+            <div className="img-ss rounded-circle bg-dark border mr-3"></div>{' '}
             Dark
           </div>
           <p className="settings-heading mt-2">HEADER SKINS</p>
@@ -179,13 +188,13 @@ function Template({ children }) {
             >
               <img src="assets/images/logo-mini.svg" alt="logo" />
             </a>
-            <button
+            {/*<button
               className="navbar-toggler navbar-toggler align-self-center mr-5"
               type="button"
               data-toggle="minimize"
             >
               <i className="mdi mdi-menu"></i>
-            </button>
+            </button>*/}
             <ul className="navbar-nav"></ul>
             <ul className="navbar-nav navbar-nav-right ml-lg-auto">
               <li className="nav-item nav-profile dropdown border-0">
@@ -195,7 +204,7 @@ function Template({ children }) {
                   data-toggle="dropdown"
                 >
                   <img
-                    style={{ marginLeft: "25%" }}
+                    style={{ marginLeft: '25%' }}
                     className="nav-profile-img mr-2"
                     alt=""
                     src={`http://localhost:3001/Images/${avatar}`}
@@ -210,8 +219,8 @@ function Template({ children }) {
                     <i
                       className="mdi mdi-logout mr-2 text-primary"
                       onClick={() => {
-                        localStorage.clear();
-                        navigate("/");
+                        localStorage.clear()
+                        navigate('/')
                       }}
                     >
                       logout
@@ -219,7 +228,7 @@ function Template({ children }) {
                   </a>
                   <a className="dropdown-item" href="#">
                     <Link to="/profile1">
-                      <i className="mdi mdi-cached mr-2 text-success"></i>{" "}
+                      <i className="mdi mdi-cached mr-2 text-success"></i>{' '}
                       Profile
                     </Link>
                   </a>
@@ -246,7 +255,7 @@ function Template({ children }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Template;
+export default Template

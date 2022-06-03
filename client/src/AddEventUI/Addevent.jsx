@@ -1,36 +1,36 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import Grid from '@mui/material/Grid'
+import Select from '@mui/material/Select'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import { useNavigate } from 'react-router-dom'
 
 function AddEvent() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const fnNavigate = (item) => {
-    navigate(`/${item}`);
-  };
+    navigate(`/${item}`)
+  }
 
   return (
     <div
       style={{
-        border: " 1px solid #cbdaee",
-        backgroundColor: "#fff",
-        borderRadius: "10px",
-        display: " flex",
-        width: "800px",
-        height: "250px",
-        marginLeft: "7%",
-        marginTop: "5%",
+        backgroundColor: '#fff',
+        borderRadius: '10px',
+        display: ' flex',
+        width: '800px',
+        height: '250px',
+        marginLeft: '7%',
+        marginTop: '5%',
+        border: '1px solid #E6552D',
 
-        flexDirection: " column",
+        flexDirection: ' column'
       }}
     >
       <img
         src="assets/images/schedule.png"
-        style={{ width: "10%", marginLeft: "20px", marginTop: "20px" }}
+        style={{ width: '10%', marginLeft: '20px', marginTop: '20px' }}
         alt="logo"
       />
       {/* <h4 style={{ marginLeft: "3%", marginTop: "3%" }}>
@@ -53,7 +53,7 @@ function AddEvent() {
         </FormControl>
       </Grid>
     </div>
-  );
+  )
 }
 
-export default AddEvent;
+export default AddEvent
