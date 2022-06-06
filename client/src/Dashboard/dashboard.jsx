@@ -1,64 +1,51 @@
-import React, { useState, useEffect } from 'react'
-import { Bar, Pie } from 'react-chartjs-2'
-import { UserData } from './Data'
-import { Chart as ChartJS } from 'chart.js/auto'
-import { Col, Row, Card, Container } from 'react-bootstrap'
-import axios from 'axios'
-import Linechart from './Linechart'
-import Lineechart from './Lineechart'
+import React, { useState, useEffect, useMemo } from "react";
+import { Col, Row, Card, Container } from "react-bootstrap";
+import axios from "axios";
+import Linechart from "./Linechart";
+import Lineechart from "./Lineechart";
 function Dashboard() {
-  // const [userDATA, setUserData] = useState({
-  //   labels: months,
-  //   datasets: [
-  //     {
-  //       label: "Users Gained",
-  //       data: UserData.map((data) => data.userGain),
-  //       backgroundColor: [
-  //         "rgba(75,192,192,1)",
-  //         "#ecf0f1",
-  //         "#50AF95",
-  //         "#f3ba2f",
-  //         "#2a71d0",
-  //       ],
-
-  //       borderWidth: 2,
-  //     },
-  //   ],
-  // });
-  const [countusers, setCountUsers] = useState('')
-  const [countpresevents, setPreEvents] = useState('')
-  const [countonlineevents, setOnlineEvents] = useState('')
+  const [countusers, setCountUsers] = useState("");
+  const [countpresevents, setPreEvents] = useState("");
+  const [countonlineevents, setOnlineEvents] = useState("");
 
   useEffect(() => {
-    axios.get('http://localhost:3001/countusers').then((result) => {
-      setCountUsers(result.data.users)
+    axios.get("http://localhost:3001/countusers").then((result) => {
+      setCountUsers(result.data.users);
       // console.log(result.data.users);
-    })
-  })
+    });
+  });
   useEffect(() => {
-    axios.get('http://localhost:3001/countPevents').then((resultat) => {
-      setPreEvents(resultat.data.events)
+    axios.get("http://localhost:3001/countPevents").then((resultat) => {
+      setPreEvents(resultat.data.events);
       // console.log(result.data.users);
-    })
-  })
+    });
+  });
   useEffect(() => {
-    axios.get('http://localhost:3001/countOEvents').then((online) => {
-      setOnlineEvents(online.data.eventsonline)
+    axios.get("http://localhost:3001/countOEvents").then((online) => {
+      setOnlineEvents(online.data.eventsonline);
       // console.log(result.data.users);
-    })
-  })
+    });
+  });
 
-  const widgets = [
-    {
-      label: 'Number of users'
-    },
-    {
-      label: 'Event online'
-    },
-    {
-      label: 'Event presentiel'
-    }
-  ]
+  const widgets = useMemo(() => {
+    return [
+      {
+        label: "Number of users",
+        value: countusers,
+        icon: "fa fa-users",
+      },
+      {
+        label: "Event online",
+        value: countpresevents,
+        icon: "fa fa-calendar",
+      },
+      {
+        label: "Event presentiel",
+        value: countonlineevents,
+        icon: "fa fa-calendar",
+      },
+    ];
+  }, [countusers, countpresevents, countonlineevents]);
   return (
     <Container>
       <Row>
@@ -68,9 +55,9 @@ function Dashboard() {
               <Col md={4}>
                 <Card
                   style={{
-                    width: '270px',
-                    height: '130px',
-                    border: '1px solid #E6552D'
+                    width: "270px",
+                    height: "130px",
+                    border: "1px solid #E6552D",
                   }}
                   className=" shadow mt-md-2  rounded"
                 >
@@ -80,19 +67,20 @@ function Dashboard() {
                         <span className="h6 font-semibold text-muted text-sm d-block mb-2">
                           Nouveaux
                         </span>
-                        <span className="h3 font-bold mb-0">{countusers}</span>{' '}
+                        <span className="h3 font-bold mb-0">{i.value}</span>{" "}
                       </Col>
                       <div className="">
                         <div
                           className="icon icon-shape  text-white text-lg rounded-circle"
                           style={{
-                            width: '40px',
-                            paddingLeft: '10px',
-                            background: '#E6552D'
+                            width: "38px",
+                            height: "30px",
+                            paddingLeft: "10px",
+                            background: "#E6552D",
                           }}
                         >
-                          {' '}
-                          <i className="bi bi-people" />{' '}
+                          {" "}
+                          <i className={i.icon} />{" "}
                         </div>
                       </div>
                     </Row>
@@ -101,19 +89,17 @@ function Dashboard() {
                         <i className="bi bi-arrow-up me-1" />
                       </span>
                       <span className="text-nowrap text-xs text-muted">
-                        {i.label}{' '}
+                        {i.label}{" "}
                       </span>
                     </div>
                   </Card.Body>
                 </Card>
               </Col>
-            )
+            );
           })}
         </Row>
         <Col md={6}>
           <div style={{ width: 500, height: 300 }}>
-            {/* <Bar data={userDATA} /> */}
-            {/* <Pie data={userDATA} />{" "}  */}
             <Linechart />
           </div>
         </Col>
@@ -126,7 +112,7 @@ function Dashboard() {
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;

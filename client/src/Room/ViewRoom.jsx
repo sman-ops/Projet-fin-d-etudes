@@ -53,6 +53,7 @@ function ViewRoom() {
         position: "relative",
         paddingBottom: 40,
         paddingInline: 20,
+        border: "1px solid #E6552D",
       }}
     >
       <div
@@ -65,6 +66,7 @@ function ViewRoom() {
           textAlign: "center",
           position: "absolute",
           top: -23,
+          background: "#E6552D",
         }}
       >
         Room details
@@ -75,6 +77,7 @@ function ViewRoom() {
             <th>N°</th>
             <th>sender</th>
             <th>msg</th>
+            <th>time</th>
             <th>room</th>
           </tr>
         </thead>
@@ -84,6 +87,7 @@ function ViewRoom() {
               <td>{key + 1}</td>
               <td>{item?.sender}</td>
               <td>{item?.msg}</td>
+              <td>{item?.time}</td>
               <td>{item?.room}</td>
             </tr>
           ))}

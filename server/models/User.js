@@ -68,5 +68,15 @@ module.exports = (sequelize, Datatype) => {
     });
   };
 
+  User.associate = (models) => {
+    User.belongsToMany(models.Events, {
+      through: models.Presence,
+      foreignKey: {
+        name: "UserId",
+        as: "events",
+      },
+    });
+  };
+
   return User;
 };

@@ -116,6 +116,7 @@ io.on("connection", (socket) => {
         sender: sender,
         msg: msg,
         room: roomId,
+        time: time,
       });
     } catch (err) {
       console.log(err);

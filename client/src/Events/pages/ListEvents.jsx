@@ -1,225 +1,166 @@
-import React, { useState, useEffect } from 'react'
-import { listEvent } from '../functions/createEvent'
-import ReactPaginate from 'react-paginate'
-import EditIcon from '@material-ui/icons/Edit'
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
-import './event.css'
-import TextField from '@mui/material/TextField'
-import Grid from '@mui/material/Grid'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { listEvent } from "../functions/createEvent";
+import ReactPaginate from "react-paginate";
+import EditIcon from "@material-ui/icons/Edit";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import "./event.css";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import { useNavigate } from "react-router-dom";
+import PreviewIcon from "@mui/icons-material/Preview";
+import axios from "axios";
 
 function ListEvents() {
-  const navigate = useNavigate()
-  const [events, setEvents] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
-  //  const  present =async (id,etat)=>{
+  const navigate = useNavigate();
+  const [events, setEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const { id } = user;
+  console.log(id);
 
-  //  }
+  const Participate = async (event, user) => {
+    const data = {
+      EventId: event,
+      UserId: user,
+    };
+
+    await axios
+      .post("http://localhost:3001/presenceUser", data)
+      .then((result) => {
+        console.log(result);
+      });
+  };
+
   useEffect(() => {
-    loadData()
-  }, [])
+    loadData();
+  }, []);
 
   const loadData = () => {
     listEvent()
       .then((res) => {
-        setEvents(res.data)
+        setEvents(res.data);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
-  const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber, setPageNumber] = useState(0);
 
-  const usersPerPage = 3
-  const pagesVisited = pageNumber * usersPerPage
+  const usersPerPage = 3;
+  const pagesVisited = pageNumber * usersPerPage;
 
   const displayUsers = events
 
     .filter((val) => {
-      if (searchTerm == '') {
-        return val
+      if (searchTerm == "") {
+        return val;
       } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return val
+        return val;
       }
     })
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((event) => {
       return (
-        <div
-          className="user"
-          onClick={() => {
-            navigate(`/vieweventPresent/${event.id}`)
-          }}
-        >
+        <div className="user">
           <img
             src="assets/images/event.png"
             style={{
-              width: '15%',
-              marginRight: '70%',
-              marginTop: '4%',
-              marginBottom: '10px'
+              width: "15%",
+              marginRight: "70%",
+              marginTop: "4%",
+              marginBottom: "1px",
             }}
             alt="logo"
           />
           <div
+            style={{ marginLeft: "400px", marginBottom: "1%", marginTop: "1%" }}
+          >
+            <PreviewIcon
+              color="primary"
+              onClick={() => {
+                navigate(`/vieweventPresent/${event.id}`);
+              }}
+            />
+          </div>
+          <div
             style={{
-              background: '#6495ED',
-              width: '150px',
-              color: 'white',
-              padding: '10px',
+              background: "#6495ED",
+              width: "150px",
+              color: "white",
+              padding: "10px",
               borderRadius: 7,
-              textAlign: 'center'
+              textAlign: "center",
+              background: "#E6552D",
+              marginBottom: "5%",
             }}
           >
             Present Event
           </div>
-          <div style={{ marginLeft: '400px', marginBottom: '15%' }}>
-            {/* <EditIcon color="primary" /> */}
-            {/* <VisibilityOutlinedIcon color="primary" /> */}
-          </div>
-          <h3 style={{ marginBottom: '30%', height: '50%' }}>
+          {/* <div style={{ marginLeft: "400px", marginBottom: "15%" }}></div> */}
+          <h3 style={{ marginBottom: "5%", height: "50%" }}>
             Name of event : {event.title}
           </h3>
-
-          {/* <div style={{ marginBottom: "10%" }}>
+          <div style={{ marginBottom: "15%" }}>
             <button
               type="button"
-              style={{ height: "55px", width: "90px", borderRadius: "3px" }}
+              style={{
+                height: "55px",
+                width: "90px",
+                borderRadius: "3px",
+              }}
               class="btn btn-inverse-info btn-fw"
-              // onClick={()=>{present(event.id,"Present")}}
+              onClick={() => Participate(event.id, id)}
             >
-              Present
+              Participate
             </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button
-              type="button"
-              style={{ height: "55px", width: "90px", borderRadius: "3px" }}
-              class="btn btn-inverse-warning btn-fw"
-              // onClick={()=>{present(event.id,"Absent")}}
-            >
-              Absent
-            </button>
-          </div> */}
+          </div>
         </div>
-      )
-    })
+      );
+    });
 
-  const pageCount = Math.ceil(events.length / usersPerPage)
+  const pageCount = Math.ceil(events.length / usersPerPage);
 
   const changePage = ({ selected }) => {
-    setPageNumber(selected)
-  }
+    setPageNumber(selected);
+  };
+  console.log(events);
 
   return (
     <div className="App">
-      <div style={{ marginBottom: '10%', marginLeft: '1%' }}>
+      <div style={{ marginBottom: "10%", marginLeft: "1%" }}>
         <Grid item xs={8} sm={3} minWidth={2} mt={5} ml={10}>
-          <TextField
+          <input
+            style={{
+              width: "80%",
+              borderRadius: 10,
+              border: "1px solid #e6552d",
+              padding: 7,
+            }}
             label="Search"
             placeholder="search..."
             onChange={(e) => {
-              setSearchTerm(e.target.value)
+              setSearchTerm(e.target.value);
             }}
           />
         </Grid>
       </div>
       {displayUsers}
-      <div style={{ marginLeft: '90%' }}>
+      <div style={{ marginLeft: "90%" }}>
         <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
           pageCount={pageCount}
           onPageChange={changePage}
-          containerClassName={'paginationBttns'}
-          previousLinkClassName={'previousBttn'}
-          nextLinkClassName={'nextBttn'}
-          disabledClassName={'paginationDisabled'}
-          activeClassName={'paginationActive'}
+          containerClassName={"paginationBttns"}
+          previousLinkClassName={"previousBttn"}
+          nextLinkClassName={"nextBttn"}
+          disabledClassName={"paginationDisabled"}
+          activeClassName={"paginationActive"}
         />
       </div>
     </div>
-  )
+  );
 }
 
-export default ListEvents
-
-// import React from 'react'
-// import Box from '@mui/material/Box'
-// import Card from '@mui/material/Card'
-// import Chip from '@mui/material/Chip'
-// import Table from '@mui/material/Table'
-// import TableRow from '@mui/material/TableRow'
-// import TableHead from '@mui/material/TableHead'
-// import TableBody from '@mui/material/TableBody'
-// import TableCell from '@mui/material/TableCell'
-// import Typography from '@mui/material/Typography'
-// import TableContainer from '@mui/material/TableContainer'
-// import {useState,useEffect} from 'react'
-// import {listEvent} from '../functions/createEvent'
-// import PreviewIcon from '@mui/icons-material/Preview';
-// import ModeEditIcon from '@mui/icons-material/ModeEdit';
-// import {Link} from 'react-router-dom'
-
-// function ListEvents() {
-
-//     const [events,setEvents] = useState([])
-
-//     useEffect(()=>{
-//         loadData()
-
-//       },[])
-
-//       const loadData = ()=>{
-
-//         listEvent()
-//         .then(res=>{
-//         setEvents(res.data)
-//         }).catch(err=>{
-//           console.log(err)
-//         })
-//       }
-
-//   return (
-//     <Card>
-//     <TableContainer>
-//       <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
-//         <TableHead>
-//           <TableRow>
-//             <TableCell>title</TableCell>
-//             <TableCell>Start at </TableCell>
-//             <TableCell>End at</TableCell>
-//             <TableCell>Type event</TableCell>
-//             <TableCell>Langue event</TableCell>
-//             <TableCell>Actions</TableCell>
-
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {events.map(event => (
-//             <TableRow hover key={event.title} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
-//               <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-//                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-//                   <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{event.title}</Typography>
-
-//                 </Box>
-//               </TableCell>
-//               <TableCell>{event.start}</TableCell>
-//               <TableCell>{event.end}</TableCell>
-//               <TableCell>{event.typeEvent}</TableCell>
-//               <TableCell>{event.langueEvent}</TableCell>
-//               <TableCell>
-//               <Link to={`/viewevent/${event.id}`}><PreviewIcon color="primary"/></Link>
-//                   <ModeEditIcon color="warning"/>
-//             </TableCell>
-
-//              </TableRow>
-//           ))}
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-//   </Card>
-//   )
-// }
-
-// export default ListEvents
+export default ListEvents;
