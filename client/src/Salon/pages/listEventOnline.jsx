@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import PreviewIcon from "@mui/icons-material/Preview";
 import "./salon.css";
 function ListEventOnline() {
   const [events, setEvents] = useState([]);
@@ -40,22 +40,27 @@ function ListEventOnline() {
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((event) => {
       return (
-        <div
-          className="user"
-          onClick={() => {
-            navigate(`/vieweventOnline/${event.id}`);
-          }}
-        >
+        <div className="user">
           <img
             src="assets/images/event.png"
             style={{
               width: "15%",
               marginRight: "70%",
               marginTop: "4%",
-              marginBottom: "10px",
+              marginBottom: "1px",
             }}
             alt="logo"
           />
+          <div
+            style={{ marginLeft: "400px", marginBottom: "1%", marginTop: "5%" }}
+          >
+            <PreviewIcon
+              color="primary"
+              onClick={() => {
+                navigate(`/vieweventOnline/${event.id}`);
+              }}
+            />
+          </div>
           <div
             style={{
               background: "#6495ED",
@@ -64,36 +69,30 @@ function ListEventOnline() {
               padding: "10px",
               borderRadius: 7,
               textAlign: "center",
+              background: "#E6552D",
+              marginBottom: "5%",
             }}
           >
             Online event
           </div>
 
-          <div style={{ marginLeft: "400px", marginBottom: "15%" }}>
-            {/* <VisibilityOutlinedIcon color="primary" /> */}
-          </div>
-
-          <h3 style={{ marginBottom: "30%" }}>
+          <h3 style={{ marginBottom: "5px" }}>
             Name of the event : {event.title}
           </h3>
 
-          {/* <div style={{ marginTop: "5%" }}>
+          <div style={{ marginBottom: "15%" }}>
             <button
               type="button"
-              style={{ height: "55px", width: "90px", borderRadius: "3px" }}
+              style={{
+                height: "55px",
+                width: "90px",
+                borderRadius: "3px",
+              }}
               class="btn btn-inverse-info btn-fw"
             >
-              Present
+              Participate
             </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button
-              type="button"
-              style={{ height: "55px", width: "90px", borderRadius: "3px" }}
-              class="btn btn-inverse-warning btn-fw"
-            >
-              Absent
-            </button>
-          </div> */}
+          </div>
         </div>
       );
     });
@@ -107,7 +106,13 @@ function ListEventOnline() {
     <div className="App">
       <div style={{ marginBottom: "10%", marginLeft: "1%" }}>
         <Grid item xs={8} sm={3} minWidth={2} mt={5} ml={10}>
-          <TextField
+          <input
+            style={{
+              width: "80%",
+              borderRadius: 10,
+              border: "1px solid #e6552d",
+              padding: 7,
+            }}
             label="Search"
             placeholder="search..."
             onChange={(e) => {

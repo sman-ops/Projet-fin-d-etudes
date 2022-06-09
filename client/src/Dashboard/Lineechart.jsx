@@ -56,7 +56,7 @@ function Lineechart() {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="OnlineEvent" stackId="a" fill="#50AF95" />
+        <Bar dataKey="OnlineEvent" stackId="a" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );

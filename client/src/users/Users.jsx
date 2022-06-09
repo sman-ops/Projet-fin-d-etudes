@@ -76,10 +76,25 @@ function Users() {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: "20px", marginLeft: "2%", marginTop: "5%" }}>
-        <TextField
-          style={{ marginRight: "50%" }}
+    <div style={{ width: "100%" }}>
+      <div
+        style={{
+          marginBottom: "20px",
+          marginTop: "5%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <input
+          style={{
+            width: "50%",
+            borderRadius: 10,
+            height: 40,
+            paddingInline: 10,
+            border: "1px solid #E6552D",
+          }}
           label="Search"
           placeholder="search..."
           onChange={(e) => {
@@ -89,12 +104,12 @@ function Users() {
 
         <Link to="/adduser">
           <Button
-            style={{ width: "25%", height: "50px", marginTop: "1%" }}
+            style={{ width: "100%", height: "50px", background: "#E6552D" }}
             type="submit"
             sx={{ mr: 2 }}
             variant="contained"
           >
-            Add User
+            + Add User
           </Button>
         </Link>
       </div>
@@ -183,6 +198,9 @@ function Users() {
             nextLinkClassName={"nextBttn"}
             disabledClassName={"paginationDisabled"}
             activeClassName={"paginationActive"}
+            breakLinkClassName={{
+              background: "red",
+            }}
           />
         </div>
       </div>

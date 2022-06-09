@@ -83,7 +83,7 @@ function Register() {
           toast.success(data.message, {
             theme: "colored",
           });
-          navigate("/");
+          navigate("/login");
         }
       })
       .catch((err) => {
@@ -93,12 +93,12 @@ function Register() {
   return (
     <div className={styles.signup_container}>
       <div className={styles.signup_form_container}>
-        <div className={styles.left}>
+        <div style={{ background: "#E6552D" }} className={styles.left}>
           <h1>Welcome Back</h1>
-          <Link to="/">
+          <Link to="/login">
             <button
               type="button"
-              style={{ width: "100px" }}
+              style={{ width: "100px", color: "#E6552D" }}
               className={styles.white_btn}
             >
               Sing in
@@ -156,6 +156,7 @@ function Register() {
             />
 
             <button
+              style={{ background: "#E6552D" }}
               type="submit"
               className={styles.green_btn}
               onClick={Register}

@@ -14,7 +14,11 @@ function Error404() {
               <h1>Sorry! Page not found.</h1>
               <p className="land">Unfortunately You are not authentificated</p>
               <div className="mt-5">
-                <a href="/" className="btn btn-success btn-lg">
+                <a
+                  style={{ backgroundColor: "#E6552D" }}
+                  href="/login"
+                  className="btn btn-success btn-lg"
+                >
                   <i className="mdi mdi-home" /> GO TO LOGIN PAGE
                 </a>
               </div>

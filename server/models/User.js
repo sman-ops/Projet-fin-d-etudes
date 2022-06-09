@@ -25,7 +25,7 @@ module.exports = (sequelize, Datatype) => {
       allowNull: true,
     },
     dateNaissance: {
-      type: Datatype.DATE,
+      type: Datatype.STRING,
       allowNull: true,
     },
     adresse: {
@@ -65,6 +65,16 @@ module.exports = (sequelize, Datatype) => {
   User.associate = (models) => {
     User.hasMany(models.EventOnline, {
       onDelete: "cascade",
+    });
+  };
+
+  User.associate = (models) => {
+    User.belongsToMany(models.Events, {
+      through: models.Presence,
+      foreignKey: {
+        name: "UserId",
+        as: "events",
+      },
     });
   };
 

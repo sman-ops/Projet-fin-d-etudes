@@ -63,8 +63,7 @@ function EditUser() {
   };
   return (
     <Card style={{ width: "80%", marginTop: "3%", marginLeft: "10%" }}>
-      <CreditScoreIcon />
-
+      {/* <CreditScoreIcon /> */}
       <CardHeader
         title="Edit User"
         titleTypographyProps={{ variant: "h6" }}

@@ -2,6 +2,7 @@ const db = require("../models");
 var sequelize = require("sequelize");
 const handlebars = require("handlebars");
 const nodemailer = require("nodemailer");
+const { Sequelize } = require("../models");
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
@@ -86,7 +87,9 @@ module.exports.listEvents = async (req, res) => {
 };
 module.exports.getEvent = (req, res, next) => {
   db.Events.findOne({ where: { id: req.params.id } })
-    .then((response) => res.status(200).send(response))
+    .then((response) => {
+      res.status(200).send(response);
+    })
     .catch((err) => res.status(400).send(err));
 };
 

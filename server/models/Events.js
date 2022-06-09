@@ -42,15 +42,15 @@ module.exports = (sequelize, Datatype) => {
     });
   };
 
-  // Events.associate = (models) => {
-  //   Events.belongsToMany(models.User, {
-  //     through: models.Presence,
-  //     foreignKey: {
-  //       name: "EventId",
-  //       as: "users",
-  //     },
-  //   });
-  // };
+  Events.associate = (models) => {
+    Events.belongsToMany(models.User, {
+      through: models.Presence,
+      foreignKey: {
+        name: "EventId",
+        as: "users",
+      },
+    });
+  };
 
   return Events;
 };

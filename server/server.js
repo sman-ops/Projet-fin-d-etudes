@@ -34,6 +34,7 @@ app.use("/", roomRouters);
 
 // static image folder
 app.use("/Images", express.static("./Images"));
+app.use("/uploads/pdf", express.static(path.join("uploads", "pdf")));
 
 let socketList = {};
 
@@ -109,18 +110,21 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("BE-send-message", ({ roomId, msg, sender, time }) => {
+  socket.on("BE-send-message", ({ roomId, msg, sender, time, pdf }) => {
     // sebnder : sender try catch
-    try {
-      db.Data.create({
-        sender: sender,
-        msg: msg,
-        room: roomId,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    io.sockets.in(roomId).emit("FE-receive-message", { msg, sender, time });
+    // try {
+    //   db.Data.create({
+    //     sender: sender,
+    //     msg: msg,
+    //     room: roomId,
+    //     time: time,
+    //   });
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    io.sockets
+      .in(roomId)
+      .emit("FE-receive-message", { msg, sender, time, pdf });
   });
 
   socket.on("BE-leave-room", ({ roomId, leaver }) => {

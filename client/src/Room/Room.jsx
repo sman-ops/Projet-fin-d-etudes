@@ -38,7 +38,10 @@ function Room() {
                       className="icon icon-shape bg-primary text-white text-lg rounded-circle"
                       style={{ width: "40px", paddingLeft: "10px" }}
                     >
-                      <i className="bi bi-calendar2-event"></i>
+                      <i
+                        className="fa fa-video-camera"
+                        style={{ height: "25px" }}
+                      ></i>
                     </div>
                   </div>
                 </Row>

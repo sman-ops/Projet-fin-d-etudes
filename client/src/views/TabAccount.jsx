@@ -52,9 +52,9 @@ const TabAccount = () => {
     setFirstName(data.firstname);
     setLastName(data.lastname);
     setEmail(data.email);
-    setPhone(data.telephone);
+    setPhone(data.telephone === 0 ? "" : data.telephone);
     setGrade(data.grade);
-    setAdresse(data.adresse);
+    setAdresse(data.adresse === "null" ? "" : data.adresse);
     setDateNaissance(data.dateNaissance);
     setAvatar(data.picture);
   };

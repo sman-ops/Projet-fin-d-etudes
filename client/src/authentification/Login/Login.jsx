@@ -61,7 +61,7 @@ function Login() {
           toast.success("signedin successfuly", {
             theme: "colored",
           });
-          navigate("/template");
+          navigate("/");
         }
       })
       .catch((err) => {
@@ -96,20 +96,27 @@ function Login() {
               className={styles.input}
             />
 
-            <button type="submit" className={styles.green_btn} onClick={login}>
+            <button
+              type="submit"
+              className={styles.green_btn}
+              style={{ backgroundColor: "#E6552D" }}
+              onClick={login}
+            >
               Sing In
             </button>
             <h6>
-              <Link to="/forgotpass">Forgot password ?</Link>
+              <Link style={{ color: "#E6552D" }} to="/forgotpass">
+                Forgot password ?
+              </Link>
             </h6>
           </form>
         </div>
-        <div className={styles.right}>
+        <div className={styles.right} style={{ backgroundColor: "#E6552D" }}>
           <h1>New Here ?</h1>
           <Link to="/register">
             <button
               type="button"
-              style={{ width: "100px" }}
+              style={{ width: "100px", color: "#E6552D" }}
               className={styles.white_btn}
             >
               Sing Up
