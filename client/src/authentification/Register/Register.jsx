@@ -83,7 +83,7 @@ function Register() {
           toast.success(data.message, {
             theme: "colored",
           });
-          navigate("/");
+          navigate("/login");
         }
       })
       .catch((err) => {

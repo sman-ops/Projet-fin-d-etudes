@@ -14,6 +14,7 @@ function ListEvents() {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [presence, setPresence] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const { id } = user;
   console.log(id);
@@ -28,6 +29,7 @@ function ListEvents() {
       .post("http://localhost:3001/presenceUser", data)
       .then((result) => {
         console.log(result);
+        loadData();
       });
   };
 
@@ -35,7 +37,7 @@ function ListEvents() {
     loadData();
   }, []);
 
-  const loadData = () => {
+  const loadData = async () => {
     listEvent()
       .then((res) => {
         setEvents(res.data);
@@ -43,6 +45,10 @@ function ListEvents() {
       .catch((err) => {
         console.log(err);
       });
+
+    const result = await axios.get("http://localhost:3001/AllPresence");
+    // console.log(result);
+    setPresence(result.data.result);
   };
 
   const [pageNumber, setPageNumber] = useState(0);
@@ -61,6 +67,12 @@ function ListEvents() {
     })
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((event) => {
+      let presenc = null;
+      console.log(event.id);
+
+      presenc = presence.find(
+        ({ EventId, UserId }) => EventId === event.id && UserId === id
+      );
       return (
         <div className="user">
           <img
@@ -92,7 +104,7 @@ function ListEvents() {
               borderRadius: 7,
               textAlign: "center",
               background: "#E6552D",
-              marginBottom: "5%",
+              marginBottom: "8%",
             }}
           >
             Present Event
@@ -102,18 +114,24 @@ function ListEvents() {
             Name of event : {event.title}
           </h3>
           <div style={{ marginBottom: "15%" }}>
-            <button
-              type="button"
-              style={{
-                height: "55px",
-                width: "90px",
-                borderRadius: "3px",
-              }}
-              class="btn btn-inverse-info btn-fw"
-              onClick={() => Participate(event.id, id)}
-            >
-              Participate
-            </button>
+            {presenc ? (
+              <div style={{ marginTop: "5%", color: "#E6552D" }}>
+                You are participated in this event Thank you.
+              </div>
+            ) : (
+              <button
+                type="button"
+                style={{
+                  height: "55px",
+                  width: "90px",
+                  borderRadius: "3px",
+                  backgroundColor: "#E6552D",
+                }}
+                onClick={() => Participate(event.id, id)}
+              >
+                Participate
+              </button>
+            )}
           </div>
         </div>
       );

@@ -12,6 +12,9 @@ module.exports = (sequelize, Datatype) => {
     room: {
       type: Datatype.STRING,
     },
+    pdf: {
+      type: Datatype.BOOLEAN,
+    },
   });
 
   return Data;

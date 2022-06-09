@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useParams } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVideo, faKeyboard } from "@fortawesome/free-solid-svg-icons";

@@ -29,3 +29,24 @@ module.exports.listDatabyId = (req, res) => {
     .then((result) => res.json({ result }))
     .catch((err) => console.log(err));
 };
+
+module.exports.Ajoutpdf = (req, res) => {
+  const { sender, time, pdf, roomId } = req.body;
+  let msg = "";
+  if (req.file) {
+    msg = req.file.filename;
+  } else {
+    msg = req.body.msg;
+  }
+  db.Data.create({
+    sender: sender,
+    msg: msg,
+    room: roomId,
+    time: time,
+    pdf: pdf,
+  })
+    .then((result) => {
+      res.json({ result });
+    })
+    .catch((err) => console.log(err));
+};
