@@ -35,18 +35,22 @@ import Dashboard from "./Dashboard/dashboard";
 import AddEvent from "./AddEventUI/Addevent";
 import Room from "./Room/Room";
 import ViewRoom from "./Room/ViewRoom";
+import { useMemo } from "react/cjs/react.production.min";
 
 function App() {
   // if you able to access the value of the state and be able to change this state in any of components below here we can pass those to value={{}}
 
   const [authState, setAuthState] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
       setAuthState(true);
+      setLoggedInUser(JSON.parse(localStorage.getItem("user")));
     }
   }, []);
 
+  console.log(loggedInUser, "useeer");
   // const routes =[{
   //   path:"/profile",component:"Profile"
   // }]
@@ -71,6 +75,7 @@ function App() {
     },
     {
       path: "/adduser",
+      for: "Admin",
       component: (
         <Template>
           <AddUser />
@@ -186,7 +191,15 @@ function App() {
       ),
     },
   ];
+  console.log(
+    routes.filter(
+      (i) => !(i.path == "/adduser" && loggedInUser?.role === "Collaborateur")
+    ),
+    loggedInUser?.role,
+    "filllltred"
+  );
 
+  const usersPath = ["/adduser", "/user", "/edituser"];
   return (
     <div className="App">
       <ToastContainer position="top-center" />
@@ -195,13 +208,21 @@ function App() {
           {authState ? (
             <>
               <Routes>
-                {routes.map((item, index) => (
-                  <Route
-                    key={index}
-                    path={item.path}
-                    element={item.component}
-                  />
-                ))}
+                {routes
+                  .filter(
+                    (i) =>
+                      !(
+                        usersPath.includes(i.path) &&
+                        loggedInUser?.role === "Collaborateur"
+                      )
+                  )
+                  .map((item, index) => (
+                    <Route
+                      key={index}
+                      path={item.path}
+                      element={item.component}
+                    />
+                  ))}
               </Routes>
             </>
           ) : (
@@ -211,7 +232,11 @@ function App() {
               <Route path="/Register" element={<Register />} />
               <Route path="/forgotpass" element={<ForgotPassword />} />{" "}
               <Route path="/resetpass/:token" element={<ResetPassword />} />
-              <Route path="*" element={<Error404 />} />{" "}
+              <Route path={"*"} element={<Error404 />} />
+              {/* {loggedInUser.role == "Collaborateur" &&
+                usersPath.map((el, index) => (
+                  <Route key={index} paths={el} element={<Error404 />} />
+                ))} */}
             </Routes>
           )}
         </Router>

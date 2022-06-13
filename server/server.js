@@ -15,6 +15,7 @@ const userRouters = require("./routers/user-routes");
 const eventRouters = require("./routers/event-routes");
 const salonRouters = require("./routers/salon-routes");
 const presenceRouters = require("./routers/presence-routes");
+const presenceonlineRouters = require("./routers/presenceonline-routes");
 const roomRouters = require("./routers/room-routes");
 // permet bash  net3amlo mt3a data eli jayetna mn form
 app.use(express.urlencoded({ extended: true }));
@@ -29,6 +30,8 @@ app.use("/", eventRouters);
 app.use("/", salonRouters);
 
 app.use("/", presenceRouters);
+
+app.use("/", presenceonlineRouters);
 
 app.use("/", roomRouters);
 

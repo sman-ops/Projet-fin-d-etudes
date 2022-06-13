@@ -110,7 +110,6 @@ function ViewEvent() {
             {i.key}:
           </h3>
           <p className="ml-20" style={{ marginLeft: "30%" }}>
-            {" "}
             {i.value}
           </p>
         </div>

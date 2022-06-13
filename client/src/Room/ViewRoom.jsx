@@ -85,43 +85,56 @@ function ViewRoom() {
       >
         Room details
       </div>
-      <Table striped style={{ marginBottom: "10%" }}>
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>sender</th>
-            <th>msg</th>
-            <th>time</th>
-            <th>room</th>
-          </tr>
-        </thead>
-        <tbody>
-          {message.map((item, key) => (
+      {message.length > 1 ? (
+        <Table striped style={{ marginBottom: "10%" }}>
+          <thead>
             <tr>
-              <td>{key + 1}</td>
-              <td>{item?.sender}</td>
-              {item.pdf ? (
-                <td>
-                  <button
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setShowModal(true);
-                      setViewPdf(item.msg);
-                    }}
-                  >
-                    {item?.msg}
-                  </button>
-                </td>
-              ) : (
-                <td>{item?.msg}</td>
-              )}
-
-              <td>{item?.time}</td>
-              <td>{item?.room}</td>
+              <th>N°</th>
+              <th>sender</th>
+              <th>msg</th>
+              <th>time</th>
+              <th>room</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {message.map((item, key) => (
+              <tr>
+                <td>{key + 1}</td>
+                <td>{item?.sender}</td>
+                {item.pdf ? (
+                  <td>
+                    <button
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setShowModal(true);
+                        setViewPdf(item.msg);
+                      }}
+                    >
+                      {item?.msg}
+                    </button>
+                  </td>
+                ) : (
+                  <td>{item?.msg}</td>
+                )}
+
+                <td>{item?.time}</td>
+                <td>{item?.room}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <div
+          style={{
+            padding: 15,
+            borderRadius: 5,
+            fontFamily: "Rubik, sans-serif",
+          }}
+          className="d-flex align-items-center justify-content-center align-self-center"
+        >
+          Room is empty
+        </div>
+      )}
       {showModal ? (
         <>
           <div className="justify-center z-50 items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

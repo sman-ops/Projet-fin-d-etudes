@@ -30,28 +30,48 @@ const TabInfo = () => {
   return (
     <CardContent>
       <Grid container spacing={9}>
-        <Grid item xs={12} sm={6}>
-          FirstName
+        <Grid
+          item
+          xs={12}
+          style={{ fontWeight: "bold", fontSize: "20px" }}
+          sm={4}
+        >
+          FirstName :
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
           {firstname}
         </Grid>
-        <Grid item xs={12} sm={6}>
-          Lastname
+        <Grid
+          item
+          xs={12}
+          style={{ fontWeight: "bold", fontSize: "20px" }}
+          sm={4}
+        >
+          Lastname :
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
           {lastname}
         </Grid>
-        <Grid item xs={12} sm={6}>
-          Email
+        <Grid
+          item
+          xs={12}
+          style={{ fontWeight: "bold", fontSize: "20px" }}
+          sm={4}
+        >
+          Email :
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
           {email}
         </Grid>
-        <Grid item xs={12} sm={6}>
-          Grade
+        <Grid
+          item
+          xs={12}
+          style={{ fontWeight: "bold", fontSize: "20px" }}
+          sm={4}
+        >
+          Grade :
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
           {grade}
         </Grid>
       </Grid>

@@ -102,7 +102,7 @@ function Login() {
               style={{ backgroundColor: "#E6552D" }}
               onClick={login}
             >
-              Sing In
+              Sign In
             </button>
             <h6>
               <Link style={{ color: "#E6552D" }} to="/forgotpass">

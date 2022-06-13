@@ -16,6 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
+import moment from "moment";
 
 // ** Icons Imports
 
@@ -46,9 +47,12 @@ const TabAccount = () => {
   const [image, setImage] = useState(null);
   const [adresse, setAdresse] = useState("");
   const [dateNaissance, setDateNaissance] = useState("");
+  const [focus, setFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
 
   const getSingleUser = async () => {
     const { data } = await axios.get(`http://localhost:3001/user/${id}`);
+    console.log({ data });
     setFirstName(data.firstname);
     setLastName(data.lastname);
     setEmail(data.email);
@@ -62,6 +66,7 @@ const TabAccount = () => {
     getSingleUser();
   }, [id]);
 
+  console.log({ dateNaissance });
   const updateUser = (e) => {
     e.preventDefault();
 
@@ -93,6 +98,8 @@ const TabAccount = () => {
         }
       });
   };
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
 
   return (
     <CardContent>
@@ -194,17 +201,27 @@ const TabAccount = () => {
               onChange={(e) => setAdresse(e.target.value)}
             />
           </Grid>
-
+          <Grid item xs={12} sm={6}>
+            <TextField
+              onFocus={onFocus}
+              onBlur={onBlur}
+              fullWidth
+              label="Date de naissance"
+              type={hasValue || focus ? "date" : "text"}
+              value={moment(dateNaissance).format("DD/MM/YYYY")}
+              onChange={(e) => setDateNaissance(e.target.value)}
+            />
+          </Grid>
+          {/* 
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Date de naissance"
               type="date"
-              placeholder="12-14-1999"
               value={dateNaissance}
               onChange={(e) => setDateNaissance(e.target.value)}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12}>
             <Button

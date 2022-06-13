@@ -38,5 +38,14 @@ module.exports = (sequelize, Datatype) => {
     });
   };
 
+  EventOnline.associate = (models) => {
+    EventOnline.belongsToMany(models.User, {
+      through: models.PresenceOnline,
+      foreignKey: {
+        name: "EventOnlineId",
+        as: "users",
+      },
+    });
+  };
   return EventOnline;
 };

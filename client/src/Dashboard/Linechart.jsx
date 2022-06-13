@@ -56,7 +56,7 @@ function Linechart() {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="PresentEvent" stackId="a" fill="#8884d8" />
+        <Bar dataKey="PresentEvent" stackId="a" fill="#E6552D" />
       </BarChart>
     </ResponsiveContainer>
   );

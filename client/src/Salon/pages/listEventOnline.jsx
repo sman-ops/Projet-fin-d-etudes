@@ -6,14 +6,34 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import PreviewIcon from "@mui/icons-material/Preview";
 import "./salon.css";
+import axios from "axios";
 function ListEventOnline() {
-  const [events, setEvents] = useState([]);
   const navigate = useNavigate();
+  const [events, setEvents] = useState([]);
+  const [presence, setPresence] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const { id } = user;
+  console.log(id);
+
+  const Participate = async (event, user) => {
+    const data = {
+      EventOnlineId: event,
+      UserId: user,
+    };
+
+    await axios
+      .post("http://localhost:3001/presenceonlineUser", data)
+      .then((result) => {
+        console.log(result);
+        loadData();
+      });
+  };
+
   useEffect(() => {
     loadData();
   }, []);
 
-  const loadData = () => {
+  const loadData = async () => {
     listSalon()
       .then((res) => {
         setEvents(res.data);
@@ -21,6 +41,9 @@ function ListEventOnline() {
       .catch((err) => {
         console.log(err);
       });
+    const result = await axios.get("http://localhost:3001/AllPresenceOnline");
+    // console.log(result);
+    setPresence(result.data.result);
   };
 
   const [pageNumber, setPageNumber] = useState(0);
@@ -39,6 +62,13 @@ function ListEventOnline() {
 
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((event) => {
+      let presenc = null;
+      console.log(event.id);
+
+      presenc = presence.find(
+        ({ EventOnlineId, UserId }) =>
+          EventOnlineId === event.id && UserId === id
+      );
       return (
         <div className="user">
           <img
@@ -52,7 +82,7 @@ function ListEventOnline() {
             alt="logo"
           />
           <div
-            style={{ marginLeft: "400px", marginBottom: "1%", marginTop: "5%" }}
+            style={{ marginLeft: "400px", marginBottom: "1%", marginTop: "1%" }}
           >
             <PreviewIcon
               color="primary"
@@ -70,28 +100,35 @@ function ListEventOnline() {
               borderRadius: 7,
               textAlign: "center",
               background: "#E6552D",
-              marginBottom: "5%",
+              marginBottom: "8%",
             }}
           >
             Online event
           </div>
 
-          <h3 style={{ marginBottom: "5px" }}>
+          <h3 style={{ marginBottom: "5%", height: "50%" }}>
             Name of the event : {event.title}
           </h3>
 
           <div style={{ marginBottom: "15%" }}>
-            <button
-              type="button"
-              style={{
-                height: "55px",
-                width: "90px",
-                borderRadius: "3px",
-              }}
-              class="btn btn-inverse-info btn-fw"
-            >
-              Participate
-            </button>
+            {presenc ? (
+              <div style={{ marginTop: "5%", color: "#E6552D" }}>
+                You are participated in this event Thank you.
+              </div>
+            ) : (
+              <button
+                type="button"
+                style={{
+                  height: "55px",
+                  width: "90px",
+                  borderRadius: "3px",
+                  backgroundColor: "#E6552D",
+                }}
+                onClick={() => Participate(event.id, id)}
+              >
+                Participate
+              </button>
+            )}
           </div>
         </div>
       );

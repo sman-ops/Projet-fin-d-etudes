@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
+import { Table } from "react-bootstrap";
 import axios from "axios";
 function ViewEvenOnline() {
   const { id } = useParams();
@@ -7,6 +8,20 @@ function ViewEvenOnline() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [description, setDescription] = useState("");
+  const [participants, setParticipants] = useState([]);
+  useEffect(() => {
+    getSingleOnlineEvent();
+    getParticipantsByEvent();
+  }, []);
+
+  const getParticipantsByEvent = async () => {
+    const { data } = await axios.get(
+      `http://localhost:3001/participantsonline/${id}`
+    );
+
+    console.log(data, "daaas");
+    setParticipants(data?.result);
+  };
 
   const getSingleOnlineEvent = async () => {
     const { data } = await axios.get(
@@ -18,44 +33,120 @@ function ViewEvenOnline() {
     setDescription(data.description);
   };
 
-  useEffect(() => {
-    getSingleOnlineEvent();
-  }, []);
+  const keys = useMemo(
+    () => [
+      {
+        key: "Name of event",
+        value: title,
+      },
+      {
+        key: "Start in ",
+        value: start,
+      },
+      {
+        key: "End in",
+        value: end,
+      },
+
+      {
+        key: "Description",
+        value: description,
+      },
+    ],
+    [end, description, start, title]
+  );
 
   return (
     <div
-      className="user"
       style={{
+        display: "flex",
+        "flex-direction": "column",
         width: "100%",
-        marginLeft: "5%",
-        height: "90%",
-        marginRight: "5%",
-        position: "relative",
-        paddingBottom: 40,
-        paddingInline: 20,
-        border: "1px solid #E6552D",
+        paddingInline: 55,
+        paddingBlock: 20,
+        background: "white",
+        borderRadius: 15,
+        marginTop: 50,
+        border: "1px solid #e6552d ",
       }}
     >
       <div
         style={{
-          background: "#6495ED",
-          width: "150px",
-          color: "white",
-          padding: "10px",
-          borderRadius: 7,
           textAlign: "center",
-          position: "absolute",
-          top: -23,
-          background: "#E6552D",
+          marginBottom: 40,
+          background: "#e6552d",
+          padding: 7,
+          color: "white",
+          fontWeight: "bold",
+          borderRadius: 15,
+          width: "40%",
+          alignSelf: "center",
         }}
       >
-        Online event
+        Online Event
       </div>
+      {keys.map((i, index) => (
+        <div className="d-flex justify-content-start align-items-center">
+          <h3 key={index} style={{ marginBottom: 20 }}>
+            {i.key}:
+          </h3>
+          <p className="ml-20" style={{ marginLeft: "30%" }}>
+            {i.value}
+          </p>
+        </div>
+      ))}
 
-      <h3>Name of event : {title} </h3>
-      <h3>Start in: {start} </h3>
-      <h3>End in : {end} </h3>
-      <h3>Description : {description} </h3>
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: 40,
+          background: "#e6552d",
+          padding: 7,
+          color: "white",
+          fontWeight: "bold",
+          borderRadius: 15,
+          width: "40%",
+          alignSelf: "center",
+        }}
+      >
+        Event Participants
+      </div>
+      {participants.length > 0 ? (
+        <Table striped>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {participants.map((el, idx) => {
+              return (
+                <tr key={idx}>
+                  <td>{el.id}</td>
+                  <td>{el.firstname}</td>
+                  <td>{el.lastname}</td>
+                  <td>{el.email}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      ) : (
+        <div
+          style={{
+            background: "#f6f0ea",
+            padding: 15,
+            borderRadius: 5,
+            fontFamily: "Rubik, sans-serif",
+          }}
+          className="d-flex align-items-center justify-content-center align-self-center"
+        >
+          There is no participants for this event
+        </div>
+      )}
     </div>
   );
 }

@@ -22,7 +22,11 @@ function Room() {
               onClick={() => {
                 navigate(`/viewroom/${item.id}`);
               }}
-              style={{ width: "280px", height: "150px" }}
+              style={{
+                width: "280px",
+                height: "150px",
+                border: "1px solid #E6552D",
+              }}
               className=" shadow mt-md-2 rounded"
             >
               <Card.Body>

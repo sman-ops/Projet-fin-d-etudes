@@ -33,8 +33,8 @@ function EditUser() {
       setFirstName(data.firstname);
       setLastName(data.lastname);
       setEmail(data.email);
-      setPhone(data.telephone);
-      setGrade(data.grade);
+      setPhone(data.telephone === 0 ? "" : data.telephone);
+      setGrade(data.grade === 0 ? "" : data.grade);
       setRole(data.role);
     };
 

@@ -25,7 +25,7 @@ module.exports = (sequelize, Datatype) => {
       allowNull: true,
     },
     dateNaissance: {
-      type: Datatype.STRING,
+      type: Datatype.DATE,
       allowNull: true,
     },
     adresse: {
@@ -74,6 +74,16 @@ module.exports = (sequelize, Datatype) => {
       foreignKey: {
         name: "UserId",
         as: "events",
+      },
+    });
+  };
+
+  User.associate = (models) => {
+    User.belongsToMany(models.EventOnline, {
+      through: models.PresenceOnline,
+      foreignKey: {
+        name: "UserId",
+        as: "eventonlines",
       },
     });
   };
