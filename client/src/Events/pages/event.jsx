@@ -278,7 +278,7 @@ function Event() {
               eventChange={handleChange}
             />
             <Modal
-              title="Add New Event"
+              title=" New Present Event"
               visible={isModalVisible}
               onOk={handleOk}
               onCancel={handleCancel}

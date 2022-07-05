@@ -12,8 +12,18 @@ let transporter = nodemailer.createTransport({
 });
 
 module.exports.createSalon = async (req, res) => {
-  const { title, start, end, email, description, mdp, color, UserId } =
-    req.body;
+  const {
+    title,
+    start,
+    end,
+    email,
+    typeEvent,
+    langueEvent,
+    description,
+    mdp,
+    color,
+    UserId,
+  } = req.body;
   if (!title) {
     throw new Error("no data!");
   }
@@ -23,6 +33,8 @@ module.exports.createSalon = async (req, res) => {
       start,
       end,
       email,
+      typeEvent,
+      langueEvent,
       description,
       mdp,
       color,
@@ -33,9 +45,11 @@ module.exports.createSalon = async (req, res) => {
     <li>Name of the event :  {{title}}</li>
     <li>Start in :  {{start}}</li>
     <li>End in :{{end}}</li>
+    <li>Type event :{{typeEvent}}</li>
+    <li>Language event :{{langueEvent}}</li>
     <li>Mot de passe room : {{mdp}}</li>
     <li>Description :{{description}}</li>
-    </ul> <br><br>Click to this <a href="http://localhost:3000/homepage/{{mdp}}">link</a> to join the room<br><br> Cordialement, `;
+    </ul> <br><br>Click to this <a href="http://localhost:3000/homepage">link</a> to join the room<br><br> Cordialement, `;
     const template = handlebars.compile(htmlsend);
     const replacement = {
       title: data.title,
@@ -43,6 +57,8 @@ module.exports.createSalon = async (req, res) => {
       end: data.end,
       mdp: data.mdp,
       description: data.description,
+      typeEvent: data.typeEvent,
+      langueEvent: data.langueEvent,
     };
     const html = template(replacement);
 

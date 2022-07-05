@@ -34,13 +34,16 @@ module.exports = (sequelize, Datatype) => {
     color: {
       type: Datatype.STRING,
     },
+    UserId: {
+      type: Datatype.INTEGER,
+    },
   });
 
-  Events.associate = (models) => {
-    Events.belongsTo(models.User, {
-      onDelete: "cascade",
-    });
-  };
+  // Events.associate = (models) => {
+  //   Events.belongsTo(models.User, {
+  //     onDelete: "cascade",
+  //   });
+  // };
 
   Events.associate = (models) => {
     Events.belongsToMany(models.User, {

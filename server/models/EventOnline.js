@@ -15,6 +15,12 @@ module.exports = (sequelize, Datatype) => {
       type: Datatype.STRING,
       allowNull: false,
     },
+    typeEvent: {
+      type: Datatype.STRING,
+    },
+    langueEvent: {
+      type: Datatype.STRING,
+    },
     mdp: {
       type: Datatype.STRING,
     },
@@ -25,13 +31,16 @@ module.exports = (sequelize, Datatype) => {
     color: {
       type: Datatype.STRING,
     },
+    UserId: {
+      type: Datatype.INTEGER,
+    },
   });
 
-  EventOnline.associate = (models) => {
-    EventOnline.belongsTo(models.User, {
-      onDelete: "cascade",
-    });
-  };
+  // EventOnline.associate = (models) => {
+  //   EventOnline.belongsTo(models.User, {
+  //     onDelete: "cascade",
+  //   });
+  // };
   EventOnline.associate = (models) => {
     EventOnline.hasMany(models.Room, {
       onDelete: "cascade",

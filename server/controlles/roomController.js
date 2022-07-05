@@ -2,7 +2,7 @@ const db = require("../models");
 var sequelize = require("sequelize");
 
 module.exports.listRoom = (req, res) => {
-  db.Room.findAll({ order: [["createdAt", "DESC"]] })
+  db.Room.findAll({ order: [["createdAt", "DESC"]], include: [db.EventOnline] })
     .then((result) => res.json({ result }))
     .catch((err) => console.log(err));
 };

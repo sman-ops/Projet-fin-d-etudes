@@ -15,7 +15,7 @@ import Select from "@mui/material/Select";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, Zoom } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 function AddUser() {
   const navigate = useNavigate();
@@ -30,6 +30,51 @@ function AddUser() {
 
   const AddUser = async (e) => {
     e.preventDefault();
+    const nameRegex = /^[a-zA-Z\-]{5,20}$/;
+    if (!nameRegex.test(firstname)) {
+      toast.error(" Firstname  must at least 5 characters  ", {
+        transition: Zoom,
+        theme: "colored",
+      });
+      return;
+    }
+    if (!nameRegex.test(lastname)) {
+      toast.error(" Lastname  must at least 5 characters  ", {
+        transition: Zoom,
+        theme: "colored",
+      });
+      return;
+    }
+    if (
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email
+      )
+    ) {
+      toast.error("please enter valid email  ", {
+        transition: Zoom,
+        theme: "colored",
+      });
+      return;
+    }
+    // minimum 8 characters,at least one letter and one number
+    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+      toast.error(
+        " password  must at least 8 characters,minimum one letter and one number  ",
+        {
+          transition: Zoom,
+          theme: "colored",
+        }
+      );
+      return;
+    }
+    if (!/^(?!\s*$).+/.test(grade)) {
+      toast.error(" grade not be null ", {
+        transition: Zoom,
+        theme: "colored",
+      });
+      return;
+    }
+
     const data = {
       firstname: firstname,
       lastname: lastname,
@@ -50,7 +95,7 @@ function AddUser() {
             theme: "colored",
           });
         } else if (response.data.notmatch) {
-          toast.error(data.notmatch, {
+          toast.error(response.data.notmatch, {
             theme: "colored",
           });
         } else {

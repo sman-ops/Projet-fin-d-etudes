@@ -44,7 +44,7 @@ function Register() {
     }
 
     if (!nameRegex.test(password)) {
-      toast.error(" password  must at least 6 characters  ", {
+      toast.error(" password  must at least 5 characters  ", {
         transition: Zoom,
         theme: "colored",
       });

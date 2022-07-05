@@ -8,6 +8,8 @@ function ViewEvenOnline() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [description, setDescription] = useState("");
+  const [typeEvent, setTypeEvent] = useState("");
+  const [languageEvent, setLanguageEvent] = useState("");
   const [participants, setParticipants] = useState([]);
   useEffect(() => {
     getSingleOnlineEvent();
@@ -31,6 +33,8 @@ function ViewEvenOnline() {
     setStart(data.start);
     setEnd(data.end);
     setDescription(data.description);
+    setLanguageEvent(data.langueEvent);
+    setTypeEvent(data.typeEvent);
   };
 
   const keys = useMemo(
@@ -40,20 +44,28 @@ function ViewEvenOnline() {
         value: title,
       },
       {
-        key: "Start in ",
+        key: "Event Start in",
         value: start,
       },
       {
-        key: "End in",
+        key: " Event End in  ",
         value: end,
       },
 
       {
-        key: "Description",
+        key: "Type of event",
+        value: typeEvent,
+      },
+      {
+        key: "Langue event",
+        value: languageEvent,
+      },
+      {
+        key: "Description  ",
         value: description,
       },
     ],
-    [end, description, start, title]
+    [end, description, start, title, typeEvent, languageEvent]
   );
 
   return (
@@ -87,10 +99,10 @@ function ViewEvenOnline() {
       </div>
       {keys.map((i, index) => (
         <div className="d-flex justify-content-start align-items-center">
-          <h3 key={index} style={{ marginBottom: 20 }}>
-            {i.key}:
+          <h3 key={index} style={{ marginBottom: 20, fontSize: "15px" }}>
+            {i.key} :
           </h3>
-          <p className="ml-20" style={{ marginLeft: "30%" }}>
+          <p className="ml-20" style={{ marginLeft: "30%", fontSize: "15px" }}>
             {i.value}
           </p>
         </div>

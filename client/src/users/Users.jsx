@@ -120,10 +120,10 @@ function Users() {
               <TableRow style={{ width: "30px" }}>
                 <StyledTableCell className="">Num</StyledTableCell>
                 <StyledTableCell>Picture</StyledTableCell>
-                <StyledTableCell>firstname</StyledTableCell>
-                <StyledTableCell align="right">lastname</StyledTableCell>
-                <StyledTableCell align="right">email</StyledTableCell>
-                <StyledTableCell align="right">grade</StyledTableCell>
+                <StyledTableCell>Firstname</StyledTableCell>
+                <StyledTableCell align="right">Lastname</StyledTableCell>
+                <StyledTableCell align="right">Email</StyledTableCell>
+                <StyledTableCell align="right">Grade</StyledTableCell>
 
                 <StyledTableCell align="right">Actions</StyledTableCell>
               </TableRow>

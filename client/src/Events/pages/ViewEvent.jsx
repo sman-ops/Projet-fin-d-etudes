@@ -47,11 +47,11 @@ function ViewEvent() {
         value: title,
       },
       {
-        key: "Start in ",
+        key: " Event Start in",
         value: start,
       },
       {
-        key: "End in",
+        key: " Event End in    ",
         value: end,
       },
       {
@@ -59,11 +59,11 @@ function ViewEvent() {
         value: typeEvent,
       },
       {
-        key: "Event language",
+        key: "Langue Event ",
         value: eventLanguage,
       },
       {
-        key: "Location",
+        key: "Location event",
         value: location,
       },
       {
@@ -107,7 +107,7 @@ function ViewEvent() {
       {keys.map((i, index) => (
         <div className="d-flex justify-content-start align-items-center">
           <h3 key={index} style={{ marginBottom: 20 }}>
-            {i.key}:
+            {i.key} :
           </h3>
           <p className="ml-20" style={{ marginLeft: "30%" }}>
             {i.value}

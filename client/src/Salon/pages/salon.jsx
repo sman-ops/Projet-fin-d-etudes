@@ -42,6 +42,8 @@ function Salon() {
     UserId: id,
     color: "",
     email: "",
+    typeEvent: "",
+    langueEvent: "",
   });
 
   const [events, setEvents] = useState([]);
@@ -116,6 +118,8 @@ function Salon() {
       end: info.endStr,
       email: values.email,
       description: values.description,
+      typeEvent: values.typeEvent,
+      langueEvent: values.langueEvent,
     });
   };
 
@@ -158,6 +162,15 @@ function Salon() {
   const onChangeDescription = (e) => {
     console.log(e.target.value);
     setValues({ ...values, description: e.target.value });
+  };
+
+  const onChangeType = (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, typeEvent: e.target.value });
+  };
+  const onChangeLangue = (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, langueEvent: e.target.value });
   };
 
   const showModal = () => {
@@ -275,7 +288,7 @@ function Salon() {
               eventChange={handleChange}
             />
             <Modal
-              title="Add New Event"
+              title=" New Online Event"
               visible={isModalVisible}
               onOk={handleOk}
               onCancel={handleCancel}
@@ -302,6 +315,36 @@ function Salon() {
                   onChange={onChangeEmail}
                   placeholder="email."
                 />
+              </Grid>
+              <Grid item xs={12} sm={6} mb={4}>
+                <FormControl fullWidth>
+                  <InputLabel id="form-layouts-separator-select-label">
+                    type event
+                  </InputLabel>
+                  <Select
+                    onChange={onChangeType}
+                    label="Country"
+                    defaultValue=""
+                  >
+                    <MenuItem value="Public">Public</MenuItem>
+                    <MenuItem value="Privé">Privé</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6} mb={4}>
+                <FormControl fullWidth>
+                  <InputLabel id="form-layouts-separator-select-label">
+                    Langue
+                  </InputLabel>
+                  <Select
+                    onChange={onChangeLangue}
+                    label="Country"
+                    defaultValue=""
+                  >
+                    <MenuItem value="Francais">Francais</MenuItem>
+                    <MenuItem value="English">English</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
 
               <Grid item xs={12} mb={2}>

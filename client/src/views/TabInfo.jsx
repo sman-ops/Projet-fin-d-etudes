@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import CardContent from "@mui/material/CardContent";
 import axios from "axios";
+import { Container } from "@mui/material";
 // ** Styled Components
 const TabInfo = () => {
   const [firstname, setFirstName] = useState("");
@@ -29,52 +30,35 @@ const TabInfo = () => {
   }, [id]);
   return (
     <CardContent>
-      <Grid container spacing={9}>
-        <Grid
-          item
-          xs={12}
-          style={{ fontWeight: "bold", fontSize: "20px" }}
-          sm={4}
-        >
-          FirstName :
+      <Container>
+        {" "}
+        <Grid container spacing={4}>
+          <Grid item xs={12} style={{ fontSize: "20px" }} sm={4}>
+            FirstName :
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
+            {firstname}
+          </Grid>
+          <Grid item xs={12} style={{ fontSize: "20px" }} sm={4}>
+            Lastname :
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
+            {lastname}
+          </Grid>
+          <Grid item xs={12} style={{ fontSize: "20px" }} sm={4}>
+            Email :
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
+            {email}
+          </Grid>
+          <Grid item xs={12} style={{ fontSize: "20px" }} sm={4}>
+            Grade :
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
+            {grade}
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
-          {firstname}
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          style={{ fontWeight: "bold", fontSize: "20px" }}
-          sm={4}
-        >
-          Lastname :
-        </Grid>
-        <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
-          {lastname}
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          style={{ fontWeight: "bold", fontSize: "20px" }}
-          sm={4}
-        >
-          Email :
-        </Grid>
-        <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
-          {email}
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          style={{ fontWeight: "bold", fontSize: "20px" }}
-          sm={4}
-        >
-          Grade :
-        </Grid>
-        <Grid item xs={12} sm={6} style={{ fontSize: "20px" }}>
-          {grade}
-        </Grid>
-      </Grid>
+      </Container>
     </CardContent>
   );
 };

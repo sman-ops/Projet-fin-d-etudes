@@ -60,12 +60,12 @@ function Template({ children }) {
       icon: "fa fa-users",
     },
     {
-      label: "Salon",
+      label: "Room",
       path: "/room",
       icon: "fa fa-video-camera",
     },
     {
-      label: "Join salon",
+      label: "Join room",
       path: "/homepage",
       icon: "fa fa-user-plus",
     },

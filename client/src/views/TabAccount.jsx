@@ -185,9 +185,11 @@ const TabAccount = () => {
                   setGrade(e.target.value);
                 }}
               >
-                <MenuItem value="stagiaire">stagiaire</MenuItem>
+                <MenuItem value="stagiaire">Stagiaire</MenuItem>
                 <MenuItem value="Consultant">Consultant</MenuItem>
-                <MenuItem value="manager">manager</MenuItem>
+                <MenuItem value="Consultant">Développeur</MenuItem>
+                <MenuItem value="Consultant">Chef de projet</MenuItem>
+                <MenuItem value="Manager">Manager</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -231,14 +233,6 @@ const TabAccount = () => {
               sx={{ marginRight: 3.5 }}
             >
               Save Changes
-            </Button>
-            <Button
-              style={{ width: "25%", height: "50px" }}
-              type="reset"
-              variant="outlined"
-              color="secondary"
-            >
-              Reset
             </Button>
           </Grid>
         </Grid>
